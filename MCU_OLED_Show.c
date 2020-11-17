@@ -17,6 +17,7 @@ void MCU_OLED_StatusChange(unsigned char flag)
 		if(flag==0x04||flag==0x00){if(P16==0x01){OLED_P6x8Str(84,4,"1");}else{OLED_P6x8Str(84,4,"0");} }
 		if(flag==0x08||flag==0x00){if(P17==0x01){OLED_P6x8Str(114,4,"1");}else{OLED_P6x8Str(114,4,"0");} }
 	}
+	else{OLED_CLS_Local(0,4,X_WIDTH,6);}
 }
 
 
@@ -34,9 +35,7 @@ void MCU_OLED_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsign
 	if(Order==0x0d)
 	{
 		//清除第三行及以下所有行
-		OLED_CLS_Local(0,2,X_WIDTH,Y_WIDTH); 
-		//将手机连接标志位，网络连接标志位初始化
-		Phone_flag=0;Net_flag=0;
+		OLED_CLS_Local(0,2,X_WIDTH,4); 
 		switch(Wifi_status_2)
 		{
 			//SoftAP模式开启
@@ -61,10 +60,10 @@ void MCU_OLED_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsign
 			case 0x3A:
 					//Station模式开启，成功连接路由器，开启绑定模式，连接上云端，无手机连接
 					if(Wifi_status_1>=0x00 && Wifi_status_1<=0x07 )
-					{	OLED_P6x8Str(6,2,"M:S C:A W:1 N:1");Net_flag=1;	}
+					{	OLED_P6x8Str(6,2,"M:S C:A W:1 N:1");}
 					//Station模式开启，成功连接路由器，开启绑定模式，连接上云端，有手机连接
 					if(Wifi_status_1>=0x08 && Wifi_status_1<=0x0F )
-					{	OLED_P6x8Str(6,2,"M:S C:A W:1 N:1 P:1");Net_flag=1;Phone_flag=1;}
+					{	OLED_P6x8Str(6,2,"M:S C:A W:1 N:1 P:1");}
 				break;	
 		}
 	}

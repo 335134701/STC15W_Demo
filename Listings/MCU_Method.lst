@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_METHOD                                                        06/14/2020 15:26:56 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_METHOD                                                        07/06/2020 14:09:33 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_METHOD
@@ -51,251 +51,249 @@ line level    source
   41          {
   42   1        //Check_protocol_flag表示接收数据是否有效标记位
   43   1        unsigned char Check_protocol_flag=0;
-  44   1        
-  45   1        if((RX1_len>0)&&!B_TX1_Busy)
-  46   1        {
-  47   2            Delay_ms(100);
-  48   2            REN=0;
-  49   2            //串口2调试输出打印数据
-  50   2            Printf(0,RX1_Buffer,RX1_len);
-  51   2            Check_protocol_flag=Check_Protocol(RX1_Buffer,RX1_len); 
-  52   2            if(!Check_protocol_flag) { RST_Uart_Timer();}
-  53   2        }
-  54   1        else{RST_Uart_Timer();}
-C51 COMPILER V9.60.0.0   MCU_METHOD                                                        06/14/2020 15:26:56 PAGE 2   
+  44   1        if((RX1_len>0)&&!B_TX1_Busy)
+  45   1        {
+  46   2            REN=0;
+  47   2            //串口2调试输出打印数据
+  48   2            Printf(0,RX1_Buffer,RX1_len);
+  49   2            Check_protocol_flag=Check_Protocol(RX1_Buffer,RX1_len); 
+  50   2            if(!Check_protocol_flag) { RST_Uart_Timer();}
+  51   2        }
+  52   1        else{RST_Uart_Timer();}
+  53   1        return Check_protocol_flag;
+  54   1      }
+C51 COMPILER V9.60.0.0   MCU_METHOD                                                        07/06/2020 14:09:33 PAGE 2   
 
-  55   1        return Check_protocol_flag;
-  56   1      }
-  57          
-  58          //========================================================================
-  59          // 函数: unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
-  60          // 描述: 计算校验和
-  61          // 参数: *Buf:字符数组,Buf_len:数组实际长度
-  62          // 返回: 无
-  63          // 说明：无
-  64          // 版本: V1.0, 2020.03.09
-  65          //========================================================================
-  66          unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
-  67          {
-  68   1        unsigned char checksum=0x00;
-  69   1        unsigned int i=0,len=Buf_len;
-  70   1        for(i=2;i<(len-1);i++)
-  71   1        {
-  72   2          checksum=checksum+Buf[i];
-  73   2        }
-  74   1        checksum=checksum%256;
-  75   1        return checksum;
-  76   1      }
-  77          
-  78          //========================================================================
-  79          // 函数: unsigned char Check_Protocol(unsigned char *Buf,unsigned int Buf_len)
-  80          // 描述: 检验校验和是否一致
-  81          // 参数: *Buf:字符数组,Buf_len:数组实际长度
-  82          // 返回: 无
-  83          // 说明：具体思想为：接收到的BUF，取校验和，计算新的校验和，对比是否一致，若不一致，则数据无效
-  84          // 版本: V1.0, 2020.03.09
-  85          //========================================================================
-  86          unsigned char Check_Protocol(unsigned char *Buf,unsigned int Buf_len)
-  87          {
-  88   1        unsigned char Check_protocol_flag=0;
-  89   1        //将原BUF的校验和提取
-  90   1        unsigned char old_checksum=Buf[Buf_len-1];
-  91   1        unsigned char new_checksum=0x00;
-  92   1        //计算新的校验和并赋值给new_checksum
-  93   1        new_checksum=Calculate_Checksum(Buf,Buf_len);
-  94   1        //比较原校验和与新校验和是否一致
-  95   1        if(new_checksum==old_checksum){Check_protocol_flag=1;}  
-  96   1        return Check_protocol_flag;
-  97   1      }
-  98          
-  99          //========================================================================
- 100          // 函数: void Data_Encapsulation(unsigned char *Buf,unsigned int Buf_len,unsigned char order,sn,action)
- 101          // 描述: 根据需要，打包数据并发送
- 102          // 参数: *Buf:字符数组,Buf_len:数组实际长度
- 103          // 返回: 无
- 104          // 说明：无
- 105          // 版本: V1.0, 2020.03.09
- 106          //========================================================================
- 107          void Data_Encapsulation(unsigned char *Buf,unsigned int Buf_len,unsigned char order,sn,action)
- 108          {
- 109   1          //判断是否询问产品信息
- 110   1          if(Buf_len!=sizeof(Device_information))
- 111   1          {
- 112   2            switch(Buf_len)
- 113   2            {
- 114   3              case 9: Buf[3]=0x05;break;
- 115   3              case 10:Buf[3]=0x06;break;
- 116   3              case 11:Buf[3]=0x07;break;
-C51 COMPILER V9.60.0.0   MCU_METHOD                                                        06/14/2020 15:26:56 PAGE 3   
+  55          
+  56          //========================================================================
+  57          // 函数: unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
+  58          // 描述: 计算校验和
+  59          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+  60          // 返回: 无
+  61          // 说明：无
+  62          // 版本: V1.0, 2020.03.09
+  63          //========================================================================
+  64          unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
+  65          {
+  66   1        unsigned char checksum=0x00;
+  67   1        unsigned int i=0,len=Buf_len;
+  68   1        for(i=2;i<(len-1);i++)
+  69   1        {
+  70   2          checksum=checksum+Buf[i];
+  71   2        }
+  72   1        checksum=checksum%256;
+  73   1        return checksum;
+  74   1      }
+  75          
+  76          //========================================================================
+  77          // 函数: unsigned char Check_Protocol(unsigned char *Buf,unsigned int Buf_len)
+  78          // 描述: 检验校验和是否一致
+  79          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+  80          // 返回: 无
+  81          // 说明：具体思想为：接收到的BUF，取校验和，计算新的校验和，对比是否一致，若不一致，则数据无效
+  82          // 版本: V1.0, 2020.03.09
+  83          //========================================================================
+  84          unsigned char Check_Protocol(unsigned char *Buf,unsigned int Buf_len)
+  85          {
+  86   1        unsigned char Check_protocol_flag=0;
+  87   1        //将原BUF的校验和提取
+  88   1        unsigned char old_checksum=Buf[Buf_len-1];
+  89   1        unsigned char new_checksum=0x00;
+  90   1        //计算新的校验和并赋值给new_checksum
+  91   1        new_checksum=Calculate_Checksum(Buf,Buf_len);
+  92   1        //比较原校验和与新校验和是否一致
+  93   1        if(new_checksum==old_checksum){Check_protocol_flag=1;}  
+  94   1        return Check_protocol_flag;
+  95   1      }
+  96          
+  97          //========================================================================
+  98          // 函数: void Data_Encapsulation(unsigned char *Buf,unsigned int Buf_len,unsigned char order,sn,action)
+  99          // 描述: 根据需要，打包数据并发送
+ 100          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+ 101          // 返回: 无
+ 102          // 说明：无
+ 103          // 版本: V1.0, 2020.03.09
+ 104          //========================================================================
+ 105          void Data_Encapsulation(unsigned char *Buf,unsigned int Buf_len,unsigned char order,sn,action)
+ 106          {
+ 107   1          //判断是否询问产品信息
+ 108   1          if(Buf_len!=sizeof(Device_information))
+ 109   1          {
+ 110   2            switch(Buf_len)
+ 111   2            {
+ 112   3              case 9: Buf[3]=0x05;break;
+ 113   3              case 10:Buf[3]=0x06;break;
+ 114   3              case 11:Buf[3]=0x07;break;
+ 115   3              case 12:Buf[3]=0x08;break;
+ 116   3              case 14:Buf[3]=0x0A;Buf[9]=(P1 >> 4 &0X0F);Buf[10]=1;Buf[11]=0x00;Buf[12]=0x00;break;
+C51 COMPILER V9.60.0.0   MCU_METHOD                                                        07/06/2020 14:09:33 PAGE 3   
 
- 117   3              case 12:Buf[3]=0x08;break;
- 118   3              case 14:Buf[3]=0x0A;Buf[9]=(P1 >> 4 &0X0F);Buf[10]=1;Buf[11]=0x00;Buf[12]=0x00;break;
- 119   3            }
- 120   2            Buf[4]=order;
- 121   2            Buf[5]=sn;
- 122   2            if(Buf_len!=9){Buf[8]=action;}
- 123   2          }
- 124   1          //计算校验和
- 125   1          Buf[Buf_len-1]=Calculate_Checksum(Buf,Buf_len);
- 126   1          //串口1回复数据
- 127   1          SendString1(Buf,Buf_len);
- 128   1          //串口2转发发送数据
- 129   1          Printf(1,Buf,Buf_len);
- 130   1      }
- 131          //========================================================================
- 132          // 函数: void IsConnect_wifi()
- 133          // 描述: 判断是否接收到心跳包，如果没有接收到表示，连接wifi失败
- 134          // 参数: *Buf:字符数组,Buf_len:数组实际长度
- 135          // 返回: 无
- 136          // 说明：无
- 137          // 版本: V1.0, 2020.03.09
- 138          //========================================================================
- 139          void IsConnect_wifi()
- 140          {
- 141   1        if((Wifi_flag==1)&&(Timer0_Count==0)){TR0=1;}
- 142   1        //超过一分钟还未收到心跳包，即单片机与wifi模块失去联系
- 143   1        if(Timer0_Count>=12000){
- 144   2            TR0=0;Timer0_Count=0;
- 145   2            Wifi_flag=0x00;
- 146   2            Net_flag=0;
- 147   2            Phone_flag=0;
- 148   2            OLED_CLS_Local(0,2,X_WIDTH,Y_WIDTH);
- 149   2            OLED_P6x8Str(36,4,"Wifi loss!");
- 150   2        }
- 151   1      }
- 152          //========================================================================
- 153          // 函数: void Printf(unsigned char flag,unsigned char *Buf,unsigned int len)
- 154          // 描述: UART2输出
- 155          // 参数: *Buf:字符数组,Buf_len:数组实际长度
- 156          // 返回: 无
- 157          // 说明：无
- 158          // 版本: V1.0, 2020.03.09
- 159          //========================================================================
- 160          void Printf(unsigned char flag,unsigned char *Buf,unsigned int len)
- 161          {
- 162   1        unsigned char Buf_HEX[RX1_Length]={0};
- 163   1        switch(flag)
- 164   1        {
- 165   2          case 0:
- 166   2                SendString2("RX:",3);
- 167   2            break;
- 168   2          case 1:
- 169   2                SendString2("TX:",3);
- 170   2            break;
- 171   2        }
- 172   1        HexToAscii(Buf_HEX,Buf,len);
- 173   1        SendString2(Buf_HEX,(len*3-1));
- 174   1        SendString2("\r\n",2);
- 175   1      }
- 176          //========================================================================
- 177          // 函数: void HexToAscii(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
- 178          // 描述: Hex转Ascii
-C51 COMPILER V9.60.0.0   MCU_METHOD                                                        06/14/2020 15:26:56 PAGE 4   
+ 117   3            }
+ 118   2            Buf[4]=order;
+ 119   2            Buf[5]=sn;
+ 120   2            if(Buf_len!=9){Buf[8]=action;}
+ 121   2          }
+ 122   1          //计算校验和
+ 123   1          Buf[Buf_len-1]=Calculate_Checksum(Buf,Buf_len);
+ 124   1          //串口1回复数据
+ 125   1          SendString1(Buf,Buf_len);
+ 126   1          //串口2转发发送数据
+ 127   1          Printf(1,Buf,Buf_len);
+ 128   1      }
+ 129          //========================================================================
+ 130          // 函数: void IsConnect_wifi()
+ 131          // 描述: 判断是否接收到心跳包，如果没有接收到表示，连接wifi失败
+ 132          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+ 133          // 返回: 无
+ 134          // 说明：无
+ 135          // 版本: V1.0, 2020.03.09
+ 136          //========================================================================
+ 137          void IsConnect_wifi()
+ 138          {
+ 139   1        if((Wifi_flag==1)&&(Timer0_Count==0)){TR0=1;}
+ 140   1        //超过一分钟还未收到心跳包，即单片机与wifi模块失去联系
+ 141   1        if(Timer0_Count>=12000){
+ 142   2            TR0=0;Timer0_Count=0;
+ 143   2            Wifi_flag=0x00;
+ 144   2            Net_flag=0;
+ 145   2            Phone_flag=0;
+ 146   2            OLED_CLS_Local(0,2,X_WIDTH,Y_WIDTH);
+ 147   2            OLED_P6x8Str(36,4,"Wifi loss!");
+ 148   2        }
+ 149   1      }
+ 150          //========================================================================
+ 151          // 函数: void Printf(unsigned char flag,unsigned char *Buf,unsigned int len)
+ 152          // 描述: UART2输出
+ 153          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+ 154          // 返回: 无
+ 155          // 说明：无
+ 156          // 版本: V1.0, 2020.03.09
+ 157          //========================================================================
+ 158          void Printf(unsigned char flag,unsigned char *Buf,unsigned int len)
+ 159          {
+ 160   1        unsigned char Buf_HEX[RX1_Length]={0};
+ 161   1        switch(flag)
+ 162   1        {
+ 163   2          case 0:
+ 164   2                SendString2("RX:",3);
+ 165   2            break;
+ 166   2          case 1:
+ 167   2                SendString2("TX:",3);
+ 168   2            break;
+ 169   2        }
+ 170   1        HexToAscii(Buf_HEX,Buf,len);
+ 171   1        SendString2(Buf_HEX,(len*3-1));
+ 172   1        SendString2("\r\n",2);
+ 173   1      }
+ 174          //========================================================================
+ 175          // 函数: void HexToAscii(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
+ 176          // 描述: Hex转Ascii
+ 177          // 参数: Buf_Dest:目标字符集,Buf_Src:原字符集,Buf_len:原字符集实际长度;
+ 178          // 返回: 无
+C51 COMPILER V9.60.0.0   MCU_METHOD                                                        07/06/2020 14:09:33 PAGE 4   
 
- 179          // 参数: Buf_Dest:目标字符集,Buf_Src:原字符集,Buf_len:原字符集实际长度;
- 180          // 返回: 无
- 181          // 说明：无
- 182          // 版本: V1.0, 2020.03.09
- 183          //========================================================================
- 184          void HexToAscii(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
- 185          {
- 186   1        unsigned char Nibble[3]={0};
- 187   1        unsigned char Buffer[RX1_Length]={0};
- 188   1        int i = 0,j=0;
- 189   1        for(i=0;i<Buf_len;i++)
- 190   1        {
- 191   2        
- 192   2          Nibble[0]=Buf_Src[i] >> 4 & 0X0F;
- 193   2          Nibble[1]=Buf_Src[i] & 0x0F;
- 194   2          for(j=0;j<sizeof(Nibble)-1;j++)
- 195   2          {
- 196   3            if((Nibble[j]>=0x00)&&(Nibble[j]<0x0A)){Nibble[j]=Nibble[j]+'0';}
- 197   3            else if((Nibble[j]>=0x0A)&&(Nibble[j]<=0x0F)){Nibble[j]=Nibble[j]-10+'A';}
- 198   3            else{return;}
- 199   3          }
- 200   2          if(i<(Buf_len-1)){Nibble[2]=' ';}
- 201   2          else{Nibble[2]='\0';}
- 202   2          memcpy(Buffer+i*sizeof(Nibble),Nibble,sizeof(Nibble));
- 203   2        }
- 204   1        memcpy(Buf_Dest,Buffer,sizeof(Nibble)*Buf_len);
- 205   1        return ;
- 206   1      }
- 207          /*
- 208          //========================================================================
- 209          // 函数: void IntToHEX(unsigned char* str,int number)
- 210          // 描述: 十进制转十六进制
- 211          // 参数: str:目标字符集,number:十进制数字
- 212          // 返回: 无
- 213          // 说明：无
- 214          // 版本: V1.0, 2020.03.09
- 215          //========================================================================
- 216          void IntToHEX(unsigned char* str,int number)
- 217          {
- 218              unsigned char i=0,j=0,CLen=0,index=0,RLen=0,TRlen=0;
- 219              unsigned char tmp[16]={0};
- 220              if(number==0){ str[0]=0x00;return;}
- 221              while (number!=0)
- 222              {
- 223                  i = number%2;
- 224                  number /= 2;
- 225                  tmp[index++] = i+48;
- 226              }
- 227              RLen=strlen(tmp);
- 228              if(RLen%8==0){CLen=RLen/8;}else{CLen=RLen/8+1;}
- 229              for(i=0;i<CLen;i++)
- 230              {
- 231                  if(i==(CLen-1)){TRlen=RLen%8;}
- 232                  else{TRlen=8;}
- 233                  index=i*8;
- 234                  for(j=0;j<TRlen;j++){
- 235                      str[i]= ((tmp[index*i+j]-0x30) << j | str[i]);
- 236                  }
- 237              }
- 238          }
- 239          
- 240          //========================================================================
-C51 COMPILER V9.60.0.0   MCU_METHOD                                                        06/14/2020 15:26:56 PAGE 5   
+ 179          // 说明：无
+ 180          // 版本: V1.0, 2020.03.09
+ 181          //========================================================================
+ 182          void HexToAscii(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
+ 183          {
+ 184   1        unsigned char Nibble[3]={0};
+ 185   1        unsigned char Buffer[RX1_Length]={0};
+ 186   1        int i = 0,j=0;
+ 187   1        for(i=0;i<Buf_len;i++)
+ 188   1        {
+ 189   2        
+ 190   2          Nibble[0]=Buf_Src[i] >> 4 & 0X0F;
+ 191   2          Nibble[1]=Buf_Src[i] & 0x0F;
+ 192   2          for(j=0;j<sizeof(Nibble)-1;j++)
+ 193   2          {
+ 194   3            if((Nibble[j]>=0x00)&&(Nibble[j]<0x0A)){Nibble[j]=Nibble[j]+'0';}
+ 195   3            else if((Nibble[j]>=0x0A)&&(Nibble[j]<=0x0F)){Nibble[j]=Nibble[j]-10+'A';}
+ 196   3            else{return;}
+ 197   3          }
+ 198   2          if(i<(Buf_len-1)){Nibble[2]=' ';}
+ 199   2          else{Nibble[2]='\0';}
+ 200   2          memcpy(Buffer+i*sizeof(Nibble),Nibble,sizeof(Nibble));
+ 201   2        }
+ 202   1        memcpy(Buf_Dest,Buffer,sizeof(Nibble)*Buf_len);
+ 203   1        return ;
+ 204   1      }
+ 205          /*
+ 206          //========================================================================
+ 207          // 函数: void IntToHEX(unsigned char* str,int number)
+ 208          // 描述: 十进制转十六进制
+ 209          // 参数: str:目标字符集,number:十进制数字
+ 210          // 返回: 无
+ 211          // 说明：无
+ 212          // 版本: V1.0, 2020.03.09
+ 213          //========================================================================
+ 214          void IntToHEX(unsigned char* str,int number)
+ 215          {
+ 216              unsigned char i=0,j=0,CLen=0,index=0,RLen=0,TRlen=0;
+ 217              unsigned char tmp[16]={0};
+ 218              if(number==0){ str[0]=0x00;return;}
+ 219              while (number!=0)
+ 220              {
+ 221                  i = number%2;
+ 222                  number /= 2;
+ 223                  tmp[index++] = i+48;
+ 224              }
+ 225              RLen=strlen(tmp);
+ 226              if(RLen%8==0){CLen=RLen/8;}else{CLen=RLen/8+1;}
+ 227              for(i=0;i<CLen;i++)
+ 228              {
+ 229                  if(i==(CLen-1)){TRlen=RLen%8;}
+ 230                  else{TRlen=8;}
+ 231                  index=i*8;
+ 232                  for(j=0;j<TRlen;j++){
+ 233                      str[i]= ((tmp[index*i+j]-0x30) << j | str[i]);
+ 234                  }
+ 235              }
+ 236          }
+ 237          
+ 238          //========================================================================
+ 239          // 函数: void AsciiToHex(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
+ 240          // 描述: ASCII转HEX
+C51 COMPILER V9.60.0.0   MCU_METHOD                                                        07/06/2020 14:09:33 PAGE 5   
 
- 241          // 函数: void AsciiToHex(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
- 242          // 描述: ASCII转HEX
- 243          // 参数: Buf_Dest:目标字符集,Buf_Src:原字符集,Buf_len:原字符集实际长度;
- 244          // 返回: 无
- 245          // 说明：无
- 246          // 版本: V1.0, 2020.03.09
- 247          //========================================================================
- 248          void AsciiToHex(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
- 249          {
- 250            unsigned int nHexLen = (Buf_len+1) / 3;
- 251            unsigned char Nibble[3] = {0};
- 252            unsigned int i = 0,j=0;
- 253            if ((Buf_len+1)%3){return;}
- 254            for (i = 0; i < nHexLen; i ++)
- 255            {
- 256              Nibble[0] = *Buf_Src ++;    
- 257              Nibble[1] = *Buf_Src ++;
- 258              if(i!=(nHexLen-1)){Nibble[2] = *Buf_Src ++;}
- 259              for (j = 0; j < (sizeof(Nibble)-1); j ++)
- 260              {
- 261                if (Nibble[j] <= 'F' && Nibble[j] >= 'A')
- 262                  Nibble[j] = Nibble[j] - 'A' + 10;
- 263                else if (Nibble[j] <= 'f' && Nibble[j] >= 'a')
- 264                  Nibble[j] = Nibble[j] - 'a' + 10;
- 265                else if (Nibble[j] >= '0' && Nibble[j] <= '9')
- 266                  Nibble [j] = Nibble[j] - '0';
- 267                else
- 268                  return ;//Nibble[j] = Nibble[j] - 'a' + 10;
- 269                
- 270              } // for (int j = ...)
- 271              Buf_Dest[i] = Nibble[0] << 4; // Set the high nibble
- 272              Buf_Dest[i] |= Nibble[1]; //Set the low nibble
- 273            } // for (int i = ...)
- 274            return;
- 275          }
- 276          */
+ 241          // 参数: Buf_Dest:目标字符集,Buf_Src:原字符集,Buf_len:原字符集实际长度;
+ 242          // 返回: 无
+ 243          // 说明：无
+ 244          // 版本: V1.0, 2020.03.09
+ 245          //========================================================================
+ 246          void AsciiToHex(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
+ 247          {
+ 248            unsigned int nHexLen = (Buf_len+1) / 3;
+ 249            unsigned char Nibble[3] = {0};
+ 250            unsigned int i = 0,j=0;
+ 251            if ((Buf_len+1)%3){return;}
+ 252            for (i = 0; i < nHexLen; i ++)
+ 253            {
+ 254              Nibble[0] = *Buf_Src ++;    
+ 255              Nibble[1] = *Buf_Src ++;
+ 256              if(i!=(nHexLen-1)){Nibble[2] = *Buf_Src ++;}
+ 257              for (j = 0; j < (sizeof(Nibble)-1); j ++)
+ 258              {
+ 259                if (Nibble[j] <= 'F' && Nibble[j] >= 'A')
+ 260                  Nibble[j] = Nibble[j] - 'A' + 10;
+ 261                else if (Nibble[j] <= 'f' && Nibble[j] >= 'a')
+ 262                  Nibble[j] = Nibble[j] - 'a' + 10;
+ 263                else if (Nibble[j] >= '0' && Nibble[j] <= '9')
+ 264                  Nibble [j] = Nibble[j] - '0';
+ 265                else
+ 266                  return ;//Nibble[j] = Nibble[j] - 'a' + 10;
+ 267                
+ 268              } // for (int j = ...)
+ 269              Buf_Dest[i] = Nibble[0] << 4; // Set the high nibble
+ 270              Buf_Dest[i] |= Nibble[1]; //Set the low nibble
+ 271            } // for (int i = ...)
+ 272            return;
+ 273          }
+ 274          */
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1307    ----
+   CODE SIZE        =   1299    ----
    CONSTANT SIZE    =    537    ----
    XDATA SIZE       =   ----     555
    PDATA SIZE       =   ----    ----
