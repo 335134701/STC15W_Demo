@@ -1,6 +1,8 @@
 #ifndef __MCU_HAND_UART_H__
 #define __MCU_HAND_UART_H__
 
+#include <stdlib.h>
+
 #include "MCU_Config.h"
 #include "MCU_Control.h"
 #include "MCU_Variable.h"

@@ -24,15 +24,21 @@
 //========================================================================
 void MCU_Init(void)
 {
-		GPIO_Init();		//GPIO 初始化
-		OLED_Init();		//OLED 初始化
-		OLED_CLS();     //OLED 清屏
-		Uart_Init();    //UART 初始化
-		Timer_Config(); //定时器初始化函数
-		
-		P14=0;P15=0;P16=0;P17=0;
-		OLED_P6x8Str(8,0,"Welcome Demo System");
-		EA=1;
+    GPIO_Init();		//GPIO 初始化
+    OLED_Init();		//OLED 初始化
+    OLED_CLS();     //OLED 清屏
+    Uart_Init();    //UART 初始化
+    Timer_Config(); //定时器初始化函数
+
+    //控制引脚初始化
+    P14 = 0;
+    P15 = 0;
+    P16 = 0;
+    P17 = 0;
+    //OLED显示
+    OLED_P6x8Str(8, 0, "Welcome Demo System");
+    //打开总中断
+    EA = 1;
 }
 /*
 //========================================================================
