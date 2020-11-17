@@ -1,0 +1,122 @@
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         03/13/2020 17:45:52 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_TIMER
+OBJECT MODULE PLACED IN .\Objects\MCU_Timer.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Timer.c LARGE OPTIMIZE(8,SPEED) BROWSE DEFINE(DEBUG_ENABLE_SEMIHOST) D
+                    -EBUG OBJECTEXTEND PRINT(.\Listings\MCU_Timer.lst) TABS(2) OBJECT(.\Objects\MCU_Timer.obj)
+
+line level    source
+
+   1          #include  "MCU_Config.h"
+   2          
+   3          u16 Timer1_Count;
+   4          
+   5          /*************  π¶ƒ‹Àµ√˜  **************
+   6          
+   7          ±æ≥Ã–Ú—› æ3∏ˆ∂® ±∆˜µƒ π”√°£
+   8          ◊¢“‚£∫∏ﬂÀŸ ±÷” ‰≥ˆ∂®“Âµƒ“˝Ω≈ «∏˘æ›‘≠¿ÌÕº…œ“˝Ω≈∂®“Âµ√¿¥µƒ°£
+   9                P3.4,P3.5 ÷–∂œ∫Õ∏ﬂÀŸ ±÷” ‰≥ˆ‘⁄Õ¨“ª“˝Ω≈…œ£¨π –Ë“™“˝Ω≈∏¥”√°£
+  10                …Ë÷√P3.4,P3.5“˝Ω≈Œ™Õ∆ÕÏ ‰≥ˆ£¨
+  11                »Ù…Ë÷√P3.4,P3.5∏ﬂÀŸ ±÷” ‰≥ˆŒ™≤ª‘ –Ì£¨‘ÚŒﬁ–Ë…Ë÷√“˝Ω≈Õ∆ÕÏ ‰≥ˆ£¨ƒ¨»œº¥ø…
+  12          
+  13          ∂® ±∆˜0≈‰÷√Œ™16Œª◊‘∂Ø÷ÿ◊∞, 20000HZ÷–∂œ¬ (50us∂® ±)
+  14                   ‘ –Ì∏ﬂÀŸ ±÷” ‰≥ˆ ±¥”P3.4 ‰≥ˆ10KHZ ±÷”–≈∫≈°£
+  15                   ‘ –Ì÷–∂œ ±¥”P1.0»°∑¥ ‰≥ˆ10KHZ∑Ω≤®–≈∫≈°£
+  16          ∂® ±∆˜1≈‰÷√Œ™16Œª◊‘∂Ø÷ÿ◊∞, 2000HZ÷–∂œ¬ (500us∂® ±)
+  17                   ‘ –Ì∏ﬂÀŸ ±÷” ‰≥ˆ ±¥”P3.5 ‰≥ˆ1000HZ ±÷”–≈∫≈°£
+  18                   ‘ –Ì÷–∂œ ±¥”P1.1»°∑¥ ‰≥ˆ1000HZ∑Ω≤®–≈∫≈°£
+  19          ∂® ±∆˜2πÃ∂®Œ™16Œª◊‘∂Ø÷ÿ◊∞, 1000HZ÷–∂œ¬ (1ms∂® ±)
+  20                   ‘ –Ì∏ﬂÀŸ ±÷” ‰≥ˆ ±¥”P3.0 ‰≥ˆ500HZ ±÷”–≈∫≈°£
+  21                   ‘ –Ì÷–∂œ ±¥”P1.2»°∑¥ ‰≥ˆ500HZ∑Ω≤®–≈∫≈°£
+  22          ∂® ±∆˜3πÃ∂®Œ™16Œª◊‘∂Ø÷ÿ◊∞, 200HZ÷–∂œ¬ (5ms∂® ±)
+  23                   ‘ –Ì∏ﬂÀŸ ±÷” ‰≥ˆ ±¥”P0.6 ‰≥ˆ100HZ ±÷”–≈∫≈°£
+  24                   ‘ –Ì÷–∂œ ±¥”P1.3»°∑¥ ‰≥ˆ100HZ∑Ω≤®–≈∫≈°£
+  25          ∂® ±∆˜4πÃ∂®Œ™16Œª◊‘∂Ø÷ÿ◊∞, 100HZ÷–∂œ¬ (10ms∂® ±)
+  26                   ‘ –Ì∏ﬂÀŸ ±÷” ‰≥ˆ ±¥”P0.4 ‰≥ˆ50HZ ±÷”–≈∫≈°£
+  27                   ‘ –Ì÷–∂œ ±¥”P1.4»°∑¥ ‰≥ˆ50HZ∑Ω≤®–≈∫≈°£
+  28          
+  29          ”√ªßø…“‘–ﬁ∏ƒ ‰≥ˆ∆µ¬ £¨µ´◊¢“‚ ±º‰≤ª“™Ã´∏ﬂ£®“ª∞„100KHZ“‘œ¬£©°£
+  30          
+  31          
+  32          ******************************************/
+  33          
+  34          //========================================================================
+  35          // ∫Ø ˝: u8 Timer_Inilize(u8 TIM, TIM_InitTypeDef *TIMx)
+  36          // √Ë ˆ: ∂® ±∆˜≥ı ºªØ≥Ã–Ú.
+  37          // ≤Œ ˝: TIMx: Ω·ππ≤Œ ˝,«Î≤Œøºtimer.h¿Ôµƒ∂®“Â.
+  38          // ∑µªÿ: ≥…π¶∑µªÿ0, ø’≤Ÿ◊˜∑µªÿ1,¥ÌŒÛ∑µªÿ2.
+  39          // ∞Ê±æ: V1.0, 2020.03.09
+  40          //========================================================================
+  41          u8  Timer_Init(u8 TIM, TIM_InitTypeDef *TIMx)
+  42          {
+  43   1        if(TIM > Timer4)  return 1; //ø’≤Ÿ◊˜
+  44   1      
+  45   1        if(TIM == Timer0)
+  46   1        {
+  47   2          if(TIMx->TIM_Mode >  TIM_16BitAutoReloadNoMask) return 2; //¥ÌŒÛ
+  48   2          TR0 = 0;    //Õ£÷πº∆ ˝
+  49   2          ET0 = 0;  //Ω˚÷π÷–∂œ
+  50   2          PT0 = 0;  //µÕ”≈œ»º∂÷–∂œ
+  51   2          TMOD &= 0xf0; //∂® ±ƒ£ Ω, 16Œª◊‘∂Ø÷ÿ◊∞
+  52   2          AUXR &= ~0x80;  //12Tƒ£ Ω, 
+  53   2          INT_CLKO &= ~0x01;  //≤ª ‰≥ˆ ±÷”
+  54   2          if(TIMx->TIM_Interrupt == ENABLE)   ET0 = 1;  //‘ –Ì÷–∂œ
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         03/13/2020 17:45:52 PAGE 2   
+
+  55   2          if(TIMx->TIM_Polity == PolityHigh)    PT0 = 1;  //∏ﬂ”≈œ»º∂÷–∂œ
+  56   2          TMOD |= TIMx->TIM_Mode; //π§◊˜ƒ£ Ω,0: 16Œª◊‘∂Ø÷ÿ◊∞, 1: 16Œª∂® ±/º∆ ˝, 2: 8Œª◊‘∂Ø÷ÿ◊∞, 3: 16Œª◊‘∂Ø÷ÿ◊∞, ≤
+             -ªø…∆¡±Œ÷–∂œ
+  57   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   AUXR |=  0x80;  //1T
+  58   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  TMOD |=  0x04;  //∂‘Õ‚º∆ ˝ªÚ∑÷∆µ
+  59   2          if(TIMx->TIM_ClkOut == ENABLE)  INT_CLKO |=  0x01;  // ‰≥ˆ ±÷”
+  60   2          
+  61   2          TH0 = (u8)(TIMx->TIM_Value >> 8);
+  62   2          TL0 = (u8)TIMx->TIM_Value;
+  63   2          if(TIMx->TIM_Run == ENABLE) TR0 = 1;  //ø™ º‘À––
+  64   2          return  0;    //≥…π¶
+  65   2        }
+  66   1        return 2; //¥ÌŒÛ
+  67   1      }
+  68          //========================================================================
+  69          // ∫Ø ˝: void Timer_config(void)
+  70          // √Ë ˆ: ∂® ±∆˜≈‰÷√∫Ø ˝
+  71          // ≤Œ ˝: Œﬁ
+  72          // ∑µªÿ: Œﬁ
+  73          // ∞Ê±æ: V1.0, 2020.03.09
+  74          //========================================================================
+  75          void  Timer_Config(void)
+  76          {
+  77   1        TIM_InitTypeDef   TIM_InitStructure;          //Ω·ππ∂®“Â
+  78   1        TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //÷∏∂®π§◊˜ƒ£ Ω,   TIM_16BitAutoReload,TIM_16Bit,TI
+             -M_8BitAutoReload,TIM_16BitAutoReloadNoMask
+  79   1        TIM_InitStructure.TIM_Polity    = PolityLow;      //÷∏∂®÷–∂œ”≈œ»º∂, PolityHigh,PolityLow
+  80   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //÷–∂œ «∑Ò‘ –Ì,   ENABLEªÚDISABLE
+  81   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;     //÷∏∂® ±÷”‘¥,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
+             -Ext
+  82   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        // «∑Ò ‰≥ˆ∏ﬂÀŸ¬ˆ≥Â, ENABLEªÚDISABLE
+  83   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 1000);   //≥ı÷µ,
+  84   1        TIM_InitStructure.TIM_Run       = ENABLE;       // «∑Ò≥ı ºªØ∫Û∆Ù∂Ø∂® ±∆˜, ENABLEªÚDISABLE
+  85   1        Timer_Init(Timer0,&TIM_InitStructure);        //≥ı ºªØTimer0    Timer0,Timer1,Timer2,Timer3,Timer4
+  86   1      }
+  87          
+  88          
+  89          /********************* Timer0÷–∂œ∫Ø ˝************************/
+  90          void Timer0_Int (void) interrupt TIMER0_VECTOR
+  91          {
+  92   1         Timer1_Count++;
+  93   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    206    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      2       8
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

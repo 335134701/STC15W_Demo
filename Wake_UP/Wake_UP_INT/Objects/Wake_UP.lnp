@@ -1,0 +1,7 @@
+".\Objects\STARTUP.obj",
+".\Objects\MCU_Common_Method.obj",
+".\Objects\MCU_Init.obj",
+".\Objects\MCU_INT.obj",
+".\Objects\MCU_Main.obj" 
+TO ".\Objects\Wake_UP" 
+PRINT(".\Listings\Wake_UP.m51") RAMSIZE(256) 

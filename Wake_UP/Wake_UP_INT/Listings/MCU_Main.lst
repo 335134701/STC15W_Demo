@@ -1,0 +1,58 @@
+C51 COMPILER V9.60.0.0   MCU_MAIN                                                          03/12/2020 19:08:02 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_MAIN
+OBJECT MODULE PLACED IN .\Objects\MCU_Main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Main.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\MCU_Main.lst) TABS(2) OBJECT(.\Objects\MCU_Main.obj)
+
+line level    source
+
+   1          #include  "MCU_Config.h"
+   2          
+   3          u16 key_num;
+   4          
+   5          void KEY(void)
+   6          {
+   7   1          if(key_num>10)
+   8   1          { 
+   9   2                key_num=0;
+  10   2                MCU_POWER_DOWN();
+  11   2          }else
+  12   1          {
+  13   2              if(P23==0){
+  14   3                  Delay_ms(10);
+  15   3                  while(P23==0);
+  16   3                  key_num++;
+  17   3                  P55=~P55;
+  18   3              }
+  19   2          
+  20   2          }
+  21   1      }
+  22          
+  23          void main()
+  24          {
+  25   1          MCU_Init();
+  26   1          key_num=0;
+  27   1          Delay_ms(10);
+  28   1          EA=1;
+  29   1          while(1)
+  30   1          {
+  31   2                KEY();
+  32   2          }
+  33   1        
+  34   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     76    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      2    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

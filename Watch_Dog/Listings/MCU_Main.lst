@@ -1,0 +1,53 @@
+C51 COMPILER V9.60.0.0   MCU_MAIN                                                          03/13/2020 12:33:15 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_MAIN
+OBJECT MODULE PLACED IN .\Objects\MCU_Main.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Main.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\MCU_Main.lst) TABS(2) OBJECT(.\Objects\MCU_Main.obj)
+
+line level    source
+
+   1          #include  "MCU_Config.h"
+   2          
+   3          
+   4          void KEY(void)
+   5          {
+   6   1          if(P23==0){Delay_ms(1);while(P23==0);P55=~P55;}
+   7   1          
+   8   1          //喂狗模式一旦开启，需要在规定时间(D_WDT_SCALE_2,....D_WDT_SCALE_128,D_WDT_SCALE_256)喂狗，否则MCU将重启
+   9   1          //MCU重启之后喂狗模式自动开启，这是由于看门狗程序启动后，单片机将从系统ISP监控区启动，与复位前的WDT_CONT
+             -R寄存器无关
+  10   1          //开启喂狗模式
+  11   1          //if(P25==0){Delay_ms(1);while(P25==0);WDT_reset(D_WDT_SCALE_128);}
+  12   1          //if(P24==0){Delay_ms(1);while(P24==0);WDT_CONTR &= 0x00;}
+  13   1          if(P25==0){Delay_ms(1);while(P25==0);WDT_CONTR = D_EN_WDT + D_CLR_WDT  + D_WDT_SCALE_128;}
+  14   1          
+  15   1      }
+  16          
+  17          void main()
+  18          {
+  19   1          WDT_CONTR=D_WDT_SCALE_128;
+  20   1          WDT_CONTR |= 0x10;
+  21   1          MCU_Init();
+  22   1          Delay_ms(10);
+  23   1          while(1)
+  24   1          {
+  25   2                KEY();
+  26   2          }
+  27   1        
+  28   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     53    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

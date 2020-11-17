@@ -1,0 +1,138 @@
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          04/11/2020 17:07:45 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_INIT
+OBJECT MODULE PLACED IN .\Objects\MCU_Init.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Init.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\MCU_Init.lst) TABS(2) OBJECT(.\Objects\MCU_Init.obj)
+
+line level    source
+
+   1          #include  "MCU_Config.h"
+   2          
+   3          u8  GPIO_Set(u8 GPIO, GPIO_InitTypeDef *GPIOx);
+   4          
+   5          //========================================================================
+   6          // 函数: void MCU_Init(void)
+   7          // 描述: 单片机初始化函数
+   8          // 参数: 无
+   9          // 返回: 无
+  10          // 版本: V1.0, 2020.03.09
+  11          //========================================================================
+  12          void MCU_Init(void)
+  13          {
+  14   1          GPIO_Init();    //GPIO 初始化
+  15   1          GPIO_Config();  //GPIO口设置工作模式
+  16   1      }
+  17          
+  18          
+  19          //========================================================================
+  20          // 函数: void GPIO_Init(void)
+  21          // 描述: GPIO口初始化函数
+  22          // 参数: 无
+  23          // 返回: 无
+  24          // 版本: V1.0, 2020.03.09
+  25          //========================================================================
+  26          //注意:   STC15W4K32S4系列的芯片,上电后所有与PWM相关的IO口均为
+  27          //        高阻态,需将这些口设置为准双向口或强推挽模式方可正常使用
+  28          void GPIO_Init(void)
+  29          {
+  30   1        //第一种方式：使用P0n_standard()函数将所有IO口设置为准双向口，默认选择第一种
+  31   1        P0n_standard(0xff); //设置为准双向口
+  32   1        P1n_standard(0xff); //设置为准双向口
+  33   1        P2n_standard(0xff); //设置为准双向口
+  34   1        P3n_standard(0xff); //设置为准双向口
+  35   1        P4n_standard(0xff); //设置为准双向口
+  36   1        P5n_standard(0xff); //设置为准双向口
+  37   1      }
+  38          
+  39          //========================================================================
+  40          // 函数: void GPIO_Config(void)
+  41          // 描述: GPIO口设置工作模式
+  42          // 参数: 无
+  43          // 返回: 无
+  44          // 版本: V1.0, 2020.03.09
+  45          //========================================================================
+  46          void  GPIO_Config(void)
+  47          {
+  48   1        //本方法例程是设置P3^4,P3^5引脚工作模式为GPIO_OUT_PP(推挽输出)
+  49   1        GPIO_InitTypeDef  GPIO_InitStructure;               //结构定义
+  50   1        GPIO_InitStructure.Pin  = GPIO_Pin_4 | GPIO_Pin_5;  //指定要初始化的IO, GPIO_Pin_0 ~ GPIO_Pin_7, 或操作
+  51   1        GPIO_InitStructure.Mode = GPIO_OUT_PP;              //指定IO的输入或输出方式,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,
+             -GPIO_OUT_PP
+  52   1        GPIO_Set(GPIO_P3,&GPIO_InitStructure);          //初始化
+  53   1      }
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          04/11/2020 17:07:45 PAGE 2   
+
+  54          
+  55          //========================================================================
+  56          // 函数: u8 GPIO_Inilize(u8 GPIO, GPIO_InitTypeDef *GPIOx)
+  57          // 描述: 初始化IO口.
+  58          // 参数: GPIOx: 结构参数,请参考timer.h里的定义.
+  59          // 返回: 成功返回0, 空操作返回1,错误返回2.
+  60          // 版本: V1.0, 2020.03.09
+  61          //========================================================================
+  62          u8  GPIO_Set(u8 GPIO, GPIO_InitTypeDef *GPIOx)
+  63          {
+  64   1        if(GPIO > GPIO_P5)        return 1; //空操作
+  65   1        if(GPIOx->Mode > GPIO_OUT_PP) return 2; //错误
+  66   1        if(GPIO == GPIO_P0)
+  67   1        {
+  68   2          if(GPIOx->Mode == GPIO_PullUp)    P0M1 &= ~GPIOx->Pin,  P0M0 &= ~GPIOx->Pin;   //上拉准双向口
+  69   2          if(GPIOx->Mode == GPIO_HighZ)   P0M1 |=  GPIOx->Pin,  P0M0 &= ~GPIOx->Pin;   //浮空输入
+  70   2          if(GPIOx->Mode == GPIO_OUT_OD)    P0M1 |=  GPIOx->Pin,  P0M0 |=  GPIOx->Pin;   //开漏输出
+  71   2          if(GPIOx->Mode == GPIO_OUT_PP)    P0M1 &= ~GPIOx->Pin,  P0M0 |=  GPIOx->Pin;   //推挽输出
+  72   2        }
+  73   1        if(GPIO == GPIO_P1)
+  74   1        {
+  75   2          if(GPIOx->Mode == GPIO_PullUp)    P1M1 &= ~GPIOx->Pin,  P1M0 &= ~GPIOx->Pin;   //上拉准双向口
+  76   2          if(GPIOx->Mode == GPIO_HighZ)   P1M1 |=  GPIOx->Pin,  P1M0 &= ~GPIOx->Pin;   //浮空输入
+  77   2          if(GPIOx->Mode == GPIO_OUT_OD)    P1M1 |=  GPIOx->Pin,  P1M0 |=  GPIOx->Pin;   //开漏输出
+  78   2          if(GPIOx->Mode == GPIO_OUT_PP)    P1M1 &= ~GPIOx->Pin,  P1M0 |=  GPIOx->Pin;   //推挽输出
+  79   2        }
+  80   1        if(GPIO == GPIO_P2)
+  81   1        {
+  82   2          if(GPIOx->Mode == GPIO_PullUp)    P2M1 &= ~GPIOx->Pin,  P2M0 &= ~GPIOx->Pin;   //上拉准双向口
+  83   2          if(GPIOx->Mode == GPIO_HighZ)   P2M1 |=  GPIOx->Pin,  P2M0 &= ~GPIOx->Pin;   //浮空输入
+  84   2          if(GPIOx->Mode == GPIO_OUT_OD)    P2M1 |=  GPIOx->Pin,  P2M0 |=  GPIOx->Pin;   //开漏输出
+  85   2          if(GPIOx->Mode == GPIO_OUT_PP)    P2M1 &= ~GPIOx->Pin,  P2M0 |=  GPIOx->Pin;   //推挽输出
+  86   2        }
+  87   1        if(GPIO == GPIO_P3)
+  88   1        {
+  89   2          if(GPIOx->Mode == GPIO_PullUp)    P3M1 &= ~GPIOx->Pin,  P3M0 &= ~GPIOx->Pin;   //上拉准双向口
+  90   2          if(GPIOx->Mode == GPIO_HighZ)   P3M1 |=  GPIOx->Pin,  P3M0 &= ~GPIOx->Pin;   //浮空输入
+  91   2          if(GPIOx->Mode == GPIO_OUT_OD)    P3M1 |=  GPIOx->Pin,  P3M0 |=  GPIOx->Pin;   //开漏输出
+  92   2          if(GPIOx->Mode == GPIO_OUT_PP)    P3M1 &= ~GPIOx->Pin,  P3M0 |=  GPIOx->Pin;   //推挽输出
+  93   2        }
+  94   1        if(GPIO == GPIO_P4)
+  95   1        {
+  96   2          if(GPIOx->Mode == GPIO_PullUp)    P4M1 &= ~GPIOx->Pin,  P4M0 &= ~GPIOx->Pin;   //上拉准双向口
+  97   2          if(GPIOx->Mode == GPIO_HighZ)   P4M1 |=  GPIOx->Pin,  P4M0 &= ~GPIOx->Pin;   //浮空输入
+  98   2          if(GPIOx->Mode == GPIO_OUT_OD)    P4M1 |=  GPIOx->Pin,  P4M0 |=  GPIOx->Pin;   //开漏输出
+  99   2          if(GPIOx->Mode == GPIO_OUT_PP)    P4M1 &= ~GPIOx->Pin,  P4M0 |=  GPIOx->Pin;   //推挽输出
+ 100   2        }
+ 101   1        if(GPIO == GPIO_P5)
+ 102   1        {
+ 103   2          if(GPIOx->Mode == GPIO_PullUp)    P5M1 &= ~GPIOx->Pin,  P5M0 &= ~GPIOx->Pin;   //上拉准双向口
+ 104   2          if(GPIOx->Mode == GPIO_HighZ)   P5M1 |=  GPIOx->Pin,  P5M0 &= ~GPIOx->Pin;   //浮空输入
+ 105   2          if(GPIOx->Mode == GPIO_OUT_OD)    P5M1 |=  GPIOx->Pin,  P5M0 |=  GPIOx->Pin;   //开漏输出
+ 106   2          if(GPIOx->Mode == GPIO_OUT_PP)    P5M1 &= ~GPIOx->Pin,  P5M0 |=  GPIOx->Pin;   //推挽输出
+ 107   2        }
+ 108   1        return 0; //成功
+ 109   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    546    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       2
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          04/11/2020 17:07:45 PAGE 3   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

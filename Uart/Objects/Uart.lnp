@@ -1,0 +1,7 @@
+".\Objects\STARTUP.obj",
+".\Objects\MCU_Init.obj",
+".\Objects\MCU_Main.obj",
+".\Objects\MCU_Uart.obj",
+".\Objects\MCU_Common_Method.obj" 
+TO ".\Objects\Uart" 
+PRINT(".\Listings\Uart.m51") RAMSIZE(256) 

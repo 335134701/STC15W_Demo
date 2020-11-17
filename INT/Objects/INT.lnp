@@ -1,0 +1,7 @@
+".\Objects\STARTUP.obj",
+".\Objects\MCU_Common_Method.obj",
+".\Objects\MCU_Init.obj",
+".\Objects\MCU_Main.obj",
+".\Objects\MCU_INT.obj" 
+TO ".\Objects\INT" 
+PRINT(".\Listings\INT.m51") RAMSIZE(256) 

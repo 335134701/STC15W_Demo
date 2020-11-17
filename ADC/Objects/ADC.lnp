@@ -1,0 +1,9 @@
+".\Objects\STARTUP.obj",
+".\Objects\MCU_Common_Method.obj",
+".\Objects\MCU_Init.obj",
+".\Objects\MCU_Main.obj",
+".\Objects\MCU_Uart.obj",
+".\Objects\MCU_Timer.obj",
+".\Objects\MCU_ADC.obj" 
+TO ".\Objects\ADC" 
+PRINT(".\Listings\ADC.m51") RAMSIZE(256) 
