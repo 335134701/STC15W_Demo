@@ -235,7 +235,7 @@ void	UART4_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖ
 void SendString1(unsigned char *puts,unsigned int len)
 {
    unsigned int i=0;
-   for (i==0; i<len;	i++)
+   for (i=0; i<len;	i++)
 	 {
 			B_TX1_Busy = 1;		//±êÖ¾·¢ËÍÃ¦
 			SBUF = puts[i];		//·¢Ò»¸ö×Ö½Ú
@@ -254,7 +254,7 @@ void SendString1(unsigned char *puts,unsigned int len)
 void SendString2(unsigned char *puts,unsigned int len)
 {
 	 unsigned int i=0;
-   for (i==0; i<len;	i++)
+   for (i=0; i<len;	i++)
 	 {
 			B_TX2_Busy = 1;		//±êÖ¾·¢ËÍÃ¦
 			S2BUF = puts[i];		//·¢Ò»¸ö×Ö½Ú
@@ -316,7 +316,6 @@ void UART1_int (void) interrupt UART1_VECTOR
 		RX1_Buffer[RX1_len] = SBUF;
 		if(++RX1_len >= RX1_Length)	RX1_len = 0;
 	}
-
 	if(TI)
 	{
 		TI = 0;

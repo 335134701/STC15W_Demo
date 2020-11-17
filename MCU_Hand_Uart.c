@@ -15,6 +15,7 @@ void UART_Receive_Processing()
 {
 	//判断是否是有效的处理命令标记位
 	unsigned char Uart_Receive_flag=0;
+	
 	//校验接收数据是否正常
 	Uart_Receive_flag=Uart_Pretreatment();
 	if(Uart_Receive_flag)
@@ -104,6 +105,7 @@ void UART_Send_Processing()
 	if(Bindable_wifi_flag==0) {Delay_ms(10);  if(Bindable_wifi_flag==0)	{flag=0x04;} }
 	/**   重启WiFi模组   **/
 	if(Restart_wifi_flag==0)  {Delay_ms(10);  if(Restart_wifi_flag==0)	{flag=0x05;} }
+	
 	if(flag!=0&&Wifi_flag==1)
 	{
 		REN=0;
@@ -137,7 +139,7 @@ void UART_Send_Processing()
 					Data_Encapsulation(Mcu_send,9,0x29,Sn,0x00);
 				break;
 		}
+		while(Set_soft_flag==0||Set_AP_flag==0||Reset_message_flag==0||Bindable_wifi_flag==0||Restart_wifi_flag==0);
+		RST_Uart_Timer();
 	}
-	while(Set_soft_flag==0||Set_AP_flag==0||Reset_message_flag==0||Bindable_wifi_flag==0||Restart_wifi_flag==0);
-	RST_Uart_Timer();
 }

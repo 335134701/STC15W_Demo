@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     05/31/2020 18:43:53 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     06/14/2020 15:26:56 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_OLED_SHOW
@@ -62,7 +62,7 @@ line level    source
   51   3            //Station模式开启，开启配置模式,配置使用AirLink
   52   3            case 0x06:OLED_P6x8Str(6,2,"M:S C:A");
   53   3              break;
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     05/31/2020 18:43:53 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     06/14/2020 15:26:56 PAGE 2   
 
   54   3            //Station模式开启，成功连接路由器
   55   3            case 0x12:OLED_P6x8Str(6,2,"M:S C:A W:1");

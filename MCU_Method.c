@@ -41,15 +41,13 @@ unsigned char Uart_Pretreatment()
 {
 	//Check_protocol_flag表示接收数据是否有效标记位
 	unsigned char Check_protocol_flag=0;
+	
 	if((RX1_len>0)&&!B_TX1_Busy)
 	{
-			//********************************
-			Delay_ms(500);
-			//停止串口接收
+			Delay_ms(100);
 			REN=0;
 			//串口2调试输出打印数据
 			Printf(0,RX1_Buffer,RX1_len);
-			//计算校验和
 			Check_protocol_flag=Check_Protocol(RX1_Buffer,RX1_len);	
 			if(!Check_protocol_flag) { RST_Uart_Timer();}
 	}
