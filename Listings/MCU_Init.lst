@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_INIT                                                          05/31/2020 15:33:45 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          05/31/2020 15:59:09 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_INIT
@@ -35,35 +35,36 @@ line level    source
   25   1          OLED_Init();    //OLED 初始化
   26   1          OLED_CLS();     //OLED 清屏
   27   1          Uart_Init();    //UART 初始化
-  28   1          EA=1;
-  29   1      }
-  30          /*
-  31          //========================================================================
-  32          // 函数: void GPIO_Config(void)
-  33          // 描述: GPIO口设置工作模式
-  34          // 参数: 无
-  35          // 返回: 无
-  36          // 版本: V1.0, 2020.03.09
-  37          //========================================================================
-  38          void  GPIO_Config(void)
-  39          {
-  40            //本方法例程是设置P3^4,P3^5引脚工作模式为GPIO_OUT_PP(推挽输出)
-  41            GPIO_InitTypeDef  GPIO_InitStructure;               //结构定义
-  42            GPIO_InitStructure.Pin  = GPIO_Pin_4 | GPIO_Pin_5;  //指定要初始化的IO, GPIO_Pin_0 ~ GPIO_Pin_7, 或操作
-  43            GPIO_InitStructure.Mode = GPIO_OUT_PP;              //指定IO的输入或输出方式,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,
+  28   1          Timer_Config(); //定时器初始化函数
+  29   1          EA=1;
+  30   1      }
+  31          /*
+  32          //========================================================================
+  33          // 函数: void GPIO_Config(void)
+  34          // 描述: GPIO口设置工作模式
+  35          // 参数: 无
+  36          // 返回: 无
+  37          // 版本: V1.0, 2020.03.09
+  38          //========================================================================
+  39          void  GPIO_Config(void)
+  40          {
+  41            //本方法例程是设置P3^4,P3^5引脚工作模式为GPIO_OUT_PP(推挽输出)
+  42            GPIO_InitTypeDef  GPIO_InitStructure;               //结构定义
+  43            GPIO_InitStructure.Pin  = GPIO_Pin_4 | GPIO_Pin_5;  //指定要初始化的IO, GPIO_Pin_0 ~ GPIO_Pin_7, 或操作
+  44            GPIO_InitStructure.Mode = GPIO_OUT_PP;              //指定IO的输入或输出方式,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,
              -GPIO_OUT_PP
-  44            GPIO_Set(GPIO_P3,&GPIO_InitStructure);          //初始化
-  45          }
-  46          */
+  45            GPIO_Set(GPIO_P3,&GPIO_InitStructure);          //初始化
+  46          }
+  47          */
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     15    ----
+   CODE SIZE        =     18    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-C51 COMPILER V9.60.0.0   MCU_INIT                                                          05/31/2020 15:33:45 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          05/31/2020 15:59:09 PAGE 2   
 
+   PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

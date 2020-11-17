@@ -18,4 +18,5 @@
 #include "OLED_Method.h"
 #include "MCU_Method.h"
 #include "MCU_Uart.h"
+#include "MCU_Timer.h"
 #endif

@@ -14,6 +14,8 @@
 /*************	串口波特率	**************/
 #define	UART_BaudRate1	9600UL	 /* 波特率 */
 #define	UART_BaudRate2	9600UL	 /* 波特率 */
+#define	UART_BaudRate3	9600UL	 /* 波特率 */
+#define	UART_BaudRate4	9600UL	 /* 波特率 */
 //#define	UART_BaudRate2	 57600UL	 /* 波特率 */
 //#define	UART_BaudRate3	 38400UL	 /* 波特率 */
 //#define	UART_BaudRate4	 19200UL	 /* 波特率 */

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_MAIN                                                          05/31/2020 15:33:45 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_MAIN                                                          05/31/2020 15:59:09 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_MAIN
@@ -18,18 +18,16 @@ line level    source
    8   1          SendString3("STC15F4K60S4 USART3 Test Prgramme!\r\n");Delay_ms(10);
    9   1          SendString4("STC15F4K60S4 USART4 Test Prgramme!\r\n");Delay_ms(10);
   10   1          while(1){
-  11   2            /*
-  12   2            OLED_P6x8Str(0,8,"heltec.taobao.com");
-  13   2            Delay_ms(5000);
-  14   2            OLED_CLS_Local(0,0,X_WIDTH,Y_WIDTH);
-  15   2            */
-  16   2          }
-  17   1      }
+  11   2            OLED_P6x8Str(0,8,"heltec.taobao.com");
+  12   2            Delay_ms(5000);
+  13   2            OLED_CLS_Local(0,0,X_WIDTH,Y_WIDTH);
+  14   2          }
+  15   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     69    ----
-   CONSTANT SIZE    =    148    ----
+   CODE SIZE        =    108    ----
+   CONSTANT SIZE    =    166    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----

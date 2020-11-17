@@ -3,7 +3,7 @@ Example_Project_V1.0.0.0 版本集成GPIO OLED 6X8
 时间：2020-4-24 11:03:07
 Example_Project_V1.0.0.1 版本集成GPIO_OLED_6X8_UART
 时间：2020-4-24 11:17:38
-Example_Project_V1.0.0.2 版本集成GPIO OLED 6X8 UART Timer
+Example_Project_V1.0.0.2 版本集成GPIO_OLED_6X8_UART_Timer
 时间：2020-5-30 17:53:19
 Example_Project_V1.0.0.3 版本集成串口接收，串口发送数据，初步功能完成：遗留BUG ，wifi连接中断后再次连接，显示有问题
 时间：2020-6-14 15:30:45

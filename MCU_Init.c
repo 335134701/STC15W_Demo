@@ -25,6 +25,7 @@ void MCU_Init(void)
 		OLED_Init();		//OLED 初始化
 		OLED_CLS();     //OLED 清屏
 		Uart_Init();    //UART 初始化
+		Timer_Config(); //定时器初始化函数
 		EA=1;
 }
 /*

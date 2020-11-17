@@ -36,6 +36,10 @@ bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// 发送忙标志
 //========================================================================
 void Uart_Init(void)
 {
+	/******
+	需要注意：定时器使用冲突问题，即Uart与Timer使用之间的冲突
+	例如：如下串口使用Timer2，在Timer中对Timer2初始化需要做一定的更改
+	*******/
 	UART1_config(2);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer1做波特率.
 	UART2_config(2);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 无效.
 	UART3_config(2);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer3做波特率.
