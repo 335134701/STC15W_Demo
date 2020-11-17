@@ -2,10 +2,15 @@
 ".\Objects\MCU_GPIO.obj",
 ".\Objects\OLED_Code.obj",
 ".\Objects\OLED_Method.obj",
-".\Objects\MCU_Method.obj",
 ".\Objects\MCU_Uart.obj",
 ".\Objects\MCU_Timer.obj",
+".\Objects\MCU_Hand_Uart.obj",
 ".\Objects\MCU_Init.obj",
-".\Objects\MCU_Main.obj" 
+".\Objects\MCU_Main.obj",
+".\Objects\MCU_Control.obj",
+".\Objects\MCU_Method.obj",
+".\Objects\MCU_Variable.obj",
+".\Objects\MCU_OLED_Show.obj",
+".\Objects\MCU_Detect.obj" 
 TO ".\Objects\Demo" 
 PRINT(".\Listings\Demo.m51") RAMSIZE(256) 

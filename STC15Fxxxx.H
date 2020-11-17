@@ -973,9 +973,9 @@ sbit CF    = CCON^7;	/* PCA计数器溢出（CH，CL由FFFFH变为0000H）标志。PCA计数器溢
 
 
 /**********************************************************/
-typedef 	unsigned char	u8;
-typedef 	unsigned int	u16;
-typedef 	unsigned long	u32;
+typedef 	unsigned char	uchar;
+typedef 	unsigned int	uint;
+typedef 	unsigned long	ulong;
 
 /**********************************************************/
 #define NOP1()  _nop_()

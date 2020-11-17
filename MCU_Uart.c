@@ -2,21 +2,22 @@
 
 void	UART1_config(unsigned char brt);
 void	UART2_config(unsigned char brt);
-void	UART3_config(unsigned char brt);
-void	UART4_config(unsigned char brt);
+//void	UART3_config(unsigned char brt);
+//void	UART4_config(unsigned char brt);
 
 /*************	±¾µØ±äÁ¿ÉùÃ÷	**************/
 unsigned char xdata	RX1_Buffer[RX1_Length];	//½ÓÊÕ»º³å
-unsigned char xdata	RX2_Buffer[RX2_Length];	//½ÓÊÕ»º³å
-unsigned char xdata	RX3_Buffer[RX3_Length];	//½ÓÊÕ»º³å
-unsigned char xdata	RX4_Buffer[RX4_Length];	//½ÓÊÕ»º³å
+//unsigned char xdata	RX2_Buffer[RX2_Length];	//½ÓÊÕ»º³å
+//unsigned char xdata	RX3_Buffer[RX3_Length];	//½ÓÊÕ»º³å
+//unsigned char xdata	RX4_Buffer[RX4_Length];	//½ÓÊÕ»º³å
 
 unsigned char RX1_len;	//½ÓÊÕÊı¾İ³¤¶È
-unsigned char RX2_len;	//½ÓÊÕÊı¾İ³¤¶È
-unsigned char RX3_len;	//½ÓÊÕÊı¾İ³¤¶È
-unsigned char RX4_len;	//½ÓÊÕÊı¾İ³¤¶È
+//unsigned char RX2_len;	//½ÓÊÕÊı¾İ³¤¶È
+//unsigned char RX3_len;	//½ÓÊÕÊı¾İ³¤¶È
+//unsigned char RX4_len;	//½ÓÊÕÊı¾İ³¤¶È
 
-bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// ·¢ËÍÃ¦±êÖ¾
+bit B_TX1_Busy,B_TX2_Busy;
+//bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// ·¢ËÍÃ¦±êÖ¾
 //========================================================================
 // UARTÒı½ÅËµÃ÷:
 // UART1:(Ä¬ÈÏ)P3^0,P3^1;		(¿ÉÑ¡)P3^6,P3^7; P1^6,P1^7;
@@ -42,8 +43,6 @@ void Uart_Init(void)
 	*******/
 	UART1_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: Ê¹ÓÃTimer1×ö²¨ÌØÂÊ.
 	UART2_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: ÎŞĞ§.
-	UART3_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: Ê¹ÓÃTimer3×ö²¨ÌØÂÊ.
-	UART4_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: Ê¹ÓÃTimer4×ö²¨ÌØÂÊ.
 	/*
 	UART2_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: ÎŞĞ§.
 	UART3_config(3);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: Ê¹ÓÃTimer3×ö²¨ÌØÂÊ.
@@ -138,11 +137,11 @@ void	UART2_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖ
 	P_SW2 &= ~1;		//ÇĞ»»µ½ P1.0 P1.1
 //P_SW2 |= 1;			//ÇĞ»»µ½ P4.6 P4.7
 
-	memset(RX2_Buffer,0,RX2_Length);
-	B_TX2_Busy  = 0;
-	RX2_len   = 0;
+	//memset(RX2_Buffer,0,RX2_Length);
+	//B_TX2_Busy  = 0;
+	//RX2_len   = 0;
 }
-
+/*
 //========================================================================
 // º¯Êı: void	UART3_config(unsigned char brt)
 // ÃèÊö: UART3³õÊ¼»¯º¯Êı¡£
@@ -154,13 +153,11 @@ void	UART2_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖ
 //========================================================================
 void	UART3_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: Ê¹ÓÃTimer3×ö²¨ÌØÂÊ.
 {
-	/*********** ²¨ÌØÂÊ¹Ì¶¨Ê¹ÓÃ¶¨Ê±Æ÷2 *****************/
 	if(brt == 2)
 	{
 		S3CON &= ~(1<<6);	//BRT select Timer2
 		SetTimer2Baudraye(65536UL - (MAIN_Fosc / 4) / UART_BaudRate3);
 	}
-	/*********** ²¨ÌØÂÊÊ¹ÓÃ¶¨Ê±Æ÷3 *****************/
 	else
 	{
 		S3CON |= (1<<6);	//BRT select Timer3
@@ -196,13 +193,11 @@ void	UART3_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖ
 //========================================================================
 void	UART4_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: Ê¹ÓÃTimer4×ö²¨ÌØÂÊ.
 {
-	/*********** ²¨ÌØÂÊ¹Ì¶¨Ê¹ÓÃ¶¨Ê±Æ÷2 *****************/
 	if(brt == 2)
 	{
 		S4CON &= ~(1<<6);	//BRT select Timer2
 		SetTimer2Baudraye(65536UL - (MAIN_Fosc / 4) / UART_BaudRate4);
 	}
-	/*********** ²¨ÌØÂÊÊ¹ÓÃ¶¨Ê±Æ÷3 *****************/
 	else
 	{
 		S4CON |= (1<<6);	//BRT select Timer4
@@ -227,8 +222,9 @@ void	UART4_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖ
 	B_TX4_Busy  = 0;
 	RX4_len   = 0;
 }
+*/
 //========================================================================
-// º¯Êı: SendString1(unsigned char *puts)
+// º¯Êı: void SendString1(unsigned char *puts,unsigned int len)
 // ÃèÊö: Uart1·¢ËÍÊı¾İº¯Êı
 // ²ÎÊı: *puts: ·¢ËÍÊı¾İ
 // ·µ»Ø: none.
@@ -236,17 +232,18 @@ void	UART4_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖ
 // ÈÕÆÚ: 2020-03-08
 // ±¸×¢: 
 //========================================================================
-void SendString1(unsigned char *puts)
+void SendString1(unsigned char *puts,unsigned int len)
 {
-    for (; *puts != 0;	puts++)
-		{
+   unsigned int i=0;
+   for (i==0; i<len;	i++)
+	 {
 			B_TX1_Busy = 1;		//±êÖ¾·¢ËÍÃ¦
-			SBUF = *puts;		//·¢Ò»¸ö×Ö½Ú
+			SBUF = puts[i];		//·¢Ò»¸ö×Ö½Ú
 			while(B_TX1_Busy);	//µÈ´ı·¢ËÍÍê³É
 		}
 }
 //========================================================================
-// º¯Êı: SendString2(unsigned char *puts)
+// º¯Êı: void SendString2(unsigned char *puts,unsigned int len)
 // ÃèÊö: Uart1·¢ËÍÊı¾İº¯Êı
 // ²ÎÊı: *puts: ·¢ËÍÊı¾İ
 // ·µ»Ø: none.
@@ -254,15 +251,17 @@ void SendString1(unsigned char *puts)
 // ÈÕÆÚ: 2020-03-08
 // ±¸×¢: 
 //========================================================================
-void SendString2(unsigned char *puts)
+void SendString2(unsigned char *puts,unsigned int len)
 {
-   for (; *puts != 0;	puts++)
+	 unsigned int i=0;
+   for (i==0; i<len;	i++)
 	 {
 			B_TX2_Busy = 1;		//±êÖ¾·¢ËÍÃ¦
-			S2BUF = *puts;		//·¢Ò»¸ö×Ö½Ú
+			S2BUF = puts[i];		//·¢Ò»¸ö×Ö½Ú
 			while(B_TX2_Busy);	//µÈ´ı·¢ËÍÍê³É
 		}
 }
+/*
 //========================================================================
 // º¯Êı: SendString3(unsigned char *puts)
 // ÃèÊö: Uart1·¢ËÍÊı¾İº¯Êı
@@ -299,6 +298,7 @@ void SendString4(unsigned char *puts)
 			while(B_TX4_Busy);	//µÈ´ı·¢ËÍÍê³É
 		}
 }
+*/
 //========================================================================
 // º¯Êı: void UART1_int (void) interrupt UART1_VECTOR
 // ÃèÊö: Uart1ÖĞ¶Ï´¥·¢º¯Êı
@@ -323,6 +323,7 @@ void UART1_int (void) interrupt UART1_VECTOR
 		B_TX1_Busy = 0;
 	}
 }
+
 //========================================================================
 // º¯Êı: void UART2_int (void) interrupt UART2_VECTOR
 // ÃèÊö: Uart2ÖĞ¶Ï´¥·¢º¯Êı
@@ -337,8 +338,8 @@ void UART2_int (void) interrupt UART2_VECTOR
 	if(RI2)
 	{
 		CLR_RI2();
-		RX2_Buffer[RX2_len] = S2BUF;
-		if(++RX2_len >= RX2_Length)	RX2_len = 0;
+		//RX2_Buffer[RX2_len] = S2BUF;
+		//if(++RX2_len >= RX2_Length)	RX2_len = 0;
 	}
 
 	if(TI2)
@@ -348,6 +349,7 @@ void UART2_int (void) interrupt UART2_VECTOR
 	}
 
 }
+/*
 //========================================================================
 // º¯Êı: void UART3_int (void) interrupt UART3_VECTOR
 // ÃèÊö: Uart3ÖĞ¶Ï´¥·¢º¯Êı
@@ -398,3 +400,4 @@ void UART4_int (void) interrupt UART4_VECTOR
 	}
 
 }
+*/

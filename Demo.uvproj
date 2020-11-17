@@ -186,7 +186,7 @@
         </Utilities>
         <Target51>
           <Target51Misc>
-            <MemoryModel>0</MemoryModel>
+            <MemoryModel>2</MemoryModel>
             <RTOS>0</RTOS>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
@@ -402,11 +402,6 @@
               <FilePath>.\OLED_Method.c</FilePath>
             </File>
             <File>
-              <FileName>MCU_Method.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MCU_Method.c</FilePath>
-            </File>
-            <File>
               <FileName>MCU_Uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MCU_Uart.c</FilePath>
@@ -415,6 +410,16 @@
               <FileName>MCU_Timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MCU_Timer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MCU_Protocol</GroupName>
+          <Files>
+            <File>
+              <FileName>MCU_Hand_Uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_Hand_Uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -430,6 +435,41 @@
               <FileName>MCU_Main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MCU_Main.c</FilePath>
+            </File>
+            <File>
+              <FileName>MCU_Control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_Control.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MCU_OMethod</GroupName>
+          <Files>
+            <File>
+              <FileName>MCU_Method.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_Method.c</FilePath>
+            </File>
+            <File>
+              <FileName>MCU_Variable.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_Variable.c</FilePath>
+            </File>
+            <File>
+              <FileName>MCU_OLED_Show.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_OLED_Show.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MCU_Perception</GroupName>
+          <Files>
+            <File>
+              <FileName>MCU_Detect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_Detect.c</FilePath>
             </File>
           </Files>
         </Group>

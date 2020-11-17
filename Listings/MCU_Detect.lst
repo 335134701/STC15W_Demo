@@ -1,0 +1,72 @@
+C51 COMPILER V9.60.0.0   MCU_DETECT                                                        05/31/2020 18:43:53 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_DETECT
+OBJECT MODULE PLACED IN .\Objects\MCU_Detect.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Detect.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\MCU_Detect.lst) TABS(2) OBJECT(.\Objects\MCU_Detect.obj)
+
+line level    source
+
+   1          #include "MCU_Detect.h"
+   2          
+   3          //========================================================================
+   4          // STC15W4K58S 4个按键：P2^3,P2^4,P2^5,P2^6
+   5          // 对应Signal_flag值为：
+   6          //                      P2^3 : 0x01
+   7          //                      P2^4 : 0x02
+   8          //                      P2^5 : 0x03
+   9          //                      P2^6 : 0x04
+  10          //========================================================================
+  11          //========================================================================
+  12          // 函数: void Dect_Init()
+  13          // 描述: 检测单片机GPIO引脚电压初始化
+  14          // 参数: time:延时时间
+  15          // 返回: 无
+  16          // 说明：单片机频率不同，延时效果不同
+  17          // 版本: V1.0, 2020.03.09
+  18          //========================================================================
+  19          /*
+  20          void Dect_Init()
+  21          {
+  22              P23=1;
+  23              P24=1;
+  24              P25=1;
+  25              P26=1;
+  26          }
+  27          */
+  28          //========================================================================
+  29          // 函数: unsigned chcar Detect_Key(void)
+  30          // 描述: 按键扫描函数
+  31          // 参数: time:延时时间
+  32          // 返回: 无
+  33          // 说明：单片机频率不同，延时效果不同
+  34          // 版本: V1.0, 2020.03.09
+  35          //========================================================================
+  36          /*
+  37          unsigned char Detect_Key(void)
+  38          {
+  39            unsigned char flag=0x00;
+  40            if(P23==0){Delay_ms(10);if(P23==0){flag=0x01;}}
+  41            if(P24==0){Delay_ms(10);if(P24==0){flag=0x01;}}
+  42            if(P25==0){Delay_ms(10);if(P25==0){flag=0x01;}}
+  43            if(P26==0){Delay_ms(10);if(P26==0){flag=0x01;}}
+  44            return flag;
+  45          }
+  46          */
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+C51 COMPILER V9.60.0.0   MCU_DETECT                                                        05/31/2020 18:43:53 PAGE 2   
+
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

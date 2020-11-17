@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   MCU_INIT                                                          05/31/2020 15:59:09 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          05/31/2020 18:43:52 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_INIT
 OBJECT MODULE PLACED IN .\Objects\MCU_Init.obj
-COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Init.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\MC
-                    -U_Init.lst) TABS(2) OBJECT(.\Objects\MCU_Init.obj)
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Init.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\MCU_Init.lst) TABS(2) OBJECT(.\Objects\MCU_Init.obj)
 
 line level    source
 
@@ -14,56 +14,62 @@ line level    source
    4          
    5          本程序主要执行初始化函数，包括:
    6              1.GPIO引脚初始化，可以使用GPIO_Config()方法设置引脚输入输出模式，GPIO_Init()方法默认设置GPIO为标准双向口
-   7              2.OLED初始化，OLED清屏
-   8              3.UART初始化
-   9          
-  10          
-  11          
-  12          ******************************************/
+   7              2.部分GPIO引脚初始化
+   8              3.OLED初始化，OLED清屏
+   9              4.UART初始化
+  10              5.Timer初始化
+  11              6.EA=1,打开总中断
+  12          
   13          
   14          
-  15          //========================================================================
-  16          // 函数: void MCU_Init(void)
-  17          // 描述: 单片机初始化函数
-  18          // 参数: 无
-  19          // 返回: 无
-  20          // 版本: V1.0, 2020.03.09
-  21          //========================================================================
-  22          void MCU_Init(void)
-  23          {
-  24   1          GPIO_Init();    //GPIO 初始化
-  25   1          OLED_Init();    //OLED 初始化
-  26   1          OLED_CLS();     //OLED 清屏
-  27   1          Uart_Init();    //UART 初始化
-  28   1          Timer_Config(); //定时器初始化函数
-  29   1          EA=1;
-  30   1      }
-  31          /*
-  32          //========================================================================
-  33          // 函数: void GPIO_Config(void)
-  34          // 描述: GPIO口设置工作模式
-  35          // 参数: 无
-  36          // 返回: 无
-  37          // 版本: V1.0, 2020.03.09
+  15          ******************************************/
+  16          
+  17          
+  18          //========================================================================
+  19          // 函数: void MCU_Init(void)
+  20          // 描述: 单片机初始化函数
+  21          // 参数: 无
+  22          // 返回: 无
+  23          // 版本: V1.0, 2020.03.09
+  24          //========================================================================
+  25          void MCU_Init(void)
+  26          {
+  27   1          GPIO_Init();    //GPIO 初始化
+  28   1          OLED_Init();    //OLED 初始化
+  29   1          OLED_CLS();     //OLED 清屏
+  30   1          Uart_Init();    //UART 初始化
+  31   1          Timer_Config(); //定时器初始化函数
+  32   1          
+  33   1          P14=0;P15=0;P16=0;P17=0;
+  34   1          OLED_P6x8Str(8,0,"Welcome Demo System");
+  35   1          EA=1;
+  36   1      }
+  37          /*
   38          //========================================================================
-  39          void  GPIO_Config(void)
-  40          {
-  41            //本方法例程是设置P3^4,P3^5引脚工作模式为GPIO_OUT_PP(推挽输出)
-  42            GPIO_InitTypeDef  GPIO_InitStructure;               //结构定义
-  43            GPIO_InitStructure.Pin  = GPIO_Pin_4 | GPIO_Pin_5;  //指定要初始化的IO, GPIO_Pin_0 ~ GPIO_Pin_7, 或操作
-  44            GPIO_InitStructure.Mode = GPIO_OUT_PP;              //指定IO的输入或输出方式,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,
+  39          // 函数: void GPIO_Config(void)
+  40          // 描述: GPIO口设置工作模式
+  41          // 参数: 无
+  42          // 返回: 无
+  43          // 版本: V1.0, 2020.03.09
+  44          //========================================================================
+  45          void  GPIO_Config(void)
+  46          {
+  47            //本方法例程是设置P3^4,P3^5引脚工作模式为GPIO_OUT_PP(推挽输出)
+  48            GPIO_InitTypeDef  GPIO_InitStructure;               //结构定义
+  49            GPIO_InitStructure.Pin  = GPIO_Pin_4 | GPIO_Pin_5;  //指定要初始化的IO, GPIO_Pin_0 ~ GPIO_Pin_7, 或操作
+  50            GPIO_InitStructure.Mode = GPIO_OUT_PP;              //指定IO的输入或输出方式,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,
              -GPIO_OUT_PP
-  45            GPIO_Set(GPIO_P3,&GPIO_InitStructure);          //初始化
-  46          }
-  47          */
+  51            GPIO_Set(GPIO_P3,&GPIO_InitStructure);          //初始化
+  52          }
+  53          */
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          05/31/2020 18:43:52 PAGE 2   
+
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     18    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =     40    ----
+   CONSTANT SIZE    =     20    ----
    XDATA SIZE       =   ----    ----
-C51 COMPILER V9.60.0.0   MCU_INIT                                                          05/31/2020 15:59:09 PAGE 2   
-
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

@@ -4,8 +4,11 @@
 
 本程序主要执行初始化函数，包括:
 		1.GPIO引脚初始化，可以使用GPIO_Config()方法设置引脚输入输出模式，GPIO_Init()方法默认设置GPIO为标准双向口
-		2.OLED初始化，OLED清屏
-		3.UART初始化
+		2.部分GPIO引脚初始化
+		3.OLED初始化，OLED清屏
+		4.UART初始化
+		5.Timer初始化
+		6.EA=1,打开总中断
 
 
 
@@ -26,6 +29,9 @@ void MCU_Init(void)
 		OLED_CLS();     //OLED 清屏
 		Uart_Init();    //UART 初始化
 		Timer_Config(); //定时器初始化函数
+		
+		P14=0;P15=0;P16=0;P17=0;
+		OLED_P6x8Str(8,0,"Welcome Demo System");
 		EA=1;
 }
 /*

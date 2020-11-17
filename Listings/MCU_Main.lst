@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   MCU_MAIN                                                          05/31/2020 15:59:09 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_MAIN                                                          05/31/2020 18:43:52 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_MAIN
 OBJECT MODULE PLACED IN .\Objects\MCU_Main.obj
-COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\MC
-                    -U_Main.lst) TABS(2) OBJECT(.\Objects\MCU_Main.obj)
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Main.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\MCU_Main.lst) TABS(2) OBJECT(.\Objects\MCU_Main.obj)
 
 line level    source
 
@@ -13,21 +13,17 @@ line level    source
    3          void main()
    4          {
    5   1          MCU_Init();
-   6   1          SendString1("STC15F4K60S4 USART1 Test Prgramme!\r\n");Delay_ms(10);
-   7   1          SendString2("STC15F4K60S4 USART2 Test Prgramme!\r\n");Delay_ms(10);
-   8   1          SendString3("STC15F4K60S4 USART3 Test Prgramme!\r\n");Delay_ms(10);
-   9   1          SendString4("STC15F4K60S4 USART4 Test Prgramme!\r\n");Delay_ms(10);
-  10   1          while(1){
-  11   2            OLED_P6x8Str(0,8,"heltec.taobao.com");
-  12   2            Delay_ms(5000);
-  13   2            OLED_CLS_Local(0,0,X_WIDTH,Y_WIDTH);
-  14   2          }
-  15   1      }
+   6   1          while(1){
+   7   2            UART_Receive_Processing();
+   8   2            UART_Send_Processing();
+   9   2            IsConnect_wifi();
+  10   2          }
+  11   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    108    ----
-   CONSTANT SIZE    =    166    ----
+   CODE SIZE        =     14    ----
+   CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
