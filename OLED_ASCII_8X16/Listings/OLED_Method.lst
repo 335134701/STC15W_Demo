@@ -1,0 +1,206 @@
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       03/09/2020 18:47:17 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OLED_METHOD
+OBJECT MODULE PLACED IN .\Objects\OLED_Method.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE OLED_Method.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Li
+                    -stings\OLED_Method.lst) TABS(2) OBJECT(.\Objects\OLED_Method.obj)
+
+line level    source
+
+   1          #include "MCU_Config.h"
+   2          
+   3          
+   4          
+   5          /************************************************************************************
+   6          *
+   7          * 2. void IIC_Start() -- ¿ªÆôI2C×ÜÏß
+   8          * 3. void IIC_Stop() -- ¹Ø±ÕI2C×ÜÏß
+   9          * 4. void Write_IIC_Byte(unsigned char IIC_Byte) -- Í¨¹ýI2C×ÜÏßÐ´Ò»¸öbyteµÄÊý¾Ý
+  10          * 5. void OLED_WrDat(unsigned char dat) -- ÏòOLEDÆÁÐ´Êý¾Ý
+  11          * 6. void OLED_WrCmd(unsigned char cmd) -- ÏòOLEDÆÁÐ´ÃüÁî
+  12          * 7. void OLED_Set_Pos(unsigned char x, unsigned char y) -- ÉèÖÃÏÔÊ¾×ø±ê
+  13          * 8. void OLED_Fill(unsigned char bmp_dat) -- È«ÆÁÏÔÊ¾(ÏÔÊ¾BMPÍ¼Æ¬Ê±²Å»áÓÃµ½´Ë¹¦ÄÜ)
+  14          * 9. void OLED_CLS(void) -- ¸´Î»/ÇåÆÁ
+  15          * 10. void OLED_Init(void) -- OLEDÆÁ³õÊ¼»¯³ÌÐò£¬´Ëº¯ÊýÓ¦ÔÚ²Ù×÷ÆÁÄ»Ö®Ç°×îÏÈµ÷ÓÃ
+  16          * 11. void OLED_P6x8Str(unsigned char x, y,unsigned char ch[]) -- 6x8µãÕû£¬ÓÃÓÚÏÔÊ¾ASCIIÂëµÄ×îÐ¡ÕóÁÐ£¬²»Ì«
+             -ÇåÎú
+  17          * 12. void OLED_P8x16Str(unsigned char x, y,unsigned char ch[]) -- 8x16µãÕû£¬ÓÃÓÚÏÔÊ¾ASCIIÂë£¬·Ç³£ÇåÎú
+  18          * 13.void OLED_P16x16Ch(unsigned char x, y, N) -- 16x16µãÕû£¬ÓÃÓÚÏÔÊ¾ºº×ÖµÄ×îÐ¡ÕóÁÐ£¬¿ÉÉèÖÃ¸÷ÖÖ×ÖÌå¡¢¼Ó´Ö¡
+             -¢ÇãÐ±¡¢ÏÂ»®ÏßµÈ
+  19          * 14.void Draw_BMP(unsigned char x0, y0,x1, y1,unsigned char BMP[]) -- ½«128x64ÏñËØµÄBMPÎ»Í¼ÔÚÈ¡×ÖÈí¼þÖÐËã
+             -³ö×Ö±í£¬È»ºó¸´ÖÆµ½codetabÖÐ£¬´Ëº¯Êýµ÷ÓÃ¼´¿É
+  20          *
+  21          *************************************************************************************/
+  22          
+  23          
+  24          
+  25          /**********************************************
+  26          //IIC Start
+  27          **********************************************/
+  28          void IIC_Start()
+  29          {
+  30   1         SCL = Hight_Voltage;   
+  31   1         SDA = Hight_Voltage;
+  32   1         SDA = Low_Voltage;
+  33   1         SCL = Low_Voltage;
+  34   1      }
+  35          
+  36          /**********************************************
+  37          //IIC Stop
+  38          **********************************************/
+  39          void IIC_Stop()
+  40          {
+  41   1         SCL = Low_Voltage;
+  42   1         SDA = Low_Voltage;
+  43   1         SCL = Hight_Voltage;
+  44   1         SDA = Hight_Voltage;
+  45   1      }
+  46          
+  47          /**********************************************
+  48          // Í¨¹ýI2C×ÜÏßÐ´Ò»¸ö×Ö½Ú
+  49          **********************************************/
+  50          void Write_IIC_Byte(u8 IIC_Byte)
+  51          {
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       03/09/2020 18:47:17 PAGE 2   
+
+  52   1        u8 i;
+  53   1        for(i=0;i<8;i++)
+  54   1        {
+  55   2          if(IIC_Byte & 0x80)
+  56   2            SDA=Hight_Voltage;
+  57   2          else
+  58   2            SDA=Low_Voltage;
+  59   2          SCL=Hight_Voltage;
+  60   2          SCL=Low_Voltage;
+  61   2          IIC_Byte<<=1;
+  62   2        }
+  63   1        SDA=1;
+  64   1        SCL=1;
+  65   1        SCL=0;
+  66   1      }
+  67          
+  68          /*********************OLEDÐ´Êý¾Ý************************************/ 
+  69          void OLED_WrDat(u8 IIC_Data)
+  70          {
+  71   1        IIC_Start();
+  72   1        Write_IIC_Byte(0x78);
+  73   1        Write_IIC_Byte(0x40);     //write data
+  74   1        Write_IIC_Byte(IIC_Data);
+  75   1        IIC_Stop();
+  76   1      }
+  77          /*********************OLEDÐ´ÃüÁî************************************/
+  78          void OLED_WrCmd(u8 IIC_Command)
+  79          {
+  80   1        IIC_Start();
+  81   1        Write_IIC_Byte(0x78);            //Slave address,SA0=0
+  82   1        Write_IIC_Byte(0x00);     //write command
+  83   1        Write_IIC_Byte(IIC_Command);
+  84   1        IIC_Stop();
+  85   1      }
+  86          /*********************OLED ÉèÖÃ×ø±ê************************************/
+  87          void OLED_Set_Pos(u8 x, u8 y) 
+  88          { 
+  89   1        OLED_WrCmd(0xb0+y);
+  90   1        OLED_WrCmd(((x&0xf0)>>4)|0x10);
+  91   1        OLED_WrCmd((x&0x0f)|0x01);
+  92   1      } 
+  93          /*********************OLEDÈ«ÆÁ************************************/
+  94          void OLED_Fill(u8 bmp_dat) 
+  95          {
+  96   1        u8 y,x;
+  97   1        for(y=0;y<8;y++)
+  98   1        {
+  99   2          OLED_WrCmd(0xb0+y);
+ 100   2          OLED_WrCmd(0x01);
+ 101   2          OLED_WrCmd(0x10);
+ 102   2          for(x=0;x<X_WIDTH;x++)
+ 103   2          OLED_WrDat(bmp_dat);
+ 104   2        }
+ 105   1      }
+ 106          /*********************OLED¸´Î»************************************/
+ 107          void OLED_CLS(void)
+ 108          {
+ 109   1        u8 y,x;
+ 110   1        for(y=0;y<8;y++)
+ 111   1        {
+ 112   2          OLED_WrCmd(0xb0+y);
+ 113   2          OLED_WrCmd(0x01);
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       03/09/2020 18:47:17 PAGE 3   
+
+ 114   2          OLED_WrCmd(0x10);
+ 115   2          for(x=0;x<X_WIDTH;x++)
+ 116   2          OLED_WrDat(0);
+ 117   2        }
+ 118   1      }
+ 119          /*********************OLED³õÊ¼»¯************************************/
+ 120          void OLED_Init(void)
+ 121          {
+ 122   1        Delay_ms(500);//³õÊ¼»¯Ö®Ç°µÄÑÓÊ±ºÜÖØÒª£¡
+ 123   1        OLED_WrCmd(0xae);//--turn off oled panel
+ 124   1        OLED_WrCmd(0x00);//---set Low_Voltage column address
+ 125   1        OLED_WrCmd(0x10);//---set Hight_Voltage column address
+ 126   1        OLED_WrCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
+ 127   1        OLED_WrCmd(0x81);//--set contrast control register
+ 128   1        OLED_WrCmd(Brightness); // Set SEG Output Current Brightness
+ 129   1        OLED_WrCmd(0xa1);//--Set SEG/Column Mapping     0xa0×óÓÒ·´ÖÃ 0xa1Õý³£
+ 130   1        OLED_WrCmd(0xc8);//Set COM/Row Scan Direction   0xc0ÉÏÏÂ·´ÖÃ 0xc8Õý³£
+ 131   1        OLED_WrCmd(0xa6);//--set normal display
+ 132   1        OLED_WrCmd(0xa8);//--set multiplex ratio(1 to 64)
+ 133   1        OLED_WrCmd(0x3f);//--1/64 duty
+ 134   1        OLED_WrCmd(0xd3);//-set display offset  Shift Mapping RAM Counter (0x00~0x3F)
+ 135   1        OLED_WrCmd(0x00);//-not offset
+ 136   1        OLED_WrCmd(0xd5);//--set display clock divide ratio/oscillator frequency
+ 137   1        OLED_WrCmd(0x80);//--set divide ratio, Set Clock as 100 Frames/Sec
+ 138   1        OLED_WrCmd(0xd9);//--set pre-charge period
+ 139   1        OLED_WrCmd(0xf1);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
+ 140   1        OLED_WrCmd(0xda);//--set com pins hardware configuration
+ 141   1        OLED_WrCmd(0x12);
+ 142   1        OLED_WrCmd(0xdb);//--set vcomh
+ 143   1        OLED_WrCmd(0x40);//Set VCOM Deselect Level
+ 144   1        OLED_WrCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
+ 145   1        OLED_WrCmd(0x02);//
+ 146   1        OLED_WrCmd(0x8d);//--set Charge Pump enable/disable
+ 147   1        OLED_WrCmd(0x14);//--set(0x10) disable
+ 148   1        OLED_WrCmd(0xa4);// Disable Entire Display On (0xa4/0xa5)
+ 149   1        OLED_WrCmd(0xa6);// Disable Inverse Display On (0xa6/a7) 
+ 150   1        OLED_WrCmd(0xaf);//--turn on oled panel
+ 151   1        OLED_Fill(0x00); //³õÊ¼ÇåÆÁ
+ 152   1        OLED_Set_Pos(0,0);
+ 153   1      } 
+ 154          /*******************¹¦ÄÜÃèÊö£ºÏÔÊ¾8*16Ò»×é±ê×¼ASCII×Ö·û´®  ÏÔÊ¾µÄ×ø±ê£¨x,y£©£¬ch[]ÎªÐèÒªÊä³öµÄ×Ö·û´®******
+             -**********/
+ 155          //×¢Òâ£ºÈç¹ûCodeÖÐµÄ×Ö·ûÓëASCII²»Ò»ÖÂ£¬Ôò»á³öÏÖ´íÎóÏÔÊ¾
+ 156          void OLED_P8x16Str(u8 x, y,u8 ch[])
+ 157          {
+ 158   1        u8 c=0,i=0,j=0;
+ 159   1        while (ch[j]!='\0')
+ 160   1        {
+ 161   2          c =ch[j]-32;
+ 162   2          if(x>120){x=0;y++;}
+ 163   2          OLED_Set_Pos(x,y);
+ 164   2          for(i=0;i<8;i++)
+ 165   2          OLED_WrDat(F8X16[c*16+i]);
+ 166   2          OLED_Set_Pos(x,y+1);
+ 167   2          for(i=0;i<8;i++)
+ 168   2          OLED_WrDat(F8X16[c*16+i+8]);
+ 169   2          x+=8;
+ 170   2          j++;
+ 171   2        }
+ 172   1      }
+
+
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       03/09/2020 18:47:17 PAGE 4   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    604    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       8
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

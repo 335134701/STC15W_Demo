@@ -1,0 +1,202 @@
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       03/09/2020 18:57:34 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OLED_METHOD
+OBJECT MODULE PLACED IN .\Objects\OLED_Method.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE OLED_Method.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Li
+                    -stings\OLED_Method.lst) TABS(2) OBJECT(.\Objects\OLED_Method.obj)
+
+line level    source
+
+   1          #include "MCU_Config.h"
+   2          
+   3          
+   4          /************************************************************************************
+   5          *
+   6          * 2. void IIC_Start() -- 开启I2C总线
+   7          * 3. void IIC_Stop() -- 关闭I2C总线
+   8          * 4. void Write_IIC_Byte(u8 IIC_Byte) -- 通过I2C总线写一个byte的数据
+   9          * 5. void OLED_WrDat(u8 dat) -- 向OLED屏写数据
+  10          * 6. void OLED_WrCmd(u8 cmd) -- 向OLED屏写命令
+  11          * 7. void OLED_Set_Pos(u8 x, u8 y) -- 设置显示坐标
+  12          * 8. void OLED_Fill(u8 bmp_dat) -- 全屏显示(显示BMP图片时才会用到此功能)
+  13          * 9. void OLED_CLS(void) -- 复位/清屏
+  14          * 10. void OLED_Init(void) -- OLED屏初始化程序，此函数应在操作屏幕之前最先调用
+  15          * 11. void OLED_P6x8Str(u8 x, y,u8 ch[]) -- 6x8点整，用于显示ASCII码的最小阵列，不太清晰
+  16          * 12. void OLED_P8x16Str(u8 x, y,u8 ch[]) -- 8x16点整，用于显示ASCII码，非常清晰
+  17          * 13.void OLED_P16x16Ch(u8 x, y, N) -- 16x16点整，用于显示汉字的最小阵列，可设置各种字体、加粗、倾斜、下划
+             -线等
+  18          * 14.void Draw_BMP(u8 x0, y0,x1, y1,u8 BMP[]) -- 将128x64像素的BMP位图在取字软件中算出字表，然后复制到code
+             -tab中，此函数调用即可
+  19          *
+  20          *************************************************************************************/
+  21          
+  22          
+  23          /**********************************************
+  24          //IIC Start
+  25          **********************************************/
+  26          void IIC_Start()
+  27          {
+  28   1         SCL = Hight_Voltage;   
+  29   1         SDA = Hight_Voltage;
+  30   1         SDA = Low_Voltage;
+  31   1         SCL = Low_Voltage;
+  32   1      }
+  33          
+  34          /**********************************************
+  35          //IIC Stop
+  36          **********************************************/
+  37          void IIC_Stop()
+  38          {
+  39   1         SCL = Low_Voltage;
+  40   1         SDA = Low_Voltage;
+  41   1         SCL = Hight_Voltage;
+  42   1         SDA = Hight_Voltage;
+  43   1      }
+  44          
+  45          /**********************************************
+  46          // 通过I2C总线写一个字节
+  47          **********************************************/
+  48          void Write_IIC_Byte(u8 IIC_Byte)
+  49          {
+  50   1        u8 i;
+  51   1        for(i=0;i<8;i++)
+  52   1        {
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       03/09/2020 18:57:34 PAGE 2   
+
+  53   2          if(IIC_Byte & 0x80)
+  54   2            SDA=Hight_Voltage;
+  55   2          else
+  56   2            SDA=Low_Voltage;
+  57   2          SCL=Hight_Voltage;
+  58   2          SCL=Low_Voltage;
+  59   2          IIC_Byte<<=1;
+  60   2        }
+  61   1        SDA=1;
+  62   1        SCL=1;
+  63   1        SCL=0;
+  64   1      }
+  65          
+  66          /*********************OLED写数据************************************/ 
+  67          void OLED_WrDat(u8 IIC_Data)
+  68          {
+  69   1        IIC_Start();
+  70   1        Write_IIC_Byte(0x78);
+  71   1        Write_IIC_Byte(0x40);     //write data
+  72   1        Write_IIC_Byte(IIC_Data);
+  73   1        IIC_Stop();
+  74   1      }
+  75          /*********************OLED写命令************************************/
+  76          void OLED_WrCmd(u8 IIC_Command)
+  77          {
+  78   1        IIC_Start();
+  79   1        Write_IIC_Byte(0x78);            //Slave address,SA0=0
+  80   1        Write_IIC_Byte(0x00);     //write command
+  81   1        Write_IIC_Byte(IIC_Command);
+  82   1        IIC_Stop();
+  83   1      }
+  84          /*********************OLED 设置坐标************************************/
+  85          void OLED_Set_Pos(u8 x, u8 y) 
+  86          { 
+  87   1        OLED_WrCmd(0xb0+y);
+  88   1        OLED_WrCmd(((x&0xf0)>>4)|0x10);
+  89   1        OLED_WrCmd((x&0x0f)|0x01);
+  90   1      } 
+  91          /*********************OLED全屏************************************/
+  92          void OLED_Fill(u8 bmp_dat) 
+  93          {
+  94   1        u8 y,x;
+  95   1        for(y=0;y<8;y++)
+  96   1        {
+  97   2          OLED_WrCmd(0xb0+y);
+  98   2          OLED_WrCmd(0x01);
+  99   2          OLED_WrCmd(0x10);
+ 100   2          for(x=0;x<X_WIDTH;x++)
+ 101   2          OLED_WrDat(bmp_dat);
+ 102   2        }
+ 103   1      }
+ 104          /*********************OLED复位************************************/
+ 105          void OLED_CLS(void)
+ 106          {
+ 107   1        u8 y,x;
+ 108   1        for(y=0;y<8;y++)
+ 109   1        {
+ 110   2          OLED_WrCmd(0xb0+y);
+ 111   2          OLED_WrCmd(0x01);
+ 112   2          OLED_WrCmd(0x10);
+ 113   2          for(x=0;x<X_WIDTH;x++)
+ 114   2          OLED_WrDat(0);
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       03/09/2020 18:57:34 PAGE 3   
+
+ 115   2        }
+ 116   1      }
+ 117          /*********************OLED初始化************************************/
+ 118          void OLED_Init(void)
+ 119          {
+ 120   1        Delay_ms(500);//初始化之前的延时很重要！
+ 121   1        OLED_WrCmd(0xae);//--turn off oled panel
+ 122   1        OLED_WrCmd(0x00);//---set Low_Voltage column address
+ 123   1        OLED_WrCmd(0x10);//---set Hight_Voltage column address
+ 124   1        OLED_WrCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
+ 125   1        OLED_WrCmd(0x81);//--set contrast control register
+ 126   1        OLED_WrCmd(Brightness); // Set SEG Output Current Brightness
+ 127   1        OLED_WrCmd(0xa1);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
+ 128   1        OLED_WrCmd(0xc8);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
+ 129   1        OLED_WrCmd(0xa6);//--set normal display
+ 130   1        OLED_WrCmd(0xa8);//--set multiplex ratio(1 to 64)
+ 131   1        OLED_WrCmd(0x3f);//--1/64 duty
+ 132   1        OLED_WrCmd(0xd3);//-set display offset  Shift Mapping RAM Counter (0x00~0x3F)
+ 133   1        OLED_WrCmd(0x00);//-not offset
+ 134   1        OLED_WrCmd(0xd5);//--set display clock divide ratio/oscillator frequency
+ 135   1        OLED_WrCmd(0x80);//--set divide ratio, Set Clock as 100 Frames/Sec
+ 136   1        OLED_WrCmd(0xd9);//--set pre-charge period
+ 137   1        OLED_WrCmd(0xf1);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
+ 138   1        OLED_WrCmd(0xda);//--set com pins hardware configuration
+ 139   1        OLED_WrCmd(0x12);
+ 140   1        OLED_WrCmd(0xdb);//--set vcomh
+ 141   1        OLED_WrCmd(0x40);//Set VCOM Deselect Level
+ 142   1        OLED_WrCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
+ 143   1        OLED_WrCmd(0x02);//
+ 144   1        OLED_WrCmd(0x8d);//--set Charge Pump enable/disable
+ 145   1        OLED_WrCmd(0x14);//--set(0x10) disable
+ 146   1        OLED_WrCmd(0xa4);// Disable Entire Display On (0xa4/0xa5)
+ 147   1        OLED_WrCmd(0xa6);// Disable Inverse Display On (0xa6/a7) 
+ 148   1        OLED_WrCmd(0xaf);//--turn on oled panel
+ 149   1        OLED_Fill(0x00); //初始清屏
+ 150   1        OLED_Set_Pos(0,0);
+ 151   1      } 
+ 152          
+ 153          /*****************功能描述：显示16*16点阵  显示的坐标（x,y），N为页范围0～7****************************/
+ 154          void OLED_P16x16Ch(u8 x, y, N)
+ 155          {
+ 156   1        u8 wm=0;
+ 157   1        u16 adder=32*N;
+ 158   1        OLED_Set_Pos(x , y);
+ 159   1        for(wm = 0;wm < 16;wm++)
+ 160   1        {
+ 161   2          OLED_WrDat(F16x16[adder]);
+ 162   2          adder += 1;
+ 163   2        }
+ 164   1        OLED_Set_Pos(x,y + 1);
+ 165   1        for(wm = 0;wm < 16;wm++)
+ 166   1        {
+ 167   2          OLED_WrDat(F16x16[adder]);
+ 168   2          adder += 1;
+ 169   2        }       
+ 170   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    485    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       2
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       03/09/2020 18:57:34 PAGE 4   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

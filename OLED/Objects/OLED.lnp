@@ -1,0 +1,8 @@
+".\Objects\STARTUP.obj",
+".\Objects\OLED_Code.obj",
+".\Objects\OLED_Main.obj",
+".\Objects\OLED_Method.obj",
+".\Objects\MCU_Init.obj",
+".\Objects\MCU_Common_Method.obj" 
+TO ".\Objects\OLED" 
+PRINT(".\Listings\OLED.m51") RAMSIZE(256) 
