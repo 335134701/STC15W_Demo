@@ -4,6 +4,8 @@
 
 本程序主要执行初始化函数，包括:
 		1.GPIO引脚初始化，可以使用GPIO_Config()方法设置引脚输入输出模式，GPIO_Init()方法默认设置GPIO为标准双向口
+		2.OLED初始化，OLED清屏
+		3.UART初始化
 
 
 
@@ -22,6 +24,8 @@ void MCU_Init(void)
 		GPIO_Init();		//GPIO 初始化
 		OLED_Init();		//OLED 初始化
 		OLED_CLS();     //OLED 清屏
+		Uart_Init();    //UART 初始化
+		EA=1;
 }
 /*
 //========================================================================

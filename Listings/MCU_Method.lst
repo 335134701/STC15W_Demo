@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_METHOD                                                        04/24/2020 10:06:04 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_METHOD                                                        05/31/2020 15:33:44 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_METHOD
@@ -10,13 +10,20 @@ line level    source
 
    1          #include "MCU_Method.h"
    2          
-   3          /******************** 软件延时函数 **************************/
-   4          void Delay_ms(unsigned int time)
-   5          {
-   6   1        unsigned int x,y;
-   7   1        for(x=time;x>0;x--)
-   8   1          for(y=110;y>0;y--);
-   9   1      }
+   3          //========================================================================
+   4          // 函数: void Delay_ms(unsigned int time)
+   5          // 描述: 软件延时函数
+   6          // 参数: time:延时时间
+   7          // 返回: 无
+   8          // 说明：单片机频率不同，延时效果不同
+   9          // 版本: V1.0, 2020.03.09
+  10          //========================================================================
+  11          void Delay_ms(unsigned int time)
+  12          {
+  13   1        unsigned int x,y;
+  14   1        for(x=time;x>0;x--)
+  15   1          for(y=110;y>0;y--);
+  16   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

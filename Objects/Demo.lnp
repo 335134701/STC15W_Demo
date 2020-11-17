@@ -3,6 +3,7 @@
 ".\Objects\OLED_Code.obj",
 ".\Objects\OLED_Method.obj",
 ".\Objects\MCU_Method.obj",
+".\Objects\MCU_Uart.obj",
 ".\Objects\MCU_Init.obj",
 ".\Objects\MCU_Main.obj" 
 TO ".\Objects\Demo" 
