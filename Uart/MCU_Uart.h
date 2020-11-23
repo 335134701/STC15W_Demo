@@ -1,19 +1,19 @@
-#ifndef	__MCU_UART_H
-#define	__MCU_UART_H
+#ifndef	__MCU_UART_H__
+#define	__MCU_UART_H__
 
 #include <string.h>
 
 /*************	本地常量声明	**************/
-#define	RX1_Length	256		/* 接收缓冲长度 */
-#define	RX2_Length	256		/* 接收缓冲长度 */
-#define	RX3_Length	256		/* 接收缓冲长度 */
-#define	RX4_Length	256		/* 接收缓冲长度 */
+#define	RX1_Length	512		/* 接收缓冲长度 */
+#define	RX2_Length	512		/* 接收缓冲长度 */
+#define	RX3_Length	512		/* 接收缓冲长度 */
+#define	RX4_Length	512		/* 接收缓冲长度 */
 
 /*************	串口波特率	**************/
 #define	UART_BaudRate1	115200UL	 /* 波特率 */
 #define	UART_BaudRate2	115200UL	 /* 波特率 */
-#define	UART_BaudRate3	115200UL	 /* 波特率 */
-#define	UART_BaudRate4	115200UL	 /* 波特率 */
+#define	UART_BaudRate3	9600UL	 /* 波特率 */
+#define	UART_BaudRate4	9600UL	 /* 波特率 */
 //#define	UART_BaudRate2	 57600UL	 /* 波特率 */
 //#define	UART_BaudRate3	 38400UL	 /* 波特率 */
 //#define	UART_BaudRate4	 19200UL	 /* 波特率 */

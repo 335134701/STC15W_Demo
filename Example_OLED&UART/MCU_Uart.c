@@ -1,17 +1,18 @@
-#include	"MCU_Config.h"
+#include	"MCU_Uart.h"
 
 /*************	本地变量声明	**************/
-u8 xdata	RX1_Buffer[RX1_Length];	//接收缓冲
-u8 xdata	RX2_Buffer[RX2_Length];	//接收缓冲
-u8 xdata	RX3_Buffer[RX3_Length];	//接收缓冲
-u8 xdata	RX4_Buffer[RX4_Length];	//接收缓冲
+unsigned char xdata	RX1_Buffer[RX1_Length];	//接收缓冲
+//unsigned char xdata	RX2_Buffer[RX2_Length];	//接收缓冲
+//unsigned char xdata	RX3_Buffer[RX3_Length];	//接收缓冲
+//unsigned char xdata	RX4_Buffer[RX4_Length];	//接收缓冲
 
-u8 RX1_len;	//接收数据长度
-u8 RX2_len;	//接收数据长度
-u8 RX3_len;	//接收数据长度
-u8 RX4_len;	//接收数据长度
+unsigned char RX1_len;	//接收数据长度
+//unsigned char RX2_len;	//接收数据长度
+//unsigned char RX3_len;	//接收数据长度
+//unsigned char RX4_len;	//接收数据长度
 
-bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// 发送忙标志
+bit B_TX1_Busy,B_TX2_Busy;	// 发送忙标志
+//bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// 发送忙标志
 //========================================================================
 // UART引脚说明:
 // UART1:(默认)P3^0,P3^1;		(可选)P3^6,P3^7; P1^6,P1^7;
@@ -20,6 +21,10 @@ bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// 发送忙标志
 // UART4:(默认)P0^2,P0^3;		(可选)P5^2,P5^3;
 //========================================================================
 
+void	UART1_config(unsigned char brt);
+void	UART2_config(unsigned char brt);
+//void	UART3_config(unsigned char brt);
+//void	UART4_config(unsigned char brt);
 
 
 //========================================================================
@@ -33,8 +38,6 @@ void Uart_Init(void)
 {
 	UART1_config(2);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer1做波特率.
 	UART2_config(2);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 无效.
-	UART3_config(2);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer3做波特率.
-	UART4_config(2);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer4做波特率.
 	/*
 	UART2_config(2);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 无效.
 	UART3_config(3);	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer3做波特率.
@@ -42,7 +45,7 @@ void Uart_Init(void)
 	*/
 }
 //========================================================================
-// 函数: SetTimer2Baudraye(u16 dat)
+// 函数: SetTimer2Baudraye(unsigned int dat)
 // 描述: 设置Timer2做波特率发生器。
 // 参数: dat: Timer2的重装值.
 // 返回: none.
@@ -50,7 +53,7 @@ void Uart_Init(void)
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void	SetTimer2Baudraye(u16 dat)	//使用Timer2做波特率
+void	SetTimer2Baudraye(unsigned int dat)	//使用Timer2做波特率
 {
 	AUXR &= ~(1<<4);	//Timer stop
 	AUXR &= ~(1<<3);	//Timer2 set As Timer
@@ -62,7 +65,7 @@ void	SetTimer2Baudraye(u16 dat)	//使用Timer2做波特率
 }
 
 //========================================================================
-// 函数: void	UART1_config(u8 brt)
+// 函数: void	UART1_config(unsigned char brt)
 // 描述: UART1初始化函数。
 // 参数: brt: 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer1做波特率.
 // 返回: none.
@@ -70,7 +73,7 @@ void	SetTimer2Baudraye(u16 dat)	//使用Timer2做波特率
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void	UART1_config(u8 brt)	
+void	UART1_config(unsigned char brt)	
 {
 	// 波特率使用定时器2
 	if(brt == 2)
@@ -110,7 +113,7 @@ void	UART1_config(u8 brt)
 
 
 //========================================================================
-// 函数: void	UART2_config(u8 brt)
+// 函数: void	UART2_config(unsigned char brt)
 // 描述: UART2初始化函数。
 // 参数: brt: 选择波特率, 2: 使用Timer2(定时器工作方式1)做波特率, 其它值: 无效.
 // 返回: none.
@@ -118,7 +121,7 @@ void	UART1_config(u8 brt)
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void	UART2_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 无效.
+void	UART2_config(unsigned char brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 无效.
 {
 	// 波特率固定使用定时器2
 	if(brt == 2)	SetTimer2Baudraye(65536UL - (MAIN_Fosc / 4) / UART_BaudRate2);
@@ -129,13 +132,13 @@ void	UART2_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 无效.
 	P_SW2 &= ~1;		//切换到 P1.0 P1.1
 //P_SW2 |= 1;			//切换到 P4.6 P4.7
 
-	memset(RX2_Buffer,0,RX2_Length);
-	B_TX2_Busy  = 0;
-	RX2_len   = 0;
+	//memset(RX2_Buffer,0,RX2_Length);
+	//B_TX2_Busy  = 0;
+	//RX2_len   = 0;
 }
-
+/*
 //========================================================================
-// 函数: void	UART3_config(u8 brt)
+// 函数: void	UART3_config(unsigned char brt)
 // 描述: UART3初始化函数。
 // 参数: brt: 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer3做波特率.
 // 返回: none.
@@ -143,9 +146,9 @@ void	UART2_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 无效.
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void	UART3_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer3做波特率.
+void	UART3_config(unsigned char brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer3做波特率.
 {
-	// 波特率固定使用定时器2
+	//波特率固定使用定时器2 
 	if(brt == 2)
 	{
 		S3CON &= ~(1<<6);	//BRT select Timer2
@@ -177,7 +180,7 @@ void	UART3_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Time
 }
 
 //========================================================================
-// 函数: void	UART4_config(u8 brt)
+// 函数: void	UART4_config(unsigned char brt)
 // 描述: UART4初始化函数。
 // 参数: brt: 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer4做波特率.
 // 返回: none.
@@ -185,7 +188,7 @@ void	UART3_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Time
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void	UART4_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer4做波特率.
+void	UART4_config(unsigned char brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer4做波特率.
 {
 	// 波特率固定使用定时器2
 	if(brt == 2)
@@ -218,8 +221,9 @@ void	UART4_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Time
 	B_TX4_Busy  = 0;
 	RX4_len   = 0;
 }
+*/
 //========================================================================
-// 函数: SendString1(u8 *puts)
+// 函数: void SendString1(unsigned char *puts)
 // 描述: Uart1发送数据函数
 // 参数: *puts: 发送数据
 // 返回: none.
@@ -227,9 +231,10 @@ void	UART4_config(u8 brt)	// 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Time
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void SendString1(u8 *puts)
+void SendString1(unsigned char *puts)
 {
-    for (; *puts != 0;	puts++)
+   unsigned int i=0;
+    for (; *puts != '\0';	puts++)
 		{
 			B_TX1_Busy = 1;		//标志发送忙
 			SBUF = *puts;		//发一个字节
@@ -237,7 +242,7 @@ void SendString1(u8 *puts)
 		}
 }
 //========================================================================
-// 函数: SendString2(u8 *puts)
+// 函数: void SendString2(unsigned char *puts)
 // 描述: Uart1发送数据函数
 // 参数: *puts: 发送数据
 // 返回: none.
@@ -245,17 +250,18 @@ void SendString1(u8 *puts)
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void SendString2(u8 *puts)
+void SendString2(unsigned char *puts)
 {
-   for (; *puts != 0;	puts++)
+   for (; *puts != '\0';	puts++)
 	 {
 			B_TX2_Busy = 1;		//标志发送忙
 			S2BUF = *puts;		//发一个字节
 			while(B_TX2_Busy);	//等待发送完成
 		}
 }
+/*
 //========================================================================
-// 函数: SendString3(u8 *puts)
+// 函数: SendString3(unsigned char *puts)
 // 描述: Uart1发送数据函数
 // 参数: *puts: 发送数据
 // 返回: none.
@@ -263,7 +269,7 @@ void SendString2(u8 *puts)
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void SendString3(u8 *puts)
+void SendString3(unsigned char *puts)
 {
     for (; *puts != 0;	puts++)
 		{
@@ -273,7 +279,7 @@ void SendString3(u8 *puts)
 		}
 }
 //========================================================================
-// 函数: SendString4(u8 *puts)
+// 函数: SendString4(unsigned char *puts)
 // 描述: Uart1发送数据函数
 // 参数: *puts: 发送数据
 // 返回: none.
@@ -281,7 +287,7 @@ void SendString3(u8 *puts)
 // 日期: 2020-03-08
 // 备注: 
 //========================================================================
-void SendString4(u8 *puts)
+void SendString4(unsigned char *puts)
 {
     for (; *puts != 0;	puts++)
 		{
@@ -290,24 +296,7 @@ void SendString4(u8 *puts)
 			while(B_TX4_Busy);	//等待发送完成
 		}
 }
-
-
-//========================================================================
-// 函数: Cl_RX_Buffer(u8 *puts,u8 *len)
-// 描述: Uart清理函数
-// 参数: *puts: 发送数据缓存，*len缓存中数据长度
-// 返回: none.
-// 版本: VER1.0
-// 日期: 2020-03-08
-// 备注: 
-//========================================================================
-void Cl_RX_Buffer(u8 *puts,u8 *len)
-{
-	*len=0;
-	memset(puts,0,*len);
-}
-
-
+*/
 //========================================================================
 // 函数: void UART1_int (void) interrupt UART1_VECTOR
 // 描述: Uart1中断触发函数
@@ -347,8 +336,8 @@ void UART2_int (void) interrupt UART2_VECTOR
 	if(RI2)
 	{
 		CLR_RI2();
-		RX2_Buffer[RX2_len] = S2BUF;
-		if(++RX2_len >= RX2_Length)	RX2_len = 0;
+		//RX2_Buffer[RX2_len] = S2BUF;
+		//if(++RX2_len >= RX2_Length)	RX2_len = 0;
 	}
 
 	if(TI2)
@@ -358,7 +347,7 @@ void UART2_int (void) interrupt UART2_VECTOR
 	}
 
 }
-
+/*
 //========================================================================
 // 函数: void UART3_int (void) interrupt UART3_VECTOR
 // 描述: Uart3中断触发函数
@@ -407,5 +396,5 @@ void UART4_int (void) interrupt UART4_VECTOR
 		CLR_TI4();
 		B_TX4_Busy = 0;
 	}
-
 }
+*/

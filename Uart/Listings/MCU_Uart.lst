@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_UART                                                          04/11/2020 18:15:03 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_UART                                                          11/24/2020 00:09:43 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_UART
@@ -62,7 +62,7 @@ line level    source
   52          //========================================================================
   53          void  SetTimer2Baudraye(u16 dat)  //使用Timer2做波特率
   54          {
-C51 COMPILER V9.60.0.0   MCU_UART                                                          04/11/2020 18:15:03 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_UART                                                          11/24/2020 00:09:43 PAGE 2   
 
   55   1        AUXR &= ~(1<<4);  //Timer stop
   56   1        AUXR &= ~(1<<3);  //Timer2 set As Timer
@@ -84,14 +84,14 @@ line level    source
   72          //========================================================================
   73          void  UART1_config(u8 brt)  
   74          {
-  75   1        /*********** 波特率使用定时器2 *****************/
+  75   1        // 波特率使用定时器2
   76   1        if(brt == 2)
   77   1        {
   78   2          AUXR |= 0x01;   //S1 BRT Use Timer2;
   79   2          SetTimer2Baudraye(65536UL - (MAIN_Fosc / 4) / UART_BaudRate1);
   80   2        }
   81   1      
-  82   1        /*********** 波特率使用定时器1 *****************/
+  82   1        // 波特率使用定时器1
   83   1        else
   84   1        {
   85   2          TR1 = 0;
@@ -126,7 +126,7 @@ line level    source
  114          // 描述: UART2初始化函数。
  115          // 参数: brt: 选择波特率, 2: 使用Timer2(定时器工作方式1)做波特率, 其它值: 无效.
  116          // 返回: none.
-C51 COMPILER V9.60.0.0   MCU_UART                                                          04/11/2020 18:15:03 PAGE 3   
+C51 COMPILER V9.60.0.0   MCU_UART                                                          11/24/2020 00:09:43 PAGE 3   
 
  117          // 版本: VER1.0
  118          // 日期: 2020-03-08
@@ -134,7 +134,7 @@ line level    source
  120          //========================================================================
  121          void  UART2_config(u8 brt)  // 选择波特率, 2: 使用Timer2做波特率, 其它值: 无效.
  122          {
- 123   1        /*********** 波特率固定使用定时器2 *****************/
+ 123   1        // 波特率固定使用定时器2
  124   1        if(brt == 2)  SetTimer2Baudraye(65536UL - (MAIN_Fosc / 4) / UART_BaudRate2);
  125   1      
  126   1        S2CON &= ~(1<<7); // 8位数据, 1位起始位, 1位停止位, 无校验
@@ -159,13 +159,13 @@ line level    source
  145          //========================================================================
  146          void  UART3_config(u8 brt)  // 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer3做波特率.
  147          {
- 148   1        /*********** 波特率固定使用定时器2 *****************/
+ 148   1        // 波特率固定使用定时器2
  149   1        if(brt == 2)
  150   1        {
  151   2          S3CON &= ~(1<<6); //BRT select Timer2
  152   2          SetTimer2Baudraye(65536UL - (MAIN_Fosc / 4) / UART_BaudRate3);
  153   2        }
- 154   1        /*********** 波特率使用定时器3 *****************/
+ 154   1        // 波特率使用定时器3
  155   1        else
  156   1        {
  157   2          S3CON |= (1<<6);  //BRT select Timer3
@@ -190,7 +190,7 @@ line level    source
  176   1        RX3_len   = 0;
  177   1      }
  178          
-C51 COMPILER V9.60.0.0   MCU_UART                                                          04/11/2020 18:15:03 PAGE 4   
+C51 COMPILER V9.60.0.0   MCU_UART                                                          11/24/2020 00:09:43 PAGE 4   
 
  179          //========================================================================
  180          // 函数: void UART4_config(u8 brt)
@@ -203,13 +203,13 @@ line level    source
  187          //========================================================================
  188          void  UART4_config(u8 brt)  // 选择波特率, 2: 使用Timer2做波特率, 其它值: 使用Timer4做波特率.
  189          {
- 190   1        /*********** 波特率固定使用定时器2 *****************/
+ 190   1        // 波特率固定使用定时器2
  191   1        if(brt == 2)
  192   1        {
  193   2          S4CON &= ~(1<<6); //BRT select Timer2
  194   2          SetTimer2Baudraye(65536UL - (MAIN_Fosc / 4) / UART_BaudRate4);
  195   2        }
- 196   1        /*********** 波特率使用定时器3 *****************/
+ 196   1        // 波特率使用定时器3
  197   1        else
  198   1        {
  199   2          S4CON |= (1<<6);  //BRT select Timer4
@@ -254,7 +254,7 @@ line level    source
  238   1      }
  239          //========================================================================
  240          // 函数: SendString2(u8 *puts)
-C51 COMPILER V9.60.0.0   MCU_UART                                                          04/11/2020 18:15:03 PAGE 5   
+C51 COMPILER V9.60.0.0   MCU_UART                                                          11/24/2020 00:09:43 PAGE 5   
 
  241          // 描述: Uart1发送数据函数
  242          // 参数: *puts: 发送数据
@@ -318,7 +318,7 @@ line level    source
  300          // 版本: VER1.0
  301          // 日期: 2020-03-08
  302          // 备注: 
-C51 COMPILER V9.60.0.0   MCU_UART                                                          04/11/2020 18:15:03 PAGE 6   
+C51 COMPILER V9.60.0.0   MCU_UART                                                          11/24/2020 00:09:43 PAGE 6   
 
  303          //========================================================================
  304          void Cl_RX_Buffer(u8 *puts,u8 *len)
@@ -328,83 +328,115 @@ line level    source
  308   1      }
  309          
  310          
- 311          /********************* UART1中断函数************************/
- 312          void UART1_int (void) interrupt UART1_VECTOR
- 313          {
- 314   1        if(RI)
- 315   1        {
- 316   2          RI = 0;
- 317   2          RX1_Buffer[RX1_len] = SBUF;
- 318   2          if(++RX1_len >= RX1_Length) RX1_len = 0;
- 319   2        }
- 320   1      
- 321   1        if(TI)
- 322   1        {
- 323   2          TI = 0;
- 324   2          B_TX1_Busy = 0;
- 325   2        }
- 326   1      }
- 327          
- 328          /********************* UART2中断函数************************/
- 329          void UART2_int (void) interrupt UART2_VECTOR
- 330          {
- 331   1        if(RI2)
- 332   1        {
- 333   2          CLR_RI2();
- 334   2          RX2_Buffer[RX2_len] = S2BUF;
- 335   2          if(++RX2_len >= RX2_Length) RX2_len = 0;
- 336   2        }
- 337   1      
- 338   1        if(TI2)
- 339   1        {
- 340   2          CLR_TI2();
- 341   2          B_TX2_Busy = 0;
- 342   2        }
- 343   1      
- 344   1      }
- 345          
- 346          /********************* UART3中断函数************************/
- 347          void UART3_int (void) interrupt UART3_VECTOR
- 348          {
- 349   1        if(RI3)
- 350   1        {
- 351   2          CLR_RI3();
- 352   2          RX3_Buffer[RX3_len] = S3BUF;
- 353   2          if(++RX3_len >= RX3_Length) RX3_len = 0;
- 354   2        }
- 355   1        if(TI3)
- 356   1        {
- 357   2          CLR_TI3();
- 358   2          B_TX3_Busy = 0;
- 359   2        }
- 360   1      
- 361   1      }
- 362          
- 363          /********************* UART4中断函数************************/
- 364          void UART4_int (void) interrupt UART4_VECTOR
-C51 COMPILER V9.60.0.0   MCU_UART                                                          04/11/2020 18:15:03 PAGE 7   
+ 311          //========================================================================
+ 312          // 函数: void UART1_int (void) interrupt UART1_VECTOR
+ 313          // 描述: Uart1中断触发函数
+ 314          // 参数: none
+ 315          // 返回: none.
+ 316          // 版本: VER1.0
+ 317          // 日期: 2020-03-08
+ 318          // 备注: 
+ 319          //========================================================================
+ 320          void UART1_int (void) interrupt UART1_VECTOR
+ 321          {
+ 322   1        if(RI)
+ 323   1        {
+ 324   2          RI = 0;
+ 325   2          RX1_Buffer[RX1_len] = SBUF;
+ 326   2          if(++RX1_len >= RX1_Length) RX1_len = 0;
+ 327   2        }
+ 328   1      
+ 329   1        if(TI)
+ 330   1        {
+ 331   2          TI = 0;
+ 332   2          B_TX1_Busy = 0;
+ 333   2        }
+ 334   1      }
+ 335          
+ 336          //========================================================================
+ 337          // 函数: void UART2_int (void) interrupt UART2_VECTOR
+ 338          // 描述: Uart2中断触发函数
+ 339          // 参数: none
+ 340          // 返回: none.
+ 341          // 版本: VER1.0
+ 342          // 日期: 2020-03-08
+ 343          // 备注: 
+ 344          //========================================================================
+ 345          void UART2_int (void) interrupt UART2_VECTOR
+ 346          {
+ 347   1        if(RI2)
+ 348   1        {
+ 349   2          CLR_RI2();
+ 350   2          RX2_Buffer[RX2_len] = S2BUF;
+ 351   2          if(++RX2_len >= RX2_Length) RX2_len = 0;
+ 352   2        }
+ 353   1      
+ 354   1        if(TI2)
+ 355   1        {
+ 356   2          CLR_TI2();
+ 357   2          B_TX2_Busy = 0;
+ 358   2        }
+ 359   1      
+ 360   1      }
+ 361          
+ 362          //========================================================================
+ 363          // 函数: void UART3_int (void) interrupt UART3_VECTOR
+ 364          // 描述: Uart3中断触发函数
+C51 COMPILER V9.60.0.0   MCU_UART                                                          11/24/2020 00:09:43 PAGE 7   
 
- 365          {
- 366   1        if(RI4)
- 367   1        {
- 368   2          CLR_RI4();
- 369   2          RX4_Buffer[RX4_len] = S4BUF;
- 370   2          if(++RX4_len >= RX4_Length) RX4_len = 0;
- 371   2        }
- 372   1      
- 373   1        if(TI4)
+ 365          // 参数: none
+ 366          // 返回: none.
+ 367          // 版本: VER1.0
+ 368          // 日期: 2020-03-08
+ 369          // 备注: 
+ 370          //========================================================================
+ 371          void UART3_int (void) interrupt UART3_VECTOR
+ 372          {
+ 373   1        if(RI3)
  374   1        {
- 375   2          CLR_TI4();
- 376   2          B_TX4_Busy = 0;
- 377   2        }
- 378   1      
- 379   1      }
+ 375   2          CLR_RI3();
+ 376   2          RX3_Buffer[RX3_len] = S3BUF;
+ 377   2          if(++RX3_len >= RX3_Length) RX3_len = 0;
+ 378   2        }
+ 379   1        if(TI3)
+ 380   1        {
+ 381   2          CLR_TI3();
+ 382   2          B_TX3_Busy = 0;
+ 383   2        }
+ 384   1      
+ 385   1      }
+ 386          
+ 387          //========================================================================
+ 388          // 函数: void UART4_int (void) interrupt UART4_VECTOR
+ 389          // 描述: Uart4中断触发函数
+ 390          // 参数: none
+ 391          // 返回: none.
+ 392          // 版本: VER1.0
+ 393          // 日期: 2020-03-08
+ 394          // 备注: 
+ 395          //========================================================================
+ 396          void UART4_int (void) interrupt UART4_VECTOR
+ 397          {
+ 398   1        if(RI4)
+ 399   1        {
+ 400   2          CLR_RI4();
+ 401   2          RX4_Buffer[RX4_len] = S4BUF;
+ 402   2          if(++RX4_len >= RX4_Length) RX4_len = 0;
+ 403   2        }
+ 404   1      
+ 405   1        if(TI4)
+ 406   1        {
+ 407   2          CLR_TI4();
+ 408   2          B_TX4_Busy = 0;
+ 409   2        }
+ 410   1      
+ 411   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    737    ----
+   CODE SIZE        =    749    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   1028       6
+   XDATA SIZE       =   2052       6
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
