@@ -456,16 +456,16 @@
               <FileType>1</FileType>
               <FilePath>.\MCU_Variable.c</FilePath>
             </File>
-            <File>
-              <FileName>MCU_OLED_Show.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MCU_OLED_Show.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>MCU_Perception</GroupName>
           <Files>
+            <File>
+              <FileName>MCU_OLED_Show.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_OLED_Show.c</FilePath>
+            </File>
             <File>
               <FileName>MCU_Detect.c</FileName>
               <FileType>1</FileType>

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         08/08/2020 00:30:36 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         11/24/2020 20:34:40 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_TIMER
@@ -62,7 +62,7 @@ line level    source
   52   2          TR0 = 0;    //停止计数
   53   2          ET0 = 0;  //禁止中断
   54   2          PT0 = 0;  //低优先级中断
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         08/08/2020 00:30:36 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         11/24/2020 20:34:40 PAGE 2   
 
   55   2          TMOD &= 0xf0; //定时模式, 16位自动重装
   56   2          AUXR &= ~0x80;  //12T模式, 
@@ -126,7 +126,7 @@ line level    source
  113   2          T4T3M &= 0xf0;    //停止计数, 定时模式, 12T模式, 不输出时钟
  114   2          IE2  &= ~(1<<5);  //禁止中断
  115   2          if(TIMx->TIM_Interrupt == ENABLE)     IE2  |=  (1<<5);  //允许中断
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         08/08/2020 00:30:36 PAGE 3   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         11/24/2020 20:34:40 PAGE 3   
 
  116   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   T4T3M |=  (1<<1); //1T
  117   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  T4T3M |=  (3<<1); //对外计数或分频
@@ -190,7 +190,7 @@ line level    source
  172   1      
  173   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //中断是否允许,   ENABLE或DISABLE. (注意: Timer2固定为16位自
              -动重装, 中断固定为低优先级)
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         08/08/2020 00:30:36 PAGE 4   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         11/24/2020 20:34:40 PAGE 4   
 
  174   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;    //指定时钟源,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
              -Ext
@@ -254,7 +254,7 @@ line level    source
  228          // 返回: 无
  229          // 版本: V1.0, 2020.03.09
  230          //========================================================================
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         08/08/2020 00:30:36 PAGE 5   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         11/24/2020 20:34:40 PAGE 5   
 
  231          void Timer2_Int (void) interrupt TIMER2_VECTOR
  232          {
