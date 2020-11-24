@@ -1,0 +1,220 @@
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     11/24/2020 21:00:44 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_HAND_UART
+OBJECT MODULE PLACED IN .\Objects\MCU_Hand_Uart.obj
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Hand_Uart.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
+                    -Listings\MCU_Hand_Uart.lst) TABS(2) OBJECT(.\Objects\MCU_Hand_Uart.obj)
+
+line level    source
+
+   1          #include "MCU_Hand_Uart.h"
+   2          
+   3          //数据包序号
+   4          unsigned char Sn = 0x00;
+   5          
+   6          
+   7          //========================================================================
+   8          // 函数: void UART_Receive_Processing()
+   9          // 描述: UART1接收处理函数
+  10          // 参数: 无
+  11          // 返回: 无
+  12          // 版本: V1.0, 2020.04.24
+  13          //========================================================================
+  14          void UART_Receive_Processing()
+  15          {
+  16   1        Uart_Pretreatment();
+  17   1      /*
+  18   1          //校验接收数据的合法性
+  19   1          if(Uart_Pretreatment()) {
+  20   1              //无线模块连接标记位
+  21   1              Wifi_flag = 0x01;
+  22   1              //获取包序号并赋值给Sn
+  23   1              Sn = RX1_Buffer[5];
+  24   1              switch(RX1_Buffer[4]) {
+  25   1              //WiFi模组获取设备信息
+  26   1              case 0x01:
+  27   1                  Data_Encapsulation(Device_information, sizeof(Device_information), 0x00, Sn, 0x00);
+  28   1                  break;
+  29   1              //WiFi模组控制设备,读取设备的当前状态
+  30   1              case 0x03:
+  31   1                  //WiFi模 组 控 制 设 备
+  32   1                  if(RX1_Buffer[8] == 0x01) {
+  33   1                      //收到数据后，mcu控制设备函数
+  34   1      //                MCU_Application_Control(RX1_Buffer);
+  35   1                      Data_Encapsulation(Mcu_send, 9, 0x04, Sn, 0x00);
+  36   1                      //MCU主动上报当前状态
+  37   1                      Sn = Sn + 0x01;
+  38   1                      Data_Encapsulation(Mcu_send, 14, 0x05, Sn, 0x04);
+  39   1                      MCU_OLED_StatusChange(RX1_Buffer[9]);
+  40   1                  }
+  41   1                  // WiFi模 组 读 取 设 备 的 当 前 状 态
+  42   1                  if(RX1_Buffer[8] == 0x02) {
+  43   1                      Data_Encapsulation(Mcu_send, 14, 0x04, Sn, 0x03);
+  44   1                  }
+  45   1                  break;
+  46   1              //MCU主动上报当前状态WIFI模组回复
+  47   1              case 0x06:
+  48   1                  break;
+  49   1              //WiFi模组向MCU发送心跳
+  50   1              case 0x07:
+  51   1                  //关闭定时器，将计数器置0
+  52   1                  TR0 = 0;
+  53   1                  Timer0_Count = 0;
+  54   1                  Data_Encapsulation(Mcu_send, 9, 0x08, Sn, 0x00);
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     11/24/2020 21:00:44 PAGE 2   
+
+  55   1                  //打开定时器
+  56   1                  TR0 = 1;
+  57   1                  break;
+  58   1              //通知WIFI模组进入配置模式后接收WIFI模组回复
+  59   1              case 0x0a:
+  60   1                  //OLED_CLS_Local(0,2,X_WIDTH,Y_WIDTH);
+  61   1                  //OLED_P6x8Str(2,2,"Enter Wifi Config!");
+  62   1                  break;
+  63   1              //重置WiFi模组后接收WIFI模组回复
+  64   1              case 0x0c:
+  65   1                  //OLED_CLS_Local(0,2,X_WIDTH,Y_WIDTH);
+  66   1                  //OLED_P6x8Str(2,2,"Wifi Reset Success!");
+  67   1                  break;
+  68   1              //WiFi模组向MCU推送WiFi状态
+  69   1              case 0x0d:
+  70   1                  //将手机连接标志位，网络连接标志位初始化
+  71   1                  Phone_flag = 0;
+  72   1                  Net_flag = 0;
+  73   1                  //展示WiFi连接信息
+  74   1                  MCU_OLED_MessageShow(RX1_Buffer[4], RX1_Buffer[8], RX1_Buffer[9]);
+  75   1                  if(RX1_Buffer[8] >= 0x00 && RX1_Buffer[8] <= 0x07 ) {
+  76   1                      Net_flag = 1;
+  77   1                  }
+  78   1                  if(RX1_Buffer[8] >= 0x08 && RX1_Buffer[8] <= 0x0F ) {
+  79   1                      Net_flag = 1;
+  80   1                      Phone_flag = 1;
+  81   1                  }
+  82   1                  //展示产品连接信息
+  83   1                  MCU_OLED_StatusChange(0x00);
+  84   1                  Data_Encapsulation(Mcu_send, 9, 0x0e, Sn, 0x00);
+  85   1                  break;
+  86   1              case 0x0f:
+  87   1                  Data_Encapsulation(Mcu_send, 9, 0x10, Sn, 0x00);
+  88   1                  break;
+  89   1              //WiFi模组非法数据包通知
+  90   1              case 0x11:
+  91   1                  Data_Encapsulation(Mcu_send, 10, 0x12, Sn, RX1_Buffer[8]);
+  92   1                  break;
+  93   1              //MCU请求WiFi进入可绑定模式，WiFi模组回复
+  94   1              case 0x16:
+  95   1                  break;
+  96   1              //MCU请求获取网络时间，WiFi模组回复
+  97   1              case 0x18:
+  98   1                  break;
+  99   1              case 0x2a:
+ 100   1                  //MCU请求WiFi重启，WiFi模组回复
+ 101   1                  break;
+ 102   1              }
+ 103   1              RST_Uart_Timer();
+ 104   1          }
+ 105   1      */
+ 106   1      }
+ 107          //========================================================================
+ 108          // 函数: void UART_Send_Processing()
+ 109          // 描述: UART1发送处理函数
+ 110          // 参数: 无
+ 111          // 返回: 无
+ 112          // 版本: V1.0, 2020.04.24
+ 113          //========================================================================
+ 114          void UART_Send_Processing()
+ 115          {
+ 116   1      
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     11/24/2020 21:00:44 PAGE 3   
+
+ 117   1          unsigned char flag = 0;
+ 118   1          //  配置WiFi模式(Soft模式)  **/
+ 119   1          if(Set_soft_flag == 0)      {
+ 120   2              Delay_ms(10);
+ 121   2              if(Set_soft_flag == 0)      {
+ 122   3                  flag = 0x01;
+ 123   3              }
+ 124   2          }
+ 125   1          //  配置WiFi模式(AP模式)  **/
+ 126   1          if(Set_AP_flag == 0)        {
+ 127   2              Delay_ms(10);
+ 128   2              if(Set_AP_flag == 0)        {
+ 129   3                  flag = 0x02;
+ 130   3              }
+ 131   2          }
+ 132   1          //  重置WiFi信息  **/
+ 133   1          if(Reset_message_flag == 0) {
+ 134   2              Delay_ms(10);
+ 135   2              if(Reset_message_flag == 0) {
+ 136   3                  flag = 0x03;
+ 137   3              }
+ 138   2          }
+ 139   1          //  WiFi进入可绑定模式  **/
+ 140   1          if(Bindable_wifi_flag == 0) {
+ 141   2              Delay_ms(10);
+ 142   2              if(Bindable_wifi_flag == 0) {
+ 143   3                  flag = 0x04;
+ 144   3              }
+ 145   2          }
+ 146   1          //   重启WiFi模组   **/
+ 147   1          if(Restart_wifi_flag == 0)  {
+ 148   2              Delay_ms(10);
+ 149   2              if(Restart_wifi_flag == 0)  {
+ 150   3                  flag = 0x05;
+ 151   3              }
+ 152   2          }
+ 153   1          if(flag != 0 && Wifi_flag == 1) {
+ 154   2              if(flag <= 0x05) {
+ 155   3                  OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
+ 156   3              }
+ 157   2              if(Sn != 0x00) {
+ 158   3                  Sn = Sn + 0x01;
+ 159   3              }
+ 160   2              switch(flag) {
+ 161   3              //  配置WiFi模式(Soft模式)  **/
+ 162   3              case 0x01:
+ 163   3                  OLED_P6x8Str(2, 2, "Configure Wifi:Soft");
+ 164   3                  Data_Encapsulation(Mcu_send, 10, 0x09, Sn, 0x01);
+ 165   3                  break;
+ 166   3              //  配置WiFi模式(AP模式)  **/
+ 167   3              case 0x02:
+ 168   3                  OLED_P6x8Str(2, 2, "Configure Wifi:AP");
+ 169   3                  Data_Encapsulation(Mcu_send, 10, 0x09, Sn, 0x02);
+ 170   3                  break;
+ 171   3              //  重置WiFi信息  **/
+ 172   3              case 0x03:
+ 173   3                  OLED_P6x8Str(2, 2, "Reset Wifi!");
+ 174   3                  Data_Encapsulation(Mcu_send, 9, 0x0b, Sn, 0x00);
+ 175   3                  break;
+ 176   3              //  WiFi进入可绑定模式  **/
+ 177   3              case 0x04:
+ 178   3                  OLED_P6x8Str(2, 2, "Enter bindable mode!");
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     11/24/2020 21:00:44 PAGE 4   
+
+ 179   3                  Data_Encapsulation(Mcu_send, 9, 0x15, Sn, 0x00);
+ 180   3                  break;
+ 181   3              //   重启WiFi模组   **/
+ 182   3              case 0x05:
+ 183   3                  OLED_P6x8Str(2, 2, "Restart Wifi!");
+ 184   3                  Data_Encapsulation(Mcu_send, 9, 0x29, Sn, 0x00);
+ 185   3                  break;
+ 186   3              }
+ 187   2              while(Set_soft_flag == 0 || Set_AP_flag == 0 || Reset_message_flag == 0 || Bindable_wifi_flag == 0
+             - || Restart_wifi_flag == 0);
+ 188   2          }
+ 189   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    461    ----
+   CONSTANT SIZE    =     85    ----
+   XDATA SIZE       =      1       1
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
