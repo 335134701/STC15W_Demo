@@ -6,6 +6,8 @@ unsigned char Phone_flag = 0x00;
 unsigned char Net_flag = 000;
 //wifi是否连接标记位
 unsigned char Wifi_flag = 0x00;
+//最小命令单位长度
+unsigned int MinOrder = 9;
 
 
 //wifi模组请求设备信息，mcu回复

@@ -39,23 +39,17 @@ unsigned char Uart_Pretreatment()
 {
     //Check_protocol_flag表示接收数据是否有效标记位
     unsigned char Check_protocol_flag = 0;
-    if((RX1_len > 0) && !B_TX1_Busy) {
-				//Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
-				SendString1(RX1_Buffer, RX1_len);
-        //REN = 0;
-        //串口2调试输出打印数据
-        //Printf(0, RX1_Buffer, RX1_len);
-				//SendString1(RX1_Buffer, sizeof(RX1_Buffer));
-        //Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
-				/*
-        if(!Check_protocol_flag) {
-            UART_BUF_Init();
-        }
-			*/
+		if((RX1_len > 0) && !B_TX1_Busy) {
+				if( RX1_Buffer[0]==0xFF || RX1_Buffer[1]==0xFF )
+				{
+						if(RX1_len>(MinOrder+5)){UART_BUF_Init();}	
+						if(RX1_len>=MinOrder){Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);}	
+				}else{
+						UART_BUF_Init();
+				}
+    }else{
 				UART_BUF_Init();
-    } else {
-        UART_BUF_Init();
-    }
+		}
     return Check_protocol_flag;
 }
 
@@ -90,8 +84,9 @@ unsigned char Check_Protocol(unsigned char *Buf, unsigned int Buf_len)
 {
     unsigned char Check_protocol_flag = 0;
     //将原BUF的校验和提取
-    unsigned char old_checksum = Buf[Buf_len - 1];
+    unsigned char old_checksum = 0xFF;
     unsigned char new_checksum = 0x00;
+		if(Buf_len>0){old_checksum = Buf[Buf_len - 1];}
     //计算新的校验和并赋值给new_checksum
     new_checksum = Calculate_Checksum(Buf, Buf_len);
     //比较原校验和与新校验和是否一致

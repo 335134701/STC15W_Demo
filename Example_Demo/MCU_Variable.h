@@ -7,6 +7,8 @@ extern unsigned char Wifi_flag;
 extern unsigned char Phone_flag;
 //网络连接信号标记位
 extern unsigned char Net_flag;
+
+extern unsigned int MinOrder;
 //设备信息字符串
 extern const unsigned char Device_information[115];
 //通用命令字符串

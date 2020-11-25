@@ -13,8 +13,6 @@ unsigned char Sn = 0x00;
 //========================================================================
 void UART_Receive_Processing()
 {
-	Uart_Pretreatment();
-/*
     //校验接收数据的合法性
     if(Uart_Pretreatment()) {
         //无线模块连接标记位
@@ -100,9 +98,8 @@ void UART_Receive_Processing()
             //MCU请求WiFi重启，WiFi模组回复
             break;
         }
-        RST_Uart_Timer();
+        UART_BUF_Init();
     }
-*/
 }
 //========================================================================
 // 函数: void UART_Send_Processing()
