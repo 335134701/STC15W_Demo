@@ -43,7 +43,9 @@ unsigned char Uart_Pretreatment()
 				if( RX1_Buffer[0]==0xFF || RX1_Buffer[1]==0xFF )
 				{
 						if(RX1_len>(MinOrder+5)){UART_BUF_Init();}	
-						if(RX1_len>=MinOrder){Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);}	
+						if(RX1_len>=MinOrder && (HexToInt(RX1_Buffer[2])*pow(16,2)+HexToInt(RX1_Buffer[3])+4)==RX1_len){
+								Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
+						}	
 				}else{
 						UART_BUF_Init();
 				}
@@ -97,17 +99,21 @@ unsigned char Check_Protocol(unsigned char *Buf, unsigned int Buf_len)
 }
 
 //========================================================================
-// 函数: void Data_Encapsulation(unsigned char *Buf,unsigned int Buf_len,unsigned char order,sn,action)
+// 函数: void Data_Encapsulation(unsigned int Buf_len,unsigned char order,sn,action)
 // 描述: 根据需要，打包数据并发送
 // 参数: *Buf:字符数组,Buf_len:数组实际长度
 // 返回: 无
 // 说明：无
 // 版本: V1.0, 2020.03.09
 //========================================================================
-void Data_Encapsulation(unsigned char *Buf, unsigned int Buf_len, unsigned char order, sn, action)
+void Data_Encapsulation(unsigned int Buf_len, unsigned char order, sn, action)
 {
+		unsigned char *Buf;
     //判断是否询问产品信息
     if(Buf_len != sizeof(Device_information)) {
+				Buf=(unsigned char*)calloc(Buf_len,sizeof(unsigned char));
+				memset(Buf, 0, sizeof(Buf));
+				Buf[0]=0xFF;Buf[1]=0xFF;
         switch(Buf_len) {
         case 9:
             Buf[3] = 0x05;
@@ -139,8 +145,6 @@ void Data_Encapsulation(unsigned char *Buf, unsigned int Buf_len, unsigned char 
     Buf[Buf_len - 1] = Calculate_Checksum(Buf, Buf_len);
     //串口1回复数据
     SendString1(Buf, Buf_len);
-    //串口2转发发送数据
-    Printf(1, Buf, Buf_len);
 }
 //========================================================================
 // 函数: void IsConnect_wifi()
@@ -167,131 +171,20 @@ void IsConnect_wifi()
     }
 }
 //========================================================================
-// 函数: void Printf(unsigned char flag,unsigned char *Buf,unsigned int len)
-// 描述: UART2输出
-// 参数: *Buf:字符数组,Buf_len:数组实际长度
-// 返回: 无
+// 函数: void HexToInt(unsigned char Buf)
+// 描述: 十六进转十进制
+// 参数: Buf:十进制字符
+// 返回: 十进制数
 // 说明：无
 // 版本: V1.0, 2020.03.09
 //========================================================================
-void Printf(unsigned char flag, unsigned char *Buf, unsigned int len)
+unsigned int HexToInt(unsigned char Buf)
 {
-    unsigned char Buf_HEX[RX1_Length] = {0};
-    switch(flag) {
-    case 0:
-        SendString2("RX:", 3);
-        break;
-    case 1:
-        SendString2("TX:", 3);
-        break;
-    }
-    HexToAscii(Buf_HEX, Buf, len);
-    SendString2(Buf_HEX, (len * 3 - 1));
-    SendString2("\r\n", 2);
+    unsigned char Nibble[2]={0};
+    unsigned int tmp=0;
+    Nibble[0] = Buf & 0x0F;
+    Nibble[1] = Buf >> 4 & 0X0F;
+    tmp = Nibble[0]*pow(16,0);
+    tmp = tmp+Nibble[1]*pow(16,1);
+    return tmp;
 }
-//========================================================================
-// 函数: void HexToAscii(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
-// 描述: Hex转Ascii
-// 参数: Buf_Dest:目标字符集,Buf_Src:原字符集,Buf_len:原字符集实际长度;
-// 返回: 无
-// 说明：无
-// 版本: V1.0, 2020.03.09
-//========================================================================
-void HexToAscii(unsigned char *Buf_Dest, unsigned char *Buf_Src, unsigned int Buf_len)
-{
-    unsigned char Nibble[3] = {0};
-    unsigned char Buffer[RX1_Length] = {0};
-    int i = 0, j = 0;
-    for(i = 0; i < Buf_len; i++) {
-
-        Nibble[0] = Buf_Src[i] >> 4 & 0X0F;
-        Nibble[1] = Buf_Src[i] & 0x0F;
-        for(j = 0; j < sizeof(Nibble) - 1; j++) {
-            if((Nibble[j] >= 0x00) && (Nibble[j] < 0x0A)) {
-                Nibble[j] = Nibble[j] + '0';
-            } else if((Nibble[j] >= 0x0A) && (Nibble[j] <= 0x0F)) {
-                Nibble[j] = Nibble[j] - 10 + 'A';
-            } else {
-                return;
-            }
-        }
-        if(i < (Buf_len - 1)) {
-            Nibble[2] = ' ';
-        } else {
-            Nibble[2] = '\0';
-        }
-        memcpy(Buffer + i * sizeof(Nibble), Nibble, sizeof(Nibble));
-    }
-    memcpy(Buf_Dest, Buffer, sizeof(Nibble)*Buf_len);
-    return ;
-}
-/*
-//========================================================================
-// 函数: void IntToHEX(unsigned char* str,int number)
-// 描述: 十进制转十六进制
-// 参数: str:目标字符集,number:十进制数字
-// 返回: 无
-// 说明：无
-// 版本: V1.0, 2020.03.09
-//========================================================================
-void IntToHEX(unsigned char* str,int number)
-{
-    unsigned char i=0,j=0,CLen=0,index=0,RLen=0,TRlen=0;
-    unsigned char tmp[16]={0};
-    if(number==0){ str[0]=0x00;return;}
-    while (number!=0)
-    {
-        i = number%2;
-        number /= 2;
-        tmp[index++] = i+48;
-    }
-    RLen=strlen(tmp);
-    if(RLen%8==0){CLen=RLen/8;}else{CLen=RLen/8+1;}
-    for(i=0;i<CLen;i++)
-    {
-        if(i==(CLen-1)){TRlen=RLen%8;}
-        else{TRlen=8;}
-        index=i*8;
-        for(j=0;j<TRlen;j++){
-            str[i]= ((tmp[index*i+j]-0x30) << j | str[i]);
-        }
-    }
-}
-
-//========================================================================
-// 函数: void AsciiToHex(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
-// 描述: ASCII转HEX
-// 参数: Buf_Dest:目标字符集,Buf_Src:原字符集,Buf_len:原字符集实际长度;
-// 返回: 无
-// 说明：无
-// 版本: V1.0, 2020.03.09
-//========================================================================
-void AsciiToHex(unsigned char *Buf_Dest,unsigned char *Buf_Src,unsigned int Buf_len)
-{
-	unsigned int nHexLen = (Buf_len+1) / 3;
-	unsigned char Nibble[3] = {0};
-	unsigned int i = 0,j=0;
-	if ((Buf_len+1)%3){return;}
-	for (i = 0; i < nHexLen; i ++)
-	{
-		Nibble[0] = *Buf_Src ++;
-		Nibble[1] = *Buf_Src ++;
-		if(i!=(nHexLen-1)){Nibble[2] = *Buf_Src ++;}
-		for (j = 0; j < (sizeof(Nibble)-1); j ++)
-		{
-			if (Nibble[j] <= 'F' && Nibble[j] >= 'A')
-				Nibble[j] = Nibble[j] - 'A' + 10;
-			else if (Nibble[j] <= 'f' && Nibble[j] >= 'a')
-				Nibble[j] = Nibble[j] - 'a' + 10;
-			else if (Nibble[j] >= '0' && Nibble[j] <= '9')
-				Nibble [j] = Nibble[j] - '0';
-			else
-				return ;//Nibble[j] = Nibble[j] - 'a' + 10;
-
-		}	// for (int j = ...)
-		Buf_Dest[i] = Nibble[0] << 4;	// Set the high nibble
-		Buf_Dest[i] |= Nibble[1];	//Set the low nibble
-	}	// for (int i = ...)
-	return;
-}
-*/

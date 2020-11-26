@@ -29,6 +29,7 @@ void MCU_Init(void)
     OLED_CLS();     //OLED 清屏
 		Uart_Init();    //UART 初始化
     Timer_Config(); //定时器初始化函数
+		Dect_Init();    //引脚初始化
 		//OLED显示
     OLED_P6x8Str(8, 0, "Welcome Demo System");
 		EA = 1; 					//开总中断

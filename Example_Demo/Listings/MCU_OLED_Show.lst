@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     11/25/2020 20:52:47 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     11/26/2020 21:16:06 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_OLED_SHOW
@@ -62,7 +62,7 @@ line level    source
   52          //========================================================================
   53          // 函数: void MCU_OLED_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_stat
              -us_2)
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     11/25/2020 20:52:47 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     11/26/2020 21:16:06 PAGE 2   
 
   54          // 描述: 系统OLED显示函数,主要显示WiFi连接状态
   55          // 参数: Order:WiFi推送状态命令;Wifi_status_1,Wifi_status_2:WiFi状态标记位
@@ -127,7 +127,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     11/25/2020 20:52:47 PAGE 3   
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     11/26/2020 21:16:06 PAGE 3   
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

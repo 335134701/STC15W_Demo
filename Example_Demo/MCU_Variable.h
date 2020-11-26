@@ -11,7 +11,5 @@ extern unsigned char Net_flag;
 extern unsigned int MinOrder;
 //设备信息字符串
 extern const unsigned char Device_information[115];
-//通用命令字符串
-extern unsigned char Mcu_send[];
 
 #endif
