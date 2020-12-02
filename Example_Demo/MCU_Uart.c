@@ -37,7 +37,7 @@ void	UART2_config(unsigned char brt);
 void Uart_Init(void)
 {
 	UART1_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: Ê¹ÓÃTimer1×ö²¨ÌØÂÊ.
-	UART2_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: ÎŞĞ§.
+	//UART2_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: ÎŞĞ§.
 	/*
 	UART2_config(2);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: ÎŞĞ§.
 	UART3_config(3);	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖµ: Ê¹ÓÃTimer3×ö²¨ÌØÂÊ.
@@ -111,7 +111,7 @@ void	UART1_config(unsigned char brt)
 	RX1_len   = 0;
 }
 
-
+/*
 //========================================================================
 // º¯Êı: void	UART2_config(unsigned char brt)
 // ÃèÊö: UART2³õÊ¼»¯º¯Êı¡£
@@ -136,7 +136,7 @@ void	UART2_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖ
 	//B_TX2_Busy  = 0;
 	//RX2_len   = 0;
 }
-/*
+
 //========================================================================
 // º¯Êı: void	UART3_config(unsigned char brt)
 // ÃèÊö: UART3³õÊ¼»¯º¯Êı¡£
@@ -241,6 +241,7 @@ void SendString1(unsigned char *puts,unsigned int len)
 			while(B_TX1_Busy);	//µÈ´ı·¢ËÍÍê³É
 		}
 }
+/*
 //========================================================================
 // º¯Êı: void SendString2(unsigned char *puts,unsigned int len)
 // ÃèÊö: Uart1·¢ËÍÊı¾İº¯Êı
@@ -260,7 +261,7 @@ void SendString2(unsigned char *puts,unsigned int len)
 			while(B_TX2_Busy);	//µÈ´ı·¢ËÍÍê³É
 		}
 }
-/*
+
 //========================================================================
 // º¯Êı: SendString3(unsigned char *puts)
 // ÃèÊö: Uart1·¢ËÍÊı¾İº¯Êı
@@ -322,7 +323,7 @@ void UART1_int (void) interrupt UART1_VECTOR
 		B_TX1_Busy = 0;
 	}
 }
-
+/*
 //========================================================================
 // º¯Êı: void UART2_int (void) interrupt UART2_VECTOR
 // ÃèÊö: Uart2ÖĞ¶Ï´¥·¢º¯Êı
@@ -348,7 +349,7 @@ void UART2_int (void) interrupt UART2_VECTOR
 	}
 
 }
-/*
+
 //========================================================================
 // º¯Êı: void UART3_int (void) interrupt UART3_VECTOR
 // ÃèÊö: Uart3ÖĞ¶Ï´¥·¢º¯Êı

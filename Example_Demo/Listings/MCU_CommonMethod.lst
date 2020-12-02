@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  11/26/2020 21:16:05 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  12/03/2020 00:07:44 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_COMMONMETHOD
@@ -38,178 +38,172 @@ line level    source
   28   1          memset(RX1_Buffer, 0, sizeof(RX1_Buffer));
   29   1      }
   30          //========================================================================
-  31          // 函数: unsigned char Uart_Pretreatment()
-  32          // 描述: 数据接收预处理函数
-  33          // 参数: 无
+  31          // 函数: void memcat(unsigned char *dest, const unsigned char *src,unsigned int index,len)
+  32          // 描述: 字符数组拼接函数
+  33          // 参数: dest目的字符数组,src源字符数组,index拼接位置,len拼接长度
   34          // 返回: 无
-  35          // 说明：此函数主要处理，接收字符串，并校验字符串
+  35          // 说明：此函数主要初始化串口设置参数
   36          // 版本: V1.0, 2020.03.09
   37          //========================================================================
-  38          unsigned char Uart_Pretreatment()
+  38          void memcat(unsigned char *dest, const unsigned char *src,unsigned int index, len)
   39          {
-  40   1          //Check_protocol_flag表示接收数据是否有效标记位
-  41   1          unsigned char Check_protocol_flag = 0;
-  42   1          if((RX1_len > 0) && !B_TX1_Busy) {
-  43   2              if( RX1_Buffer[0]==0xFF || RX1_Buffer[1]==0xFF )
-  44   2              {
-  45   3                  if(RX1_len>(MinOrder+5)){UART_BUF_Init();}  
-  46   3                  if(RX1_len>=MinOrder && (HexToInt(RX1_Buffer[2])*pow(16,2)+HexToInt(RX1_Buffer[3])+4)==RX1_len){
-  47   4                      Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
-  48   4                  } 
-  49   3              }else{
-  50   3                  UART_BUF_Init();
-  51   3              }
-  52   2          }else{
-  53   2              UART_BUF_Init();
-  54   2          }
-C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  11/26/2020 21:16:05 PAGE 2   
+  40   1          unsigned int i=0;
+  41   1          if(index<0){ return;}
+  42   1          for (i = index;  i< len+index; i++) {
+  43   2              dest[i]=src[i-index];
+  44   2          }
+  45   1      }
+  46          //========================================================================
+  47          // 函数: unsigned char Uart_Pretreatment()
+  48          // 描述: 数据接收预处理函数
+  49          // 参数: 无
+  50          // 返回: 无
+  51          // 说明：此函数主要处理，接收字符串，并校验字符串
+  52          // 版本: V1.0, 2020.03.09
+  53          //========================================================================
+  54          unsigned char Uart_Pretreatment()
+C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  12/03/2020 00:07:44 PAGE 2   
 
-  55   1          return Check_protocol_flag;
-  56   1      }
-  57          
-  58          //========================================================================
-  59          // 函数: unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
-  60          // 描述: 计算校验和
-  61          // 参数: *Buf:字符数组,Buf_len:数组实际长度
-  62          // 返回: 无
-  63          // 说明：无
-  64          // 版本: V1.0, 2020.03.09
-  65          //========================================================================
-  66          unsigned char Calculate_Checksum(unsigned char *Buf, unsigned int Buf_len)
-  67          {
-  68   1          unsigned char checksum = 0x00;
-  69   1          unsigned int i = 0, len = Buf_len;
-  70   1          for(i = 2; i < (len - 1); i++) {
-  71   2              checksum = checksum + Buf[i];
-  72   2          }
-  73   1          checksum = checksum % 256;
-  74   1          return checksum;
-  75   1      }
-  76          
-  77          //========================================================================
-  78          // 函数: unsigned char Check_Protocol(unsigned char *Buf,unsigned int Buf_len)
-  79          // 描述: 检验校验和是否一致
-  80          // 参数: *Buf:字符数组,Buf_len:数组实际长度
-  81          // 返回: 无
-  82          // 说明：具体思想为：接收到的BUF，取校验和，计算新的校验和，对比是否一致，若不一致，则数据无效
-  83          // 版本: V1.0, 2020.03.09
-  84          //========================================================================
-  85          unsigned char Check_Protocol(unsigned char *Buf, unsigned int Buf_len)
-  86          {
-  87   1          unsigned char Check_protocol_flag = 0;
-  88   1          //将原BUF的校验和提取
-  89   1          unsigned char old_checksum = 0xFF;
-  90   1          unsigned char new_checksum = 0x00;
-  91   1          if(Buf_len>0){old_checksum = Buf[Buf_len - 1];}
-  92   1          //计算新的校验和并赋值给new_checksum
-  93   1          new_checksum = Calculate_Checksum(Buf, Buf_len);
-  94   1          //比较原校验和与新校验和是否一致
-  95   1          if(new_checksum == old_checksum) {
-  96   2              Check_protocol_flag = 1;
-  97   2          }
-  98   1          return Check_protocol_flag;
-  99   1      }
- 100          
- 101          //========================================================================
- 102          // 函数: void Data_Encapsulation(unsigned int Buf_len,unsigned char order,sn,action)
- 103          // 描述: 根据需要，打包数据并发送
- 104          // 参数: *Buf:字符数组,Buf_len:数组实际长度
- 105          // 返回: 无
- 106          // 说明：无
- 107          // 版本: V1.0, 2020.03.09
- 108          //========================================================================
- 109          void Data_Encapsulation(unsigned int Buf_len, unsigned char order, sn, action)
- 110          {
- 111   1          unsigned char *Buf;
- 112   1          //判断是否询问产品信息
- 113   1          if(Buf_len != sizeof(Device_information)) {
- 114   2              Buf=(unsigned char*)calloc(Buf_len,sizeof(unsigned char));
- 115   2              memset(Buf, 0, sizeof(Buf));
- 116   2              Buf[0]=0xFF;Buf[1]=0xFF;
-C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  11/26/2020 21:16:05 PAGE 3   
+  55          {
+  56   1          //Check_protocol_flag表示接收数据是否有效标记位
+  57   1          unsigned char Check_protocol_flag = 0;
+  58   1          if(RX1_len > 0 && !B_TX1_Busy && RX1_Buffer[0]==0xFF){
+  59   2              if(RX1_len>2)
+  60   2              {
+  61   3                    if(RX1_Buffer[1]==0xFF){
+  62   4                        if(RX1_len>(MinOrder+5)){UART_BUF_Init();}  
+  63   4                        if(RX1_len>=MinOrder && (RX1_Buffer[2]*16*16+RX1_Buffer[3]+4)==RX1_len){
+  64   5                            Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
+  65   5                            if(!Check_protocol_flag){UART_BUF_Init();}
+  66   5                        }
+  67   4                    }
+  68   3                    else{
+  69   4                        UART_BUF_Init();
+  70   4                    }
+  71   3              }
+  72   2          }else{
+  73   2              UART_BUF_Init();
+  74   2          }
+  75   1          return Check_protocol_flag;
+  76   1      }
+  77          
+  78          //========================================================================
+  79          // 函数: unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
+  80          // 描述: 计算校验和
+  81          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+  82          // 返回: 无
+  83          // 说明：无
+  84          // 版本: V1.0, 2020.03.09
+  85          //========================================================================
+  86          unsigned char Calculate_Checksum(unsigned char *Buf, unsigned int Buf_len)
+  87          {
+  88   1          unsigned char checksum = 0x00;
+  89   1          unsigned int i = 0, len = Buf_len;
+  90   1          for(i = 2; i < (len - 1); i++) {
+  91   2              checksum = checksum + Buf[i];
+  92   2          }
+  93   1          checksum = checksum % 256;
+  94   1          return checksum;
+  95   1      }
+  96          
+  97          //========================================================================
+  98          // 函数: unsigned char Check_Protocol(unsigned char *Buf,unsigned int Buf_len)
+  99          // 描述: 检验校验和是否一致
+ 100          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+ 101          // 返回: 无
+ 102          // 说明：具体思想为：接收到的BUF，取校验和，计算新的校验和，对比是否一致，若不一致，则数据无效
+ 103          // 版本: V1.0, 2020.03.09
+ 104          //========================================================================
+ 105          unsigned char Check_Protocol(unsigned char *Buf, unsigned int Buf_len)
+ 106          {
+ 107   1          unsigned char Check_protocol_flag = 0;
+ 108   1          //将原BUF的校验和提取
+ 109   1          unsigned char old_checksum = 0xFF;
+ 110   1          unsigned char new_checksum = 0x00;
+ 111   1          if(Buf_len>0){old_checksum = Buf[Buf_len - 1];}
+ 112   1          //计算新的校验和并赋值给new_checksum
+ 113   1          new_checksum = Calculate_Checksum(Buf, Buf_len);
+ 114   1          //比较原校验和与新校验和是否一致
+ 115   1          if(new_checksum == old_checksum) {
+ 116   2              Check_protocol_flag = 1;
+C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  12/03/2020 00:07:44 PAGE 3   
 
- 117   2              switch(Buf_len) {
- 118   3              case 9:
- 119   3                  Buf[3] = 0x05;
- 120   3                  break;
- 121   3              case 10:
- 122   3                  Buf[3] = 0x06;
- 123   3                  break;
- 124   3              case 11:
- 125   3                  Buf[3] = 0x07;
- 126   3                  break;
- 127   3              case 12:
- 128   3                  Buf[3] = 0x08;
- 129   3                  break;
- 130   3              case 14:
- 131   3                  Buf[3] = 0x0A;
- 132   3                  Buf[9] = (P1 >> 4 & 0X0F);
- 133   3                  Buf[10] = 1;
- 134   3                  Buf[11] = 0x00;
- 135   3                  Buf[12] = 0x00;
- 136   3                  break;
- 137   3              }
- 138   2              Buf[4] = order;
- 139   2              Buf[5] = sn;
- 140   2              if(Buf_len != 9) {
- 141   3                  Buf[8] = action;
- 142   3              }
- 143   2          }
- 144   1          //计算校验和
- 145   1          Buf[Buf_len - 1] = Calculate_Checksum(Buf, Buf_len);
- 146   1          //串口1回复数据
- 147   1          SendString1(Buf, Buf_len);
- 148   1      }
- 149          //========================================================================
- 150          // 函数: void IsConnect_wifi()
- 151          // 描述: 判断是否接收到心跳包，如果没有接收到表示，连接wifi失败
- 152          // 参数: *Buf:字符数组,Buf_len:数组实际长度
- 153          // 返回: 无
- 154          // 说明：无
- 155          // 版本: V1.0, 2020.03.09
- 156          //========================================================================
- 157          void IsConnect_wifi()
- 158          {
- 159   1          if((Wifi_flag == 1) && (Timer0_Count == 0)) {
- 160   2              TR0 = 1;
- 161   2          }
- 162   1          //超过一分钟还未收到心跳包，即单片机与wifi模块失去联系
- 163   1          if(Timer0_Count >= 12000) {
- 164   2              TR0 = 0;
- 165   2              Timer0_Count = 0;
- 166   2              Wifi_flag = 0x00;
- 167   2              Net_flag = 0;
- 168   2              Phone_flag = 0;
- 169   2              OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
- 170   2              OLED_P6x8Str(36, 4, "Wifi loss!");
- 171   2          }
- 172   1      }
- 173          //========================================================================
- 174          // 函数: void HexToInt(unsigned char Buf)
- 175          // 描述: 十六进转十进制
- 176          // 参数: Buf:十进制字符
- 177          // 返回: 十进制数
- 178          // 说明：无
-C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  11/26/2020 21:16:05 PAGE 4   
+ 117   2          }
+ 118   1          return Check_protocol_flag;
+ 119   1      }
+ 120          
+ 121          //========================================================================
+ 122          // 函数: void Data_Encapsulation(unsigned int Buf_len,unsigned char order,sn,action)
+ 123          // 描述: 根据需要，打包数据并发送
+ 124          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+ 125          // 返回: 无
+ 126          // 说明：无
+ 127          // 版本: V1.0, 2020.03.09
+ 128          //========================================================================
+ 129          void Data_Encapsulation(unsigned int Buf_len, unsigned char order, action)
+ 130          {
+ 131   1          unsigned char Buf[116]={0};
+ 132   1          memcpy(Buf,PublicAgreement,sizeof(PublicAgreement));
+ 133   1          Buf[3] = Buf_len-4;
+ 134   1          Buf[4] = order;
+ 135   1          Buf[5] = Sn;
+ 136   1          //上传设备信息
+ 137   1          if(order==0x02){
+ 138   2              memcat(Buf,SerialProVersion,8,sizeof(SerialProVersion));
+ 139   2              memcat(Buf,BusinessProVersion,16,sizeof(BusinessProVersion));
+ 140   2              memcat(Buf,HardVersion,24,sizeof(HardVersion));
+ 141   2              memcat(Buf,SoftVersion,32,sizeof(SoftVersion));
+ 142   2              memcat(Buf,ProductKey,40,sizeof(ProductKey));
+ 143   2              memcat(Buf,DeviceAttributes,74,sizeof(DeviceAttributes));
+ 144   2              memcat(Buf,ProductSecert,82,sizeof(ProductSecert));
+ 145   2          }
+ 146   1          //接收非法数据包
+ 147   1          if(order==0x12){Buf[8] = action;}
+ 148   1          //上传设备状态
+ 149   1          if((order==0x04&&action==0x03)||(order==0x05&&action==0x04)){
+ 150   2              Buf[8] = action;
+ 151   2              Buf[9] = (P1 >> 4 & 0X0F);
+ 152   2              Buf[10] = 1;
+ 153   2              Buf[11] = 0x00;
+ 154   2              Buf[12] = 0x00;
+ 155   2          }
+ 156   1          //计算校验和
+ 157   1          Buf[Buf_len - 1] = Calculate_Checksum(Buf, Buf_len);
+ 158   1          //串口1回复数据
+ 159   1          SendString1(Buf, Buf_len);
+ 160   1      }
+ 161          //========================================================================
+ 162          // 函数: void IsConnect_wifi()
+ 163          // 描述: 判断是否接收到心跳包，如果没有接收到表示，连接wifi失败
+ 164          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+ 165          // 返回: 无
+ 166          // 说明：无
+ 167          // 版本: V1.0, 2020.03.09
+ 168          //========================================================================
+ 169          void IsConnect_wifi()
+ 170          {
+ 171   1          if((Wifi_flag == 1) && (Timer0_Count == 0)) {
+ 172   2              TR0 = 1;
+ 173   2          }
+ 174   1          //超过一分钟还未收到心跳包，即单片机与wifi模块失去联系
+ 175   1          if(Timer0_Count >= 12000) {
+ 176   2              TR0 = 0;
+ 177   2              Timer0_Count = 0;
+ 178   2              Wifi_flag = 0x00;
+C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  12/03/2020 00:07:44 PAGE 4   
 
- 179          // 版本: V1.0, 2020.03.09
- 180          //========================================================================
- 181          unsigned int HexToInt(unsigned char Buf)
- 182          {
- 183   1          unsigned char Nibble[2]={0};
- 184   1          unsigned int tmp=0;
- 185   1          Nibble[0] = Buf & 0x0F;
- 186   1          Nibble[1] = Buf >> 4 & 0X0F;
- 187   1          tmp = Nibble[0]*pow(16,0);
- 188   1          tmp = tmp+Nibble[1]*pow(16,1);
- 189   1          return tmp;
- 190   1      }
+ 179   2              Net_flag = 0;
+ 180   2              Phone_flag = 0;
+ 181   2              OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
+ 182   2              OLED_P6x8Str(36, 4, "Wifi loss!");
+ 183   2          }
+ 184   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1114    ----
-   CONSTANT SIZE    =     13    ----
-   XDATA SIZE       =   ----      28
+   CODE SIZE        =   1026    ----
+   CONSTANT SIZE    =    127    ----
+   XDATA SIZE       =   ----     146
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

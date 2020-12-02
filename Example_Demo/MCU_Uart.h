@@ -39,13 +39,13 @@ extern unsigned char	RX1_len;	//接收数据长度
 // UART4:(默认)P0^2,P0^3;		(可选)P5^2,P5^3;
 //========================================================================
 
-extern bit B_TX1_Busy,B_TX2_Busy;	// 发送忙标志
+extern bit B_TX1_Busy;	// 发送忙标志
 //extern bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// 发送忙标志
 
 /*************	本地函数声明	**************/
 extern void Uart_Init(void);
 extern void SendString1(unsigned char *puts,unsigned int len);
-extern void SendString2(unsigned char *puts,unsigned int len);
+//extern void SendString2(unsigned char *puts,unsigned int len);
 //extern void SendString3(unsigned char *puts);
 //extern void SendString4(unsigned char *puts);
 #endif

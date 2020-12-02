@@ -5,6 +5,6 @@
 
 
 extern void MCU_OLED_StatusChange(unsigned char flag);
-extern void MCU_OLED_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_status_2);
+extern void MCU_WIFI_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_status_2);
 
 #endif

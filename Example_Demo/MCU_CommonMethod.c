@@ -28,6 +28,22 @@ void UART_BUF_Init()
     memset(RX1_Buffer, 0, sizeof(RX1_Buffer));
 }
 //========================================================================
+// 函数: void memcat(unsigned char *dest, const unsigned char *src,unsigned int index,len)
+// 描述: 字符数组拼接函数
+// 参数: dest目的字符数组,src源字符数组,index拼接位置,len拼接长度
+// 返回: 无
+// 说明：此函数主要初始化串口设置参数
+// 版本: V1.0, 2020.03.09
+//========================================================================
+void memcat(unsigned char *dest, const unsigned char *src,unsigned int index, len)
+{
+    unsigned int i=0;
+    if(index<0){ return;}
+    for (i = index;  i< len+index; i++) {
+        dest[i]=src[i-index];
+    }
+}
+//========================================================================
 // 函数: unsigned char Uart_Pretreatment()
 // 描述: 数据接收预处理函数
 // 参数: 无
@@ -39,17 +55,21 @@ unsigned char Uart_Pretreatment()
 {
     //Check_protocol_flag表示接收数据是否有效标记位
     unsigned char Check_protocol_flag = 0;
-		if((RX1_len > 0) && !B_TX1_Busy) {
-				if( RX1_Buffer[0]==0xFF || RX1_Buffer[1]==0xFF )
+		if(RX1_len > 0 && !B_TX1_Busy && RX1_Buffer[0]==0xFF){
+				if(RX1_len>2)
 				{
-						if(RX1_len>(MinOrder+5)){UART_BUF_Init();}	
-						if(RX1_len>=MinOrder && (HexToInt(RX1_Buffer[2])*pow(16,2)+HexToInt(RX1_Buffer[3])+4)==RX1_len){
-								Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
-						}	
-				}else{
-						UART_BUF_Init();
+							if(RX1_Buffer[1]==0xFF){
+									if(RX1_len>(MinOrder+5)){UART_BUF_Init();}	
+									if(RX1_len>=MinOrder && (RX1_Buffer[2]*16*16+RX1_Buffer[3]+4)==RX1_len){
+											Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
+											if(!Check_protocol_flag){UART_BUF_Init();}
+									}
+							}
+							else{
+									UART_BUF_Init();
+							}
 				}
-    }else{
+		}else{
 				UART_BUF_Init();
 		}
     return Check_protocol_flag;
@@ -106,41 +126,33 @@ unsigned char Check_Protocol(unsigned char *Buf, unsigned int Buf_len)
 // 说明：无
 // 版本: V1.0, 2020.03.09
 //========================================================================
-void Data_Encapsulation(unsigned int Buf_len, unsigned char order, sn, action)
+void Data_Encapsulation(unsigned int Buf_len, unsigned char order, action)
 {
-		unsigned char *Buf;
-    //判断是否询问产品信息
-    if(Buf_len != sizeof(Device_information)) {
-				Buf=(unsigned char*)calloc(Buf_len,sizeof(unsigned char));
-				memset(Buf, 0, sizeof(Buf));
-				Buf[0]=0xFF;Buf[1]=0xFF;
-        switch(Buf_len) {
-        case 9:
-            Buf[3] = 0x05;
-            break;
-        case 10:
-            Buf[3] = 0x06;
-            break;
-        case 11:
-            Buf[3] = 0x07;
-            break;
-        case 12:
-            Buf[3] = 0x08;
-            break;
-        case 14:
-            Buf[3] = 0x0A;
-            Buf[9] = (P1 >> 4 & 0X0F);
-            Buf[10] = 1;
-            Buf[11] = 0x00;
-            Buf[12] = 0x00;
-            break;
-        }
-        Buf[4] = order;
-        Buf[5] = sn;
-        if(Buf_len != 9) {
-            Buf[8] = action;
-        }
-    }
+		unsigned char Buf[116]={0};
+		memcpy(Buf,PublicAgreement,sizeof(PublicAgreement));
+		Buf[3] = Buf_len-4;
+		Buf[4] = order;
+    Buf[5] = Sn;
+		//上传设备信息
+		if(order==0x02){
+				memcat(Buf,SerialProVersion,8,sizeof(SerialProVersion));
+				memcat(Buf,BusinessProVersion,16,sizeof(BusinessProVersion));
+				memcat(Buf,HardVersion,24,sizeof(HardVersion));
+				memcat(Buf,SoftVersion,32,sizeof(SoftVersion));
+				memcat(Buf,ProductKey,40,sizeof(ProductKey));
+				memcat(Buf,DeviceAttributes,74,sizeof(DeviceAttributes));
+				memcat(Buf,ProductSecert,82,sizeof(ProductSecert));
+		}
+		//接收非法数据包
+		if(order==0x12){Buf[8] = action;}
+		//上传设备状态
+		if((order==0x04&&action==0x03)||(order==0x05&&action==0x04)){
+				Buf[8] = action;
+				Buf[9] = (P1 >> 4 & 0X0F);
+				Buf[10] = 1;
+				Buf[11] = 0x00;
+				Buf[12] = 0x00;
+		}
     //计算校验和
     Buf[Buf_len - 1] = Calculate_Checksum(Buf, Buf_len);
     //串口1回复数据
@@ -169,22 +181,4 @@ void IsConnect_wifi()
         OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
         OLED_P6x8Str(36, 4, "Wifi loss!");
     }
-}
-//========================================================================
-// 函数: void HexToInt(unsigned char Buf)
-// 描述: 十六进转十进制
-// 参数: Buf:十进制字符
-// 返回: 十进制数
-// 说明：无
-// 版本: V1.0, 2020.03.09
-//========================================================================
-unsigned int HexToInt(unsigned char Buf)
-{
-    unsigned char Nibble[2]={0};
-    unsigned int tmp=0;
-    Nibble[0] = Buf & 0x0F;
-    Nibble[1] = Buf >> 4 & 0X0F;
-    tmp = Nibble[0]*pow(16,0);
-    tmp = tmp+Nibble[1]*pow(16,1);
-    return tmp;
 }
