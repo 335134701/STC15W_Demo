@@ -186,7 +186,6 @@ void OLED_CLS_Local(unsigned char first_x,first_y,last_x,last_y)
 //========================================================================
 void OLED_Init(void)
 {
-	Delay_ms(500);//初始化之前的延时很重要！
 	OLED_WrCmd(0xae);//--turn off oled panel
 	OLED_WrCmd(0x00);//---set Low_Voltage column address
 	OLED_WrCmd(0x10);//---set Hight_Voltage column address

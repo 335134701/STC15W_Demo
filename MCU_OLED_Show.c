@@ -50,14 +50,14 @@ void MCU_OLED_StatusChange(unsigned char flag)
 
 
 //========================================================================
-// 函数: void MCU_OLED_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_status_2)
+// 函数: void MCU_WIFI_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_status_2)
 // 描述: 系统OLED显示函数,主要显示WiFi连接状态
 // 参数: Order:WiFi推送状态命令;Wifi_status_1,Wifi_status_2:WiFi状态标记位
 // 返回: 无
 // 说明:
 // 版本: V1.0, 2020.03.09
 //========================================================================
-void MCU_OLED_MessageShow(unsigned char Order, unsigned char Wifi_status_1, unsigned char Wifi_status_2)
+void MCU_WIFI_MessageShow(unsigned char Order, unsigned char Wifi_status_1, unsigned char Wifi_status_2)
 {
     //推送wifi状态
     if(Order == 0x0d) {

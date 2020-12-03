@@ -1,11 +1,10 @@
 #ifndef __MCU_OLED_SHOW_H__
 #define __MCU_OLED_SHOW_H__
 
-#include "MCU_Variable.h"
-#include "OLED_Method.h"
+#include "MCU_Config.h"
 
 
 extern void MCU_OLED_StatusChange(unsigned char flag);
-extern void MCU_OLED_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_status_2);
+extern void MCU_WIFI_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_status_2);
 
 #endif

@@ -15,7 +15,7 @@
         <TargetCommonOption>
           <Device>STC15W4K32S4</Device>
           <Vendor>STC</Vendor>
-          <Cpu>IRAM(0-0xFF) XRAM(0-0xEFF) IROM(0-0xEFF8) CLOCK(35000000) MODP2</Cpu>
+          <Cpu>IRAM(0-0xFF) XRAM(0-0x6FF) IROM(0-0xEFF8) CLOCK(35000000) MODP2</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
@@ -125,7 +125,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -137,7 +137,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>-1</TargetSelection>
+          <TargetSelection>12</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -163,7 +163,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver></Driver>
+            <Driver>BIN\STCMON51.DLL</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -233,7 +233,7 @@
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0xffff</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -283,7 +283,7 @@
               <XRA>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0xf00</Size>
+                <Size>0x700</Size>
               </XRA>
               <XRA512>
                 <Type>0</Type>
@@ -414,12 +414,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>MCU_Protocol</GroupName>
+          <GroupName>MCU_Method</GroupName>
           <Files>
             <File>
-              <FileName>MCU_Hand_Uart.c</FileName>
+              <FileName>MCU_Variable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MCU_Hand_Uart.c</FilePath>
+              <FilePath>.\MCU_Variable.c</FilePath>
+            </File>
+            <File>
+              <FileName>MCU_CommonMethod.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_CommonMethod.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -437,6 +442,11 @@
               <FilePath>.\MCU_Main.c</FilePath>
             </File>
             <File>
+              <FileName>MCU_Hand_Uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_Hand_Uart.c</FilePath>
+            </File>
+            <File>
               <FileName>MCU_Control.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MCU_Control.c</FilePath>
@@ -444,32 +454,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>MCU_OMethod</GroupName>
-          <Files>
-            <File>
-              <FileName>MCU_Method.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MCU_Method.c</FilePath>
-            </File>
-            <File>
-              <FileName>MCU_Variable.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MCU_Variable.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>MCU_Perception</GroupName>
           <Files>
-            <File>
-              <FileName>MCU_OLED_Show.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MCU_OLED_Show.c</FilePath>
-            </File>
             <File>
               <FileName>MCU_Detect.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MCU_Detect.c</FilePath>
+            </File>
+            <File>
+              <FileName>MCU_OLED_Show.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MCU_OLED_Show.c</FilePath>
             </File>
           </Files>
         </Group>
