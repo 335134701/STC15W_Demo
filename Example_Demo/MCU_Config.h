@@ -24,4 +24,6 @@
 #include "MCU_Detect.h"
 #include "MCU_Hand_Uart.h"
 #include "MCU_OLED_Show.h"
+#include "MCU_Control.h"
+
 #endif

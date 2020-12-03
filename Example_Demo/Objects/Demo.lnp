@@ -9,6 +9,7 @@
 ".\Objects\MCU_Init.obj",
 ".\Objects\MCU_Main.obj",
 ".\Objects\MCU_Hand_Uart.obj",
+".\Objects\MCU_Control.obj",
 ".\Objects\MCU_Detect.obj",
 ".\Objects\MCU_OLED_Show.obj" 
 TO ".\Objects\Demo" 

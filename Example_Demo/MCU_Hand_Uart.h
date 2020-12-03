@@ -12,6 +12,7 @@ sbit Reset_message_flag=P2^5;
 sbit Bindable_wifi_flag=P2^0;
 sbit Restart_wifi_flag=P2^6;
 
-extern void UART_Receive_Processing();
-extern void UART_Send_Processing();
+extern void UART_Receive_Service_Layer();
+extern void UART_Send_Servvice_Layer();
+extern void IsConnect_wifi();
 #endif

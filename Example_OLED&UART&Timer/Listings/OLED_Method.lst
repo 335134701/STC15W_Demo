@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       11/24/2020 00:29:19 PAGE 1   
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/03/2020 19:20:36 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OLED_METHOD
@@ -62,7 +62,7 @@ line level    source
   49   1         SDA = Low_Voltage;
   50   1         SCL = Hight_Voltage;
   51   1         SDA = Hight_Voltage;
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       11/24/2020 00:29:19 PAGE 2   
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/03/2020 19:20:36 PAGE 2   
 
   52   1      }
   53          
@@ -126,7 +126,7 @@ line level    source
  111          // 参数: x:横坐标; y:纵坐标;
  112          // 返回: 无
  113          // 版本: V1.0, 2020.03.09
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       11/24/2020 00:29:19 PAGE 3   
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/03/2020 19:20:36 PAGE 3   
 
  114          //========================================================================
  115          /*********************OLED 设置坐标************************************/
@@ -190,7 +190,7 @@ line level    source
  173   2          OLED_WrCmd(0xb0+y);
  174   2          OLED_WrCmd(0x01);
  175   2          OLED_WrCmd(0x10);
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       11/24/2020 00:29:19 PAGE 4   
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/03/2020 19:20:36 PAGE 4   
 
  176   2          for(x=first_x;x<last_x;x++)
  177   2          OLED_WrDat(0);
@@ -254,7 +254,7 @@ line level    source
  234   2          c =ch[j]-32;
  235   2          if(x>126){x=0;y++;}
  236   2          OLED_Set_Pos(x,y);
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       11/24/2020 00:29:19 PAGE 5   
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/03/2020 19:20:36 PAGE 5   
 
  237   2          for(i=0;i<6;i++)
  238   2          OLED_WrDat(F6x8[c][i]);
