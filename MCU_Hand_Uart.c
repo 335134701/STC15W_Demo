@@ -189,7 +189,7 @@ unsigned char Uart_Prereception_Layer()
 				{
 							if(RX1_Buffer[1]==0xFF){
 									if(RX1_len>(MinOrder+5)){UART_BUF_Init();}	
-									if(RX1_len>=MinOrder && (RX1_Buffer[2]*16*16+RX1_Buffer[3]+4)==RX1_len){
+									if((RX1_Buffer[2]*16*16+RX1_Buffer[3]+4)==RX1_len){
 											Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
 											if(!Check_protocol_flag){UART_BUF_Init();}
 									}
