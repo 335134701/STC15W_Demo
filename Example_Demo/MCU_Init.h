@@ -5,5 +5,4 @@
 #include "MCU_Config.h"
 
 extern void MCU_Init(void);
-extern void Variabe_Init();
 #endif

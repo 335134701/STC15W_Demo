@@ -73,6 +73,10 @@ void MCU_WIFI_MessageShow(unsigned char Order, unsigned char Wifi_status_1, unsi
             OLED_P6x8Str(6, 2, "M:S");
             break;
         //SoftAP模式开启，开启配置模式,配置使用SoftAP
+				case 0x04:
+            OLED_P6x8Str(6, 2, "M:S");
+            break;
+        //SoftAP模式开启，开启配置模式,配置使用SoftAP
         case 0x05:
             OLED_P6x8Str(6, 2, "M:A C:S");
             break;
@@ -90,13 +94,11 @@ void MCU_WIFI_MessageShow(unsigned char Order, unsigned char Wifi_status_1, unsi
             break;
         //Station模式开启，成功连接路由器，开启绑定模式，连接上云端
         case 0x3A:
-            //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，无手机连接
-            if(Wifi_status_1 >= 0x00 && Wifi_status_1 <= 0x07 ) {
-                OLED_P6x8Str(6, 2, "M:S C:A W:1 N:1");
-            }
-            //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，有手机连接
+            //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，无手机连接 (Wifi_status_1 >= 0x00 && Wifi_status_1 <= 0x07 )
+             OLED_P6x8Str(6, 2, "M:S C:A W:1 N:1");
+            //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，有手机连接 (Wifi_status_1 >= 0x08 && Wifi_status_1 <= 0x0F )
             if(Wifi_status_1 >= 0x08 && Wifi_status_1 <= 0x0F ) {
-                OLED_P6x8Str(6, 2, "M:S C:A W:1 N:1 P:1");
+                OLED_P6x8Str(102, 2, "P:1");
             }
             break;
         }

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/03/2020 20:26:15 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/05/2020 19:27:28 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_TIMER
@@ -11,10 +11,10 @@ line level    source
    1          #include "MCU_Timer.h"
    2          
    3          int Timer0_Count=0;
-   4          int Timer1_Count=0;
-   5          int Timer2_Count=0;
-   6          int Timer3_Count=0;
-   7          int Timer4_Count=0;
+   4          //int Timer1_Count=0;
+   5          //int Timer2_Count=0;
+   6          //int Timer3_Count=0;
+   7          //int Timer4_Count=0;
    8          
    9          /*************  功能说明  **************
   10          
@@ -62,7 +62,7 @@ line level    source
   52   2          TR0 = 0;    //停止计数
   53   2          ET0 = 0;  //禁止中断
   54   2          PT0 = 0;  //低优先级中断
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/03/2020 20:26:15 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/05/2020 19:27:28 PAGE 2   
 
   55   2          TMOD &= 0xf0; //定时模式, 16位自动重装
   56   2          AUXR &= ~0x80;  //12T模式, 
@@ -126,7 +126,7 @@ line level    source
  113   2          T4T3M &= 0xf0;    //停止计数, 定时模式, 12T模式, 不输出时钟
  114   2          IE2  &= ~(1<<5);  //禁止中断
  115   2          if(TIMx->TIM_Interrupt == ENABLE)     IE2  |=  (1<<5);  //允许中断
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/03/2020 20:26:15 PAGE 3   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/05/2020 19:27:28 PAGE 3   
 
  116   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   T4T3M |=  (1<<1); //1T
  117   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  T4T3M |=  (3<<1); //对外计数或分频
@@ -190,7 +190,7 @@ line level    source
  172   1      
  173   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //中断是否允许,   ENABLE或DISABLE. (注意: Timer2固定为16位自
              -动重装, 中断固定为低优先级)
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/03/2020 20:26:15 PAGE 4   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/05/2020 19:27:28 PAGE 4   
 
  174   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;    //指定时钟源,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
              -Ext
@@ -234,7 +234,7 @@ line level    source
  208          {
  209   1         Timer0_Count++;
  210   1      }
- 211          
+ 211          /*
  212          //========================================================================
  213          // 函数: void Timer1_Int (void) interrupt TIMER1_VECTOR
  214          // 描述: 定时器1中断函数
@@ -244,8 +244,8 @@ line level    source
  218          //========================================================================
  219          void Timer1_Int (void) interrupt TIMER1_VECTOR
  220          {
- 221   1          Timer1_Count++;
- 222   1      }
+ 221              Timer1_Count++;
+ 222          }
  223          
  224          //========================================================================
  225          // 函数: void Timer2_Int (void) interrupt TIMER2_VECTOR
@@ -254,12 +254,12 @@ line level    source
  228          // 返回: 无
  229          // 版本: V1.0, 2020.03.09
  230          //========================================================================
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/03/2020 20:26:15 PAGE 5   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/05/2020 19:27:28 PAGE 5   
 
  231          void Timer2_Int (void) interrupt TIMER2_VECTOR
  232          {
- 233   1         Timer2_Count++;
- 234   1      }
+ 233             Timer2_Count++;
+ 234          }
  235          
  236          //========================================================================
  237          // 函数: Timer3_Int (void) interrupt TIMER3_VECTOR
@@ -270,8 +270,8 @@ line level    source
  242          //========================================================================
  243          void Timer3_Int (void) interrupt TIMER3_VECTOR
  244          {
- 245   1         Timer3_Count++;
- 246   1      }
+ 245             Timer3_Count++;
+ 246          }
  247          
  248          //========================================================================
  249          // 函数: void Timer4_Int (void) interrupt TIMER4_VECTOR
@@ -282,14 +282,15 @@ line level    source
  254          //========================================================================
  255          void Timer4_Int (void) interrupt TIMER4_VECTOR
  256          {
- 257   1         Timer4_Count++;
- 258   1      }
+ 257             Timer4_Count++;
+ 258          }
+ 259          */
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    793    ----
+   CODE SIZE        =    685    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     10       8
+   XDATA SIZE       =      2       8
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
