@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/05/2020 17:15:47 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/05/2020 19:27:29 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_OLED_SHOW
@@ -62,7 +62,7 @@ line level    source
   52          //========================================================================
   53          // 函数: void MCU_WIFI_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_stat
              -us_2)
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/05/2020 17:15:47 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/05/2020 19:27:29 PAGE 2   
 
   54          // 描述: 系统OLED显示函数,主要显示WiFi连接状态
   55          // 参数: Order:WiFi推送状态命令;Wifi_status_1,Wifi_status_2:WiFi状态标记位
@@ -86,48 +86,52 @@ line level    source
   73   3                  OLED_P6x8Str(6, 2, "M:S");
   74   3                  break;
   75   3              //SoftAP模式开启，开启配置模式,配置使用SoftAP
-  76   3              case 0x05:
-  77   3                  OLED_P6x8Str(6, 2, "M:A C:S");
+  76   3              case 0x04:
+  77   3                  OLED_P6x8Str(6, 2, "M:S");
   78   3                  break;
-  79   3              //Station模式开启，开启配置模式,配置使用AirLink
-  80   3              case 0x06:
-  81   3                  OLED_P6x8Str(6, 2, "M:S C:A");
+  79   3              //SoftAP模式开启，开启配置模式,配置使用SoftAP
+  80   3              case 0x05:
+  81   3                  OLED_P6x8Str(6, 2, "M:A C:S");
   82   3                  break;
-  83   3              //Station模式开启，成功连接路由器
-  84   3              case 0x12:
-  85   3                  OLED_P6x8Str(6, 2, "M:S C:A W:1");
+  83   3              //Station模式开启，开启配置模式,配置使用AirLink
+  84   3              case 0x06:
+  85   3                  OLED_P6x8Str(6, 2, "M:S C:A");
   86   3                  break;
-  87   3              //Station模式开启，成功连接路由器，开启绑定模式
-  88   3              case 0x1A:
+  87   3              //Station模式开启，成功连接路由器
+  88   3              case 0x12:
   89   3                  OLED_P6x8Str(6, 2, "M:S C:A W:1");
   90   3                  break;
-  91   3              //Station模式开启，成功连接路由器，开启绑定模式，连接上云端
-  92   3              case 0x3A:
-  93   3                  //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，无手机连接
-  94   3                  if(Wifi_status_1 >= 0x00 && Wifi_status_1 <= 0x07 ) {
-  95   4                      OLED_P6x8Str(6, 2, "M:S C:A W:1 N:1");
-  96   4                  }
-  97   3                  //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，有手机连接
-  98   3                  if(Wifi_status_1 >= 0x08 && Wifi_status_1 <= 0x0F ) {
-  99   4                      OLED_P6x8Str(6, 2, "M:S C:A W:1 N:1 P:1");
- 100   4                  }
- 101   3                  break;
- 102   3              }
- 103   2          }
- 104   1      }
+  91   3              //Station模式开启，成功连接路由器，开启绑定模式
+  92   3              case 0x1A:
+  93   3                  OLED_P6x8Str(6, 2, "M:S C:A W:1");
+  94   3                  break;
+  95   3              //Station模式开启，成功连接路由器，开启绑定模式，连接上云端
+  96   3              case 0x3A:
+  97   3                  //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，无手机连接 (Wifi_status_1 >= 0x00
+             - && Wifi_status_1 <= 0x07 )
+  98   3                   OLED_P6x8Str(6, 2, "M:S C:A W:1 N:1");
+  99   3                  //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，有手机连接 (Wifi_status_1 >= 0x08
+             - && Wifi_status_1 <= 0x0F )
+ 100   3                  if(Wifi_status_1 >= 0x08 && Wifi_status_1 <= 0x0F ) {
+ 101   4                      OLED_P6x8Str(102, 2, "P:1");
+ 102   4                  }
+ 103   3                  break;
+ 104   3              }
+ 105   2          }
+ 106   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    412    ----
-   CONSTANT SIZE    =     96    ----
+   CODE SIZE        =    405    ----
+   CONSTANT SIZE    =     80    ----
    XDATA SIZE       =   ----       3
    PDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/05/2020 19:27:29 PAGE 3   
+
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
-
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/05/2020 17:15:47 PAGE 3   
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

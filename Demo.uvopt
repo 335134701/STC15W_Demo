@@ -326,8 +326,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\MCU_Hand_Uart.c</PathWithFileName>
-      <FilenameWithoutPath>MCU_Hand_Uart.c</FilenameWithoutPath>
+      <PathWithFileName>.\MCU_Control.c</PathWithFileName>
+      <FilenameWithoutPath>MCU_Control.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -338,8 +338,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\MCU_Control.c</PathWithFileName>
-      <FilenameWithoutPath>MCU_Control.c</FilenameWithoutPath>
+      <PathWithFileName>.\MCU_Hand_Uart.c</PathWithFileName>
+      <FilenameWithoutPath>MCU_Hand_Uart.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

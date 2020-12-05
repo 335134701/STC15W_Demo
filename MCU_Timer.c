@@ -1,10 +1,10 @@
 #include "MCU_Timer.h"
 
 int Timer0_Count=0;
-int Timer1_Count=0;
-int Timer2_Count=0;
-int Timer3_Count=0;
-int Timer4_Count=0;
+//int Timer1_Count=0;
+//int Timer2_Count=0;
+//int Timer3_Count=0;
+//int Timer4_Count=0;
 
 /*************	功能说明	**************
 
@@ -208,7 +208,7 @@ void Timer0_Int (void) interrupt TIMER0_VECTOR
 {
    Timer0_Count++;
 }
-
+/*
 //========================================================================
 // 函数: void Timer1_Int (void) interrupt TIMER1_VECTOR
 // 描述: 定时器1中断函数
@@ -256,3 +256,4 @@ void Timer4_Int (void) interrupt TIMER4_VECTOR
 {
 	 Timer4_Count++;
 }
+*/

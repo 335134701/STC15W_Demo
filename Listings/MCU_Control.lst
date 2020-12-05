@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_CONTROL                                                       12/05/2020 17:15:47 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_CONTROL                                                       12/05/2020 19:27:29 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_CONTROL
@@ -62,7 +62,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
-C51 COMPILER V9.60.0.0   MCU_CONTROL                                                       12/05/2020 17:15:47 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_CONTROL                                                       12/05/2020 19:27:29 PAGE 2   
 
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

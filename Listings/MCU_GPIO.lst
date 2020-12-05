@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_GPIO                                                          12/05/2020 17:15:47 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_GPIO                                                          12/05/2020 19:27:28 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_GPIO
@@ -62,7 +62,7 @@ line level    source
   52              if(GPIOx->Mode == GPIO_OUT_OD)    P2M1 |=  GPIOx->Pin,  P2M0 |=  GPIOx->Pin;   //开漏输出
   53              if(GPIOx->Mode == GPIO_OUT_PP)    P2M1 &= ~GPIOx->Pin,  P2M0 |=  GPIOx->Pin;   //推挽输出
   54            }
-C51 COMPILER V9.60.0.0   MCU_GPIO                                                          12/05/2020 17:15:47 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_GPIO                                                          12/05/2020 19:27:28 PAGE 2   
 
   55            if(GPIO == GPIO_P3)
   56            {

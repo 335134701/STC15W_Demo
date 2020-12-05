@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_INIT                                                          12/05/2020 17:15:47 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          12/05/2020 19:27:28 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_INIT
@@ -37,7 +37,7 @@ line level    source
   27   1          OLED_CLS();     //OLED 清屏
   28   1          Uart_Init();    //UART 初始化
   29   1          Timer_Config(); //定时器初始化函数
-  30   1          P1=0x00;
+  30   1          P1=0x00;        //引脚初始化
   31   1          //OLED显示
   32   1          OLED_P6x8Str(8, 0, "Welcome Demo System");
   33   1          EA = 1;           //开总中断
@@ -62,7 +62,7 @@ line level    source
   51          */
 
 
-C51 COMPILER V9.60.0.0   MCU_INIT                                                          12/05/2020 17:15:47 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_INIT                                                          12/05/2020 19:27:28 PAGE 2   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =     34    ----
