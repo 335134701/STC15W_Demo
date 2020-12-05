@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/03/2020 20:26:15 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/05/2020 17:15:47 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_HAND_UART
@@ -62,7 +62,7 @@ line level    source
   52   3                  TR0 = 1;
   53   3                  break;
   54   3              //通知WIFI模组进入配置模式后接收WIFI模组回复
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/03/2020 20:26:15 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/05/2020 17:15:47 PAGE 2   
 
   55   3              case 0x0a:
   56   3                  break;
@@ -126,7 +126,7 @@ line level    source
  114   3              }
  115   2          }
  116   1          //  重置WiFi信息  
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/03/2020 20:26:15 PAGE 3   
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/05/2020 17:15:47 PAGE 3   
 
  117   1          if(Reset_message_flag == 0) {
  118   2              Delay_ms(10);
@@ -190,7 +190,7 @@ line level    source
  175          //========================================================================
  176          // 函数: unsigned char Uart_Prereception_Layer()
  177          // 描述: 数据接收预处理函数
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/03/2020 20:26:15 PAGE 4   
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/05/2020 17:15:47 PAGE 4   
 
  178          // 参数: 无
  179          // 返回: 无
@@ -206,7 +206,7 @@ line level    source
  189   2              {
  190   3                    if(RX1_Buffer[1]==0xFF){
  191   4                        if(RX1_len>(MinOrder+5)){UART_BUF_Init();}  
- 192   4                        if(RX1_len>=MinOrder && (RX1_Buffer[2]*16*16+RX1_Buffer[3]+4)==RX1_len){
+ 192   4                        if((RX1_Buffer[2]*16*16+RX1_Buffer[3]+4)==RX1_len){
  193   5                            Check_protocol_flag = Check_Protocol(RX1_Buffer, RX1_len);
  194   5                            if(!Check_protocol_flag){UART_BUF_Init();}
  195   5                        }
@@ -254,7 +254,7 @@ line level    source
  237   2              Buf[9] = P1 >> 4 & 0X0F;
  238   2              Buf[10] = 0;
  239   2              Buf[11] = 0x00;
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/03/2020 20:26:15 PAGE 5   
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/05/2020 17:15:47 PAGE 5   
 
  240   2              Buf[12] = 0x00;
  241   2          }
@@ -282,15 +282,19 @@ line level    source
  263   1          //超过三分钟还未收到心跳包，即单片机与wifi模块失去联系
  264   1          //定时器的时间为5ms
  265   1          if(Timer0_Count >= 36000) {
- 266   2              Variabe_Init();
- 267   2              OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
- 268   2              OLED_P6x8Str(36, 4, "Wifi loss!");
- 269   2          }
- 270   1      }
+ 266   2              TR0 = 0;            //定时器0 初始化关闭
+ 267   2              Timer0_Count = 0;   //定时器0计数位
+ 268   2              Wifi_flag = 0x00;   //wifi连接模块标记位初始化
+ 269   2              Net_flag = 0;       //网络标记位初始化
+ 270   2              Phone_flag = 0;     //手机连接标记位初始化
+ 271   2              OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
+ 272   2              OLED_P6x8Str(36, 4, "Wifi loss!");
+ 273   2          }
+ 274   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1370    ----
+   CODE SIZE        =   1364    ----
    CONSTANT SIZE    =    212    ----
    XDATA SIZE       =   ----     123
    PDATA SIZE       =   ----    ----

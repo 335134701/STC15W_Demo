@@ -263,7 +263,11 @@ void IsConnect_wifi()
     //超过三分钟还未收到心跳包，即单片机与wifi模块失去联系
 		//定时器的时间为5ms
     if(Timer0_Count >= 36000) {
-				Variabe_Init();
+				TR0 = 0;        		//定时器0 初始化关闭
+				Timer0_Count = 0;   //定时器0计数位
+				Wifi_flag = 0x00;   //wifi连接模块标记位初始化
+				Net_flag = 0;       //网络标记位初始化
+				Phone_flag = 0;     //手机连接标记位初始化
         OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
         OLED_P6x8Str(36, 4, "Wifi loss!");
     }
