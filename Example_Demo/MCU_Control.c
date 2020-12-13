@@ -1,7 +1,6 @@
 #include "MCU_Control.h"
 
 
-
 //========================================================================
 // 函数: void MCU_Application_Control(unsigned char* Buf)
 // 描述: MCU控制处理函数
@@ -43,4 +42,3 @@ void MCU_Application_Control(unsigned char* Buf)
         break;
     }
 }
-

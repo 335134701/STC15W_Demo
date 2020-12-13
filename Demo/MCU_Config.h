@@ -13,9 +13,17 @@
 /*********************************************************/
 
 #include "STC15Fxxxx.H"
-
+#include "MCU_GPIO.h"
 #include "MCU_Init.h"
-#include "MCU_Main.h"
-#include "MCU_Common_Method.h"
-
+#include "OLED_Code.h"
+#include "OLED_Method.h"
+#include "MCU_Uart.h"
+#include "MCU_Timer.h"
+//#include "MCU_CommonMethod.h"
+//#include "MCU_Variable.h"
+//#include "MCU_Detect.h"
+//#include "MCU_Hand_Uart.h"
+//#include "MCU_OLED_Show.h"
+//#include "MCU_Control.h"
+//#include "MCU_Hand_Uart.h"
 #endif

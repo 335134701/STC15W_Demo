@@ -22,7 +22,7 @@ Dialog DLL:      TP51.DLL V2.60.0.0
  
 <h2>Project:</h2>
 C:\Users\Administrator\Desktop\Example\Demo.uvproj
-Project File Date:  12/05/2020
+Project File Date:  12/13/2020
 
 <h2>Output:</h2>
 Rebuild target 'Target 1'
@@ -41,9 +41,21 @@ compiling MCU_Hand_Uart.c...
 compiling MCU_Detect.c...
 compiling MCU_OLED_Show.c...
 linking...
-Program Size: data=9.2 xdata=512 code=5438
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MCU_APPLICATION_CONTROL?MCU_CONTROL
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_PRERECEPTION_LAYER?MCU_HAND_UART
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ISCONNECT_WIFI?MCU_HAND_UART
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UART_SEND_SERVVICE_LAYER?MCU_HAND_UART
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MCU_OLED_STATUSCHANGE?MCU_OLED_SHOW
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_MCU_WIFI_MESSAGESHOW?MCU_OLED_SHOW
+Program Size: data=9.2 xdata=539 code=4753
 creating hex file from ".\Objects\Demo"...
-".\Objects\Demo" - 0 Error(s), 0 Warning(s).
+".\Objects\Demo" - 0 Error(s), 6 Warning(s).
 Build Time Elapsed:  00:00:01
 </pre>
 </body>

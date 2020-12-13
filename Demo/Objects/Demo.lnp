@@ -1,5 +1,9 @@
 ".\Objects\STARTUP.obj",
-".\Objects\MCU_Common_Method.obj",
+".\Objects\MCU_GPIO.obj",
+".\Objects\OLED_Code.obj",
+".\Objects\OLED_Method.obj",
+".\Objects\MCU_Uart.obj",
+".\Objects\MCU_Timer.obj",
 ".\Objects\MCU_Init.obj",
 ".\Objects\MCU_Main.obj" 
 TO ".\Objects\Demo" 
