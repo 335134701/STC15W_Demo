@@ -18,7 +18,7 @@ sbit SDA=P2^2; //´®ÐÐÊý¾Ý
 #define Y_WIDTH 	8
 
 
-extern void OLED_CLS(void);
+//extern void OLED_CLS(void);
 extern void OLED_CLS_Local(unsigned char first_x,first_y,last_x,last_y);
 extern void OLED_Init(void);
 extern void OLED_P6x8Str(unsigned char x, y,unsigned char ch[]);

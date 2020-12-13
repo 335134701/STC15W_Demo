@@ -30,9 +30,10 @@ typedef struct
 } TIM_InitTypeDef;
 
 extern int Timer0_Count;
-extern int Timer1_Count;extern int Timer2_Count;
-extern int Timer3_Count;
-extern int Timer4_Count;
+//extern int Timer1_Count;
+//extern int Timer2_Count;
+//extern int Timer3_Count;
+//extern int Timer4_Count;
 
 
 extern void	Timer_Config(void);

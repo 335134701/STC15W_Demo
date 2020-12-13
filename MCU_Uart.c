@@ -11,7 +11,7 @@ unsigned char RX1_len;	//½ÓÊÕÊı¾İ³¤¶È
 //unsigned char RX3_len;	//½ÓÊÕÊı¾İ³¤¶È
 //unsigned char RX4_len;	//½ÓÊÕÊı¾İ³¤¶È
 
-bit B_TX1_Busy,B_TX2_Busy;	// ·¢ËÍÃ¦±êÖ¾
+bit B_TX1_Busy;	// ·¢ËÍÃ¦±êÖ¾
 //bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// ·¢ËÍÃ¦±êÖ¾
 //========================================================================
 // UARTÒı½ÅËµÃ÷:
@@ -22,7 +22,7 @@ bit B_TX1_Busy,B_TX2_Busy;	// ·¢ËÍÃ¦±êÖ¾
 //========================================================================
 
 void	UART1_config(unsigned char brt);
-void	UART2_config(unsigned char brt);
+//void	UART2_config(unsigned char brt);
 //void	UART3_config(unsigned char brt);
 //void	UART4_config(unsigned char brt);
 
@@ -132,9 +132,9 @@ void	UART2_config(unsigned char brt)	// Ñ¡Ôñ²¨ÌØÂÊ, 2: Ê¹ÓÃTimer2×ö²¨ÌØÂÊ, ÆäËüÖ
 	P_SW2 &= ~1;		//ÇĞ»»µ½ P1.0 P1.1
 //P_SW2 |= 1;			//ÇĞ»»µ½ P4.6 P4.7
 
-	//memset(RX2_Buffer,0,RX2_Length);
-	//B_TX2_Busy  = 0;
-	//RX2_len   = 0;
+	memset(RX2_Buffer,0,RX2_Length);
+	B_TX2_Busy  = 0;
+	RX2_len   = 0;
 }
 
 //========================================================================

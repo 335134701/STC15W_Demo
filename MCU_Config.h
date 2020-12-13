@@ -22,8 +22,7 @@
 #include "MCU_CommonMethod.h"
 #include "MCU_Variable.h"
 #include "MCU_Detect.h"
-#include "MCU_Hand_Uart.h"
 #include "MCU_OLED_Show.h"
 #include "MCU_Control.h"
-//#include "MCU_Hand_Uart.h"
+#include "MCU_Hand_Uart.h"
 #endif

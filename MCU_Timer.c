@@ -67,7 +67,7 @@ unsigned char	Timer_Init(unsigned char TIM, TIM_InitTypeDef *TIMx)
 		if(TIMx->TIM_Run == ENABLE)	TR0 = 1;	//开始运行
 		return	0;		//成功
 	}
-
+/*
 	if(TIM == Timer1)
 	{
 		if(TIMx->TIM_Mode >= TIM_16BitAutoReloadNoMask)	return 2;	//错误
@@ -138,6 +138,7 @@ unsigned char	Timer_Init(unsigned char TIM, TIM_InitTypeDef *TIMx)
 		if(TIMx->TIM_Run == ENABLE)	T4T3M |=  (1<<7);	//开始运行
 		return	0;		//成功
 	}
+*/
 	return 2;	//错误
 }
 //========================================================================

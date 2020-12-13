@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 15:45:08 PAGE 1   
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 19:46:28 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE OLED_METHOD
@@ -62,7 +62,7 @@ line level    source
   49   1         SDA = Low_Voltage;
   50   1         SCL = Hight_Voltage;
   51   1         SDA = Hight_Voltage;
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 15:45:08 PAGE 2   
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 19:46:28 PAGE 2   
 
   52   1      }
   53          
@@ -126,7 +126,7 @@ line level    source
  111          // 参数: x:横坐标; y:纵坐标;
  112          // 返回: 无
  113          // 版本: V1.0, 2020.03.09
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 15:45:08 PAGE 3   
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 19:46:28 PAGE 3   
 
  114          //========================================================================
  115          /*********************OLED 设置坐标************************************/
@@ -156,116 +156,118 @@ line level    source
  139   2          OLED_WrDat(bmp_dat);
  140   2        }
  141   1      }
- 142          //========================================================================
- 143          // 函数: void OLED_CLS(void)
- 144          // 描述: 复位/清屏
- 145          // 参数: 无
- 146          // 返回: 无
- 147          // 版本: V1.0, 2020.03.09
- 148          //========================================================================
- 149          void OLED_CLS(void)
- 150          {
- 151   1        unsigned char y,x;
- 152   1        for(y=0;y<8;y++)
- 153   1        {
- 154   2          OLED_WrCmd(0xb0+y);
- 155   2          OLED_WrCmd(0x01);
- 156   2          OLED_WrCmd(0x10);
- 157   2          for(x=0;x<X_WIDTH;x++)
- 158   2          OLED_WrDat(0);
- 159   2        }
- 160   1      }
- 161          //========================================================================
- 162          // 函数: void OLED_CLS_Local(unsigned char first_x,first_y,last_x,last_y)
- 163          // 描述: OLED局部复位/清屏
- 164          // 参数: first_x:横坐标起始位置;first_y:纵坐标起始位置;last_x:横坐标终止位置;last_y:纵坐标终止位置;
- 165          // 返回: 无
- 166          // 版本: V1.0, 2020.03.09
- 167          //========================================================================
- 168          void OLED_CLS_Local(unsigned char first_x,first_y,last_x,last_y)
- 169          {
- 170   1        unsigned char y,x;
- 171   1        for(y=first_y;y<=last_y;y++)
- 172   1        {
- 173   2          OLED_WrCmd(0xb0+y);
- 174   2          OLED_WrCmd(0x01);
- 175   2          OLED_WrCmd(0x10);
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 15:45:08 PAGE 4   
+ 142          /*
+ 143          //========================================================================
+ 144          // 函数: void OLED_CLS(void)
+ 145          // 描述: 复位/清屏
+ 146          // 参数: 无
+ 147          // 返回: 无
+ 148          // 版本: V1.0, 2020.03.09
+ 149          //========================================================================
+ 150          void OLED_CLS(void)
+ 151          {
+ 152            unsigned char y,x;
+ 153            for(y=0;y<8;y++)
+ 154            {
+ 155              OLED_WrCmd(0xb0+y);
+ 156              OLED_WrCmd(0x01);
+ 157              OLED_WrCmd(0x10);
+ 158              for(x=0;x<X_WIDTH;x++)
+ 159              OLED_WrDat(0);
+ 160            }
+ 161          }
+ 162          */
+ 163          //========================================================================
+ 164          // 函数: void OLED_CLS_Local(unsigned char first_x,first_y,last_x,last_y)
+ 165          // 描述: OLED局部复位/清屏
+ 166          // 参数: first_x:横坐标起始位置;first_y:纵坐标起始位置;last_x:横坐标终止位置;last_y:纵坐标终止位置;
+ 167          // 返回: 无
+ 168          // 版本: V1.0, 2020.03.09
+ 169          //========================================================================
+ 170          void OLED_CLS_Local(unsigned char first_x,first_y,last_x,last_y)
+ 171          {
+ 172   1        unsigned char y,x;
+ 173   1        for(y=first_y;y<=last_y;y++)
+ 174   1        {
+ 175   2          OLED_WrCmd(0xb0+y);
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 19:46:28 PAGE 4   
 
- 176   2          for(x=first_x;x<last_x;x++)
- 177   2          OLED_WrDat(0);
- 178   2        }
- 179   1      }
- 180          //========================================================================
- 181          // 函数: void OLED_Init(void)
- 182          // 描述: OLED初始化
- 183          // 参数: 无
- 184          // 返回: 无
- 185          // 版本: V1.0, 2020.03.09
- 186          //========================================================================
- 187          void OLED_Init(void)
- 188          {
- 189   1        OLED_WrCmd(0xae);//--turn off oled panel
- 190   1        OLED_WrCmd(0x00);//---set Low_Voltage column address
- 191   1        OLED_WrCmd(0x10);//---set Hight_Voltage column address
- 192   1        OLED_WrCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
- 193   1        OLED_WrCmd(0x81);//--set contrast control register
- 194   1        OLED_WrCmd(Brightness); // Set SEG Output Current Brightness
- 195   1        OLED_WrCmd(0xa1);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
- 196   1        OLED_WrCmd(0xc8);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
- 197   1        OLED_WrCmd(0xa6);//--set normal display
- 198   1        OLED_WrCmd(0xa8);//--set multiplex ratio(1 to 64)
- 199   1        OLED_WrCmd(0x3f);//--1/64 duty
- 200   1        OLED_WrCmd(0xd3);//-set display offset  Shift Mapping RAM Counter (0x00~0x3F)
- 201   1        OLED_WrCmd(0x00);//-not offset
- 202   1        OLED_WrCmd(0xd5);//--set display clock divide ratio/oscillator frequency
- 203   1        OLED_WrCmd(0x80);//--set divide ratio, Set Clock as 100 Frames/Sec
- 204   1        OLED_WrCmd(0xd9);//--set pre-charge period
- 205   1        OLED_WrCmd(0xf1);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
- 206   1        OLED_WrCmd(0xda);//--set com pins hardware configuration
- 207   1        OLED_WrCmd(0x12);
- 208   1        OLED_WrCmd(0xdb);//--set vcomh
- 209   1        OLED_WrCmd(0x40);//Set VCOM Deselect Level
- 210   1        OLED_WrCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
- 211   1        OLED_WrCmd(0x02);//
- 212   1        OLED_WrCmd(0x8d);//--set Charge Pump enable/disable
- 213   1        OLED_WrCmd(0x14);//--set(0x10) disable
- 214   1        OLED_WrCmd(0xa4);// Disable Entire Display On (0xa4/0xa5)
- 215   1        OLED_WrCmd(0xa6);// Disable Inverse Display On (0xa6/a7) 
- 216   1        OLED_WrCmd(0xaf);//--turn on oled panel
- 217   1        OLED_Fill(0x00); //初始清屏
- 218   1        OLED_Set_Pos(0,0);
- 219   1      } 
- 220          //========================================================================
- 221          // 函数: void OLED_P6x8Str(unsigned char x, y,unsigned char ch[])
- 222          // 描述: 根据ch[]显示OLED
- 223          // 参数: x:起始横坐标;y:起始纵坐标;ch[]:显示字符集
- 224          // 返回: 无
- 225          // 版本: V1.0, 2020.03.09
- 226          //========================================================================
- 227          /***************功能描述：显示6*8一组标准ASCII字符串  显示的坐标（x,y），ch[]为需要输出的字符串************
+ 176   2          OLED_WrCmd(0x01);
+ 177   2          OLED_WrCmd(0x10);
+ 178   2          for(x=first_x;x<last_x;x++)
+ 179   2          OLED_WrDat(0);
+ 180   2        }
+ 181   1      }
+ 182          //========================================================================
+ 183          // 函数: void OLED_Init(void)
+ 184          // 描述: OLED初始化
+ 185          // 参数: 无
+ 186          // 返回: 无
+ 187          // 版本: V1.0, 2020.03.09
+ 188          //========================================================================
+ 189          void OLED_Init(void)
+ 190          {
+ 191   1        OLED_WrCmd(0xae);//--turn off oled panel
+ 192   1        OLED_WrCmd(0x00);//---set Low_Voltage column address
+ 193   1        OLED_WrCmd(0x10);//---set Hight_Voltage column address
+ 194   1        OLED_WrCmd(0x40);//--set start line address  Set Mapping RAM Display Start Line (0x00~0x3F)
+ 195   1        OLED_WrCmd(0x81);//--set contrast control register
+ 196   1        OLED_WrCmd(Brightness); // Set SEG Output Current Brightness
+ 197   1        OLED_WrCmd(0xa1);//--Set SEG/Column Mapping     0xa0左右反置 0xa1正常
+ 198   1        OLED_WrCmd(0xc8);//Set COM/Row Scan Direction   0xc0上下反置 0xc8正常
+ 199   1        OLED_WrCmd(0xa6);//--set normal display
+ 200   1        OLED_WrCmd(0xa8);//--set multiplex ratio(1 to 64)
+ 201   1        OLED_WrCmd(0x3f);//--1/64 duty
+ 202   1        OLED_WrCmd(0xd3);//-set display offset  Shift Mapping RAM Counter (0x00~0x3F)
+ 203   1        OLED_WrCmd(0x00);//-not offset
+ 204   1        OLED_WrCmd(0xd5);//--set display clock divide ratio/oscillator frequency
+ 205   1        OLED_WrCmd(0x80);//--set divide ratio, Set Clock as 100 Frames/Sec
+ 206   1        OLED_WrCmd(0xd9);//--set pre-charge period
+ 207   1        OLED_WrCmd(0xf1);//Set Pre-Charge as 15 Clocks & Discharge as 1 Clock
+ 208   1        OLED_WrCmd(0xda);//--set com pins hardware configuration
+ 209   1        OLED_WrCmd(0x12);
+ 210   1        OLED_WrCmd(0xdb);//--set vcomh
+ 211   1        OLED_WrCmd(0x40);//Set VCOM Deselect Level
+ 212   1        OLED_WrCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
+ 213   1        OLED_WrCmd(0x02);//
+ 214   1        OLED_WrCmd(0x8d);//--set Charge Pump enable/disable
+ 215   1        OLED_WrCmd(0x14);//--set(0x10) disable
+ 216   1        OLED_WrCmd(0xa4);// Disable Entire Display On (0xa4/0xa5)
+ 217   1        OLED_WrCmd(0xa6);// Disable Inverse Display On (0xa6/a7) 
+ 218   1        OLED_WrCmd(0xaf);//--turn on oled panel
+ 219   1        OLED_Fill(0x00); //初始清屏
+ 220   1        OLED_Set_Pos(0,0);
+ 221   1      } 
+ 222          //========================================================================
+ 223          // 函数: void OLED_P6x8Str(unsigned char x, y,unsigned char ch[])
+ 224          // 描述: 根据ch[]显示OLED
+ 225          // 参数: x:起始横坐标;y:起始纵坐标;ch[]:显示字符集
+ 226          // 返回: 无
+ 227          // 版本: V1.0, 2020.03.09
+ 228          //========================================================================
+ 229          /***************功能描述：显示6*8一组标准ASCII字符串  显示的坐标（x,y），ch[]为需要输出的字符串************
              -****/
- 228          //注意：如果Code中的字符与ASCII不一致，则会出现错误显示
- 229          void OLED_P6x8Str(unsigned char x, y,unsigned char ch[])
- 230          {
- 231   1        unsigned char c=0,i=0,j=0;
- 232   1        while (ch[j]!='\0')
- 233   1        {
- 234   2          c =ch[j]-32;
- 235   2          if(x>126){x=0;y++;}
- 236   2          OLED_Set_Pos(x,y);
-C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 15:45:08 PAGE 5   
+ 230          //注意：如果Code中的字符与ASCII不一致，则会出现错误显示
+ 231          void OLED_P6x8Str(unsigned char x, y,unsigned char ch[])
+ 232          {
+ 233   1        unsigned char c=0,i=0,j=0;
+ 234   1        while (ch[j]!='\0')
+ 235   1        {
+ 236   2          c =ch[j]-32;
+C51 COMPILER V9.60.0.0   OLED_METHOD                                                       12/13/2020 19:46:28 PAGE 5   
 
- 237   2          for(i=0;i<6;i++)
- 238   2          OLED_WrDat(F6x8[c][i]);
- 239   2          x+=6;
- 240   2          j++;
- 241   2        }
- 242   1      }
+ 237   2          if(x>126){x=0;y++;}
+ 238   2          OLED_Set_Pos(x,y);
+ 239   2          for(i=0;i<6;i++)
+ 240   2          OLED_WrDat(F6x8[c][i]);
+ 241   2          x+=6;
+ 242   2          j++;
+ 243   2        }
+ 244   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    603    ----
+   CODE SIZE        =    564    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----      15
    PDATA SIZE       =   ----    ----
