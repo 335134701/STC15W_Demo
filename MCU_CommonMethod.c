@@ -28,23 +28,6 @@ void UART_BUF_Init()
     memset(RX1_Buffer, 0, sizeof(RX1_Buffer));
 }
 //========================================================================
-// 函数: void memcat(unsigned char *dest, const unsigned char *src,unsigned int index,len)
-// 描述: 字符数组拼接函数
-// 参数: dest目的字符数组,src源字符数组,index拼接位置,len拼接长度
-// 返回: 无
-// 说明：此函数主要初始化串口设置参数
-// 版本: V1.0, 2020.03.09
-//========================================================================
-void memcat(unsigned char *dest, const unsigned char *src,unsigned int index, len)
-{
-    unsigned int i=0;
-    if(index<0){ return;}
-    for (i = index;  i< len+index; i++) {
-        dest[i]=src[i-index];
-    }
-}
-
-//========================================================================
 // 函数: unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
 // 描述: 计算校验和
 // 参数: *Buf:字符数组,Buf_len:数组实际长度
@@ -86,5 +69,3 @@ unsigned char Check_Protocol(unsigned char *Buf, unsigned int Buf_len)
     }
     return Check_protocol_flag;
 }
-
-

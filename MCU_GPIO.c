@@ -21,6 +21,21 @@ void GPIO_Init(void)
 }
 /*
 //========================================================================
+// 函数: void	GPIO_Config(void)
+// 描述: GPIO口设置工作模式
+// 参数: 无
+// 返回: 无
+// 版本: V1.0, 2020.03.09
+//========================================================================
+void	GPIO_Config(void)
+{
+	//本方法例程是设置P3^4,P3^5引脚工作模式为GPIO_OUT_PP(推挽输出)
+	GPIO_InitTypeDef	GPIO_InitStructure;								//结构定义
+	GPIO_InitStructure.Pin  = GPIO_Pin_4 | GPIO_Pin_5;	//指定要初始化的IO, GPIO_Pin_0 ~ GPIO_Pin_7, 或操作
+	GPIO_InitStructure.Mode = GPIO_OUT_PP;							//指定IO的输入或输出方式,GPIO_PullUp,GPIO_HighZ,GPIO_OUT_OD,GPIO_OUT_PP
+	GPIO_Set(GPIO_P3,&GPIO_InitStructure);					//初始化
+}
+//========================================================================
 // 函数: unsigned char	GPIO_Inilize(unsigned char GPIO, GPIO_InitTypeDef *GPIOx)
 // 描述: 初始化IO口.
 // 参数: GPIOx: 结构参数,请参考timer.h里的定义.
