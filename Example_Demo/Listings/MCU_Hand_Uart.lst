@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 15:45:09 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 19:26:56 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_HAND_UART
 OBJECT MODULE PLACED IN .\Objects\MCU_Hand_Uart.obj
-COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE MCU_Hand_Uart.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
-                    -Listings\MCU_Hand_Uart.lst) TABS(2) OBJECT(.\Objects\MCU_Hand_Uart.obj)
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE ..\Example\MCU_Hand_Uart.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTE
+                    -ND PRINT(.\Listings\MCU_Hand_Uart.lst) TABS(2) OBJECT(.\Objects\MCU_Hand_Uart.obj)
 
 line level    source
 
@@ -57,233 +57,220 @@ line level    source
   47          void Uart_Transmission_Layer(unsigned int Buf_len, unsigned char order, action)
   48          {
   49   1          unsigned char Buf[116] = {0};
-  50   1          unsigned char *tmp=NULL;
-  51   1          memcpy(Buf, PublicAgreement, sizeof(PublicAgreement));
-  52   1          tmp=Buf+sizeof(PublicAgreement);
-  53   1          Buf[3] = Buf_len - 4;
-  54   1          Buf[4] = order;
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 15:45:09 PAGE 2   
+  50   1          memcpy(Buf, PublicAgreement, sizeof(PublicAgreement));
+  51   1          Buf[3] = Buf_len - 4;
+  52   1          Buf[4] = order;
+  53   1          Buf[5] = Sn;
+  54   1          Buf[8] = action;
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 19:26:56 PAGE 2   
 
-  55   1          Buf[5] = Sn;
-  56   1          //上传设备信息
-  57   1          if(order == 0x02) {
-  58   2              memcpy(tmp,SerialProVersion,sizeof(SerialProVersion));
-  59   2              tmp=tmp+sizeof(SerialProVersion);
-  60   2              memcpy(tmp,BusinessProVersion,sizeof(BusinessProVersion));
-  61   2              tmp=tmp+sizeof(BusinessProVersion);
-  62   2              memcpy(tmp,HardVersion,sizeof(HardVersion));
-  63   2              tmp=tmp+sizeof(HardVersion);
-  64   2              memcpy(tmp,SoftVersion,sizeof(SoftVersion));
-  65   2              tmp=tmp+sizeof(SoftVersion);
-  66   2              memcpy(tmp,ProductKey,sizeof(ProductKey));
-  67   2              tmp=tmp+sizeof(ProductKey)+2;
-  68   2              memcpy(tmp,DeviceAttributes,sizeof(DeviceAttributes));
-  69   2              tmp=tmp+sizeof(DeviceAttributes);
-  70   2              memcpy(tmp,ProductSecert,sizeof(ProductSecert));
-  71   2          }
-  72   1          //接收非法数据包
-  73   1          if(order == 0x12) {
-  74   2              Buf[8] = action;
-  75   2          }
-  76   1          //上传设备状态
-  77   1          if((order == 0x04 && action == 0x03) || (order == 0x05 && action == 0x04)) {
-  78   2              Buf[8] = action;
-  79   2              Buf[9] = P1 >> 4 & 0X0F;
-  80   2              Buf[10] = 0;
-  81   2              Buf[11] = 0x00;
-  82   2              Buf[12] = 0x00;
-  83   2          }
-  84   1          //计算校验和
-  85   1          Buf[Buf_len - 1] = Calculate_Checksum(Buf, Buf_len);
-  86   1          //串口1回复数据
-  87   1          SendString1(Buf, Buf_len);
-  88   1      }
-  89          
-  90          //========================================================================
-  91          // 函数: void IsConnect_wifi()
-  92          // 描述: 判断是否接收到心跳包，如果没有接收到表示，连接wifi失败
-  93          // 参数: *Buf:字符数组,Buf_len:数组实际长度
-  94          // 返回: 无
-  95          // 说明：无
-  96          // 版本: V1.0, 2020.03.09
-  97          //========================================================================
-  98          void IsConnect_wifi()
-  99          {
- 100   1          //说明wifi模块已经连接成功，开启定时器
- 101   1          if((Wifi_flag == 1) && (Timer0_Count == 0)) {
- 102   2              TR0 = 1;
+  55   1          //上传设备信息
+  56   1          if(order == 0x02) {
+  57   2              memcat(Buf, SerialProVersion, 8, sizeof(SerialProVersion));
+  58   2              memcat(Buf, BusinessProVersion, 16, sizeof(BusinessProVersion));
+  59   2              memcat(Buf, HardVersion, 24, sizeof(HardVersion));
+  60   2              memcat(Buf, SoftVersion, 32, sizeof(SoftVersion));
+  61   2              memcat(Buf, ProductKey, 40, sizeof(ProductKey));
+  62   2              memcat(Buf, DeviceAttributes, 74, sizeof(DeviceAttributes));
+  63   2              memcat(Buf, ProductSecert, 82, sizeof(ProductSecert));
+  64   2          }
+  65   1          //上传设备状态
+  66   1          if((order == 0x04 && action == 0x03) || (order == 0x05 && action == 0x04)) {
+  67   2              Buf[8] = action;
+  68   2              Buf[9] = P1 >> 4 & 0X0F;
+  69   2              Buf[10] = 0;
+  70   2              Buf[11] = 0x00;
+  71   2              Buf[12] = 0x00;
+  72   2          }
+  73   1          //计算校验和
+  74   1          Buf[Buf_len - 1] = Calculate_Checksum(Buf, Buf_len);
+  75   1          //串口1回复数据
+  76   1          SendString1(Buf, Buf_len);
+  77   1      }
+  78          
+  79          //========================================================================
+  80          // 函数: void IsConnect_wifi()
+  81          // 描述: 判断是否接收到心跳包，如果没有接收到表示，连接wifi失败
+  82          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+  83          // 返回: 无
+  84          // 说明：无
+  85          // 版本: V1.0, 2020.03.09
+  86          //========================================================================
+  87          void IsConnect_wifi()
+  88          {
+  89   1          //说明wifi模块已经连接成功，开启定时器
+  90   1          if((Wifi_flag == 1) && (Timer0_Count == 0)) {
+  91   2              TR0 = 1;
+  92   2          }
+  93   1          //超过三分钟还未收到心跳包，即单片机与wifi模块失去联系
+  94   1          //定时器的时间为5ms
+  95   1          if(Timer0_Count >= 36000) {
+  96   2              TR0 = 0;            //定时器0 初始化关闭
+  97   2              Timer0_Count = 0;   //定时器0计数位
+  98   2              Wifi_flag = 0x00;   //wifi连接模块标记位初始化
+  99   2              Net_flag = 0;       //网络标记位初始化
+ 100   2              Phone_flag = 0;     //手机连接标记位初始化
+ 101   2              OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
+ 102   2              OLED_P6x8Str(36, 4, "Wifi loss!");
  103   2          }
- 104   1          //超过三分钟还未收到心跳包，即单片机与wifi模块失去联系
- 105   1          //定时器的时间为5ms
- 106   1          if(Timer0_Count >= 36000) {
- 107   2              TR0 = 0;            //定时器0 初始化关闭
- 108   2              Timer0_Count = 0;   //定时器0计数位
- 109   2              Wifi_flag = 0x00;   //wifi连接模块标记位初始化
- 110   2              Net_flag = 0;       //网络标记位初始化
- 111   2              Phone_flag = 0;     //手机连接标记位初始化
- 112   2              OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
- 113   2              OLED_P6x8Str(36, 4, "Wifi loss!");
- 114   2          }
- 115   1      }
- 116          
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 15:45:09 PAGE 3   
-
- 117          //========================================================================
- 118          // 函数: void UART_Send_Servvice_Layer()
- 119          // 描述: UART1发送业务处理函数
- 120          // 参数: 无
- 121          // 返回: 无
- 122          // 版本: V1.0, 2020.04.24
- 123          //========================================================================
- 124          void UART_Send_Servvice_Layer()
- 125          {
- 126   1          if(Set_soft_flag == 0 || Set_AP_flag == 0 || Reset_message_flag == 0 || Bindable_wifi_flag == 0 || Res
+ 104   1      }
+ 105          
+ 106          //========================================================================
+ 107          // 函数: void UART_Send_Servvice_Layer()
+ 108          // 描述: UART1发送业务处理函数
+ 109          // 参数: 无
+ 110          // 返回: 无
+ 111          // 版本: V1.0, 2020.04.24
+ 112          //========================================================================
+ 113          void UART_Send_Servvice_Layer()
+ 114          {
+ 115   1          if(Set_soft_flag == 0 || Set_AP_flag == 0 || Reset_message_flag == 0 || Bindable_wifi_flag == 0 || Res
              -tart_wifi_flag == 0) {
- 127   2              Delay_ms(10);
- 128   2              OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
- 129   2              if(Sn != 0x00) {
- 130   3                  Sn = Sn + 0x01;
- 131   3              }
- 132   2              //  配置WiFi模式(Soft模式)
- 133   2              if(Set_soft_flag == 0) {
- 134   3                  ConfigWifiMode = 0x01;
- 135   3                  Uart_Transmission_Layer(10, 0x09, ConfigWifiMode);
- 136   3              }
- 137   2              //  配置WiFi模式(AP模式)
- 138   2              if(Set_AP_flag == 0)        {
- 139   3                  ConfigWifiMode = 0x02;
- 140   3                 Uart_Transmission_Layer(10, 0x09, ConfigWifiMode);
- 141   3              }
- 142   2              //  重置WiFi信息
- 143   2              if(Reset_message_flag == 0) {
- 144   3                 Uart_Transmission_Layer(9, 0x0b, 0x00);
- 145   3              }
- 146   2              //  WiFi进入可绑定模式
- 147   2              if(Bindable_wifi_flag == 0) {
- 148   3                 Uart_Transmission_Layer(9, 0x15, 0x00);
- 149   3              }
- 150   2              //   重启WiFi模组
- 151   2              if(Restart_wifi_flag == 0)  {
- 152   3                 Uart_Transmission_Layer(9, 0x29, 0x00);
- 153   3              }
- 154   2              while(Set_soft_flag == 0 || Set_AP_flag == 0 || Reset_message_flag == 0 || Bindable_wifi_flag == 0
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 19:26:56 PAGE 3   
+
+ 116   2              Delay_ms(10);
+ 117   2              OLED_CLS_Local(0, 2, X_WIDTH, Y_WIDTH);
+ 118   2              if(Sn != 0x00) {
+ 119   3                  Sn = Sn + 0x01;
+ 120   3              }
+ 121   2              //  配置WiFi模式(Soft模式)
+ 122   2              if(Set_soft_flag == 0) {
+ 123   3                  ConfigWifiMode = 0x01;
+ 124   3                  Uart_Transmission_Layer(10, 0x09, ConfigWifiMode);
+ 125   3              }
+ 126   2              //  配置WiFi模式(AP模式)
+ 127   2              if(Set_AP_flag == 0)        {
+ 128   3                  ConfigWifiMode = 0x02;
+ 129   3                 Uart_Transmission_Layer(10, 0x09, ConfigWifiMode);
+ 130   3              }
+ 131   2              //  重置WiFi信息
+ 132   2              if(Reset_message_flag == 0) {
+ 133   3                 Uart_Transmission_Layer(9, 0x0b, 0x00);
+ 134   3              }
+ 135   2              //  WiFi进入可绑定模式
+ 136   2              if(Bindable_wifi_flag == 0) {
+ 137   3                 Uart_Transmission_Layer(9, 0x15, 0x00);
+ 138   3              }
+ 139   2              //   重启WiFi模组
+ 140   2              if(Restart_wifi_flag == 0)  {
+ 141   3                 Uart_Transmission_Layer(9, 0x29, 0x00);
+ 142   3              }
+ 143   2              while(Set_soft_flag == 0 || Set_AP_flag == 0 || Reset_message_flag == 0 || Bindable_wifi_flag == 0
              - || Restart_wifi_flag == 0);
- 155   2          }
+ 144   2          }
+ 145   1        
+ 146   1      }
+ 147          //========================================================================
+ 148          // 函数: void UART_Receive_Service_Layer()
+ 149          // 描述: UART1接收业务处理函数
+ 150          // 参数: 无
+ 151          // 返回: 无
+ 152          // 版本: V1.0, 2020.04.24
+ 153          //========================================================================
+ 154          void UART_Receive_Service_Layer()
+ 155          {
  156   1        
- 157   1      }
- 158          /*
- 159          //========================================================================
- 160          // 函数: void UART_Receive_Service_Layer()
- 161          // 描述: UART1接收业务处理函数
- 162          // 参数: 无
- 163          // 返回: 无
- 164          // 版本: V1.0, 2020.04.24
- 165          //========================================================================
- 166          void UART_Receive_Service_Layer()
- 167          {
- 168            
- 169            //校验接收数据的合法性
- 170              if(Uart_Prereception_Layer()) {
- 171                  //获取包序号并赋值给Sn
- 172                  Sn = RX1_Buffer[5];
- 173                  switch(RX1_Buffer[4]) {
- 174                  //WiFi模组获取设备信息
- 175                  case 0x01:
- 176                      Uart_Transmission_Layer(115, RX1_Buffer[4] + 1, 0x00);
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 15:45:09 PAGE 4   
+ 157   1        //校验接收数据的合法性
+ 158   1          if(Uart_Prereception_Layer()) {
+ 159   2              //获取包序号并赋值给Sn
+ 160   2              Sn = RX1_Buffer[5];
+ 161   2              switch(RX1_Buffer[4]) {
+ 162   3              //WiFi模组获取设备信息
+ 163   3              case 0x01:
+ 164   3                  Uart_Transmission_Layer(115, RX1_Buffer[4] + 1, 0x00);
+ 165   3                  break;
+ 166   3              //WiFi模组控制设备,读取设备的当前状态
+ 167   3              case 0x03:
+ 168   3                  //WiFi模 组 控 制 设 备
+ 169   3                  if(RX1_Buffer[8] == 0x01) {
+ 170   4                      //收到数据后，mcu控制设备函数
+ 171   4                      MCU_Application_Control(RX1_Buffer);
+ 172   4                      Uart_Transmission_Layer(9, RX1_Buffer[4] + 1, 0x00);
+ 173   4                      //MCU主动上报当前状态
+ 174   4                      Sn = Sn + 0x01;
+ 175   4                      Uart_Transmission_Layer(14, RX1_Buffer[4] + 2, 0x04);
+ 176   4                      MCU_OLED_StatusChange(RX1_Buffer[9]);
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 19:26:56 PAGE 4   
 
- 177                      break;
- 178                  //WiFi模组控制设备,读取设备的当前状态
- 179                  case 0x03:
- 180                      //WiFi模 组 控 制 设 备
- 181                      if(RX1_Buffer[8] == 0x01) {
- 182                          //收到数据后，mcu控制设备函数
- 183                          MCU_Application_Control(RX1_Buffer);
- 184                          Uart_Transmission_Layer(9, RX1_Buffer[4] + 1, 0x00);
- 185                          //MCU主动上报当前状态
- 186                          Sn = Sn + 0x01;
- 187                          Uart_Transmission_Layer(14, RX1_Buffer[4] + 2, 0x04);
- 188                          MCU_OLED_StatusChange(RX1_Buffer[9]);
- 189                      }
- 190                      // WiFi模 组 读 取 设 备 的 当 前 状 态
- 191                      if(RX1_Buffer[8] == 0x02) {
- 192                          Uart_Transmission_Layer(14, RX1_Buffer[4] + 1, RX1_Buffer[8] + 1);
- 193                      }
- 194                      break;
- 195                  //MCU主动上报当前状态WIFI模组回复
- 196                  case 0x06:
- 197                      break;
- 198                  //WiFi模组向MCU发送心跳
- 199                  case 0x07:
- 200                      Wifi_flag = 0x01;
- 201                      //关闭定时器，将计数器置0
- 202                      TR0 = 0;
- 203                      Timer0_Count = 0;
- 204                      Uart_Transmission_Layer(9, RX1_Buffer[4] + 1, 0x00);
- 205                      //打开定时器
- 206                      TR0 = 1;
- 207                      break;
- 208                  //通知WIFI模组进入配置模式后接收WIFI模组回复
- 209                  case 0x0a:
- 210                      if(ConfigWifiMode == 0x01) {
- 211                          OLED_P6x8Str(2, 2, "Configure Wifi:Soft");
- 212                      } else {
- 213                          OLED_P6x8Str(2, 2, "Configure Wifi:AP");
- 214                      }
- 215                      break;
- 216                  //重置WiFi模组后接收WIFI模组回复
- 217                  case 0x0c:
- 218                      OLED_P6x8Str(2, 2, "Reset Wifi!");
- 219                      break;
- 220                  //WiFi模组向MCU推送WiFi状态
- 221                  case 0x0d:
- 222                      //将手机连接标志位，网络连接标志位初始化
- 223                      Phone_flag = 0;
- 224                      Net_flag = 0;
- 225                      Wifi_flag = 0x01;
- 226                      //展示WiFi连接信息
- 227                      MCU_WIFI_MessageShow(RX1_Buffer[4], RX1_Buffer[8], RX1_Buffer[9]);
- 228                      if(RX1_Buffer[8] >= 0x00 && RX1_Buffer[8] <= 0x07 ) Net_flag = 1;
- 229                      if(RX1_Buffer[8] >= 0x08 && RX1_Buffer[8] <= 0x0F ) {
- 230                          Net_flag = 1;
- 231                          Phone_flag = 1;
- 232                      }
- 233                      //如果有手机连接 展示产品连接信息
- 234                      MCU_OLED_StatusChange(0x00);
- 235                      Uart_Transmission_Layer(9, RX1_Buffer[4] + 1, 0x00);
- 236                      break;
- 237                  case 0x0f:
- 238                      Uart_Transmission_Layer(9, RX1_Buffer[4] + 1, 0x00);
-C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 15:45:09 PAGE 5   
+ 177   4                  }
+ 178   3                  // WiFi模 组 读 取 设 备 的 当 前 状 态
+ 179   3                  if(RX1_Buffer[8] == 0x02) {
+ 180   4                      Uart_Transmission_Layer(14, RX1_Buffer[4] + 1, RX1_Buffer[8] + 1);
+ 181   4                  }
+ 182   3                  break;
+ 183   3              //MCU主动上报当前状态WIFI模组回复
+ 184   3              case 0x06:
+ 185   3                  break;
+ 186   3              //WiFi模组向MCU发送心跳
+ 187   3              case 0x07:
+ 188   3                  Wifi_flag = 0x01;
+ 189   3                  //关闭定时器，将计数器置0
+ 190   3                  TR0 = 0;
+ 191   3                  Timer0_Count = 0;
+ 192   3                  Uart_Transmission_Layer(9, RX1_Buffer[4] + 1, 0x00);
+ 193   3                  //打开定时器
+ 194   3                  TR0 = 1;
+ 195   3                  break;
+ 196   3              //通知WIFI模组进入配置模式后接收WIFI模组回复
+ 197   3              case 0x0a:
+ 198   3                  if(ConfigWifiMode == 0x01) {
+ 199   4                      OLED_P6x8Str(2, 2, "Configure Wifi:Soft");
+ 200   4                  } else {
+ 201   4                      OLED_P6x8Str(2, 2, "Configure Wifi:AP");
+ 202   4                  }
+ 203   3                  break;
+ 204   3              //重置WiFi模组后接收WIFI模组回复
+ 205   3              case 0x0c:
+ 206   3                  OLED_P6x8Str(2, 2, "Reset Wifi!");
+ 207   3                  break;
+ 208   3              //WiFi模组向MCU推送WiFi状态
+ 209   3              case 0x0d:
+ 210   3                  //将手机连接标志位，网络连接标志位初始化
+ 211   3                  Phone_flag = 0;
+ 212   3                  Net_flag = 0;
+ 213   3                  Wifi_flag = 0x01;
+ 214   3                  //展示WiFi连接信息
+ 215   3                  MCU_WIFI_MessageShow(RX1_Buffer[4], RX1_Buffer[8], RX1_Buffer[9]);
+ 216   3                  if(RX1_Buffer[8] >= 0x00 && RX1_Buffer[8] <= 0x07 ) Net_flag = 1;
+ 217   3                  if(RX1_Buffer[8] >= 0x08 && RX1_Buffer[8] <= 0x0F ) {
+ 218   4                      Net_flag = 1;
+ 219   4                      Phone_flag = 1;
+ 220   4                  }
+ 221   3                  //如果有手机连接 展示产品连接信息
+ 222   3                  MCU_OLED_StatusChange(0x00);
+ 223   3                  Uart_Transmission_Layer(9, RX1_Buffer[4] + 1, 0x00);
+ 224   3                  break;
+ 225   3              case 0x0f:
+ 226   3                  Uart_Transmission_Layer(9, RX1_Buffer[4] + 1, 0x00);
+ 227   3                  break;
+ 228   3              //WiFi模组非法数据包通知
+ 229   3              case 0x11:
+ 230   3                  Uart_Transmission_Layer(10, RX1_Buffer[4] + 1, RX1_Buffer[8]);
+ 231   3                  break;
+ 232   3              //MCU请求WiFi进入可绑定模式，WiFi模组回复
+ 233   3              case 0x16:
+ 234   3                  OLED_P6x8Str(2, 2, "Enter bindable mode!");
+ 235   3                  break;
+ 236   3              //MCU请求获取网络时间，WiFi模组回复
+ 237   3              case 0x18:
+ 238   3                  break;
+C51 COMPILER V9.60.0.0   MCU_HAND_UART                                                     12/13/2020 19:26:56 PAGE 5   
 
- 239                      break;
- 240                  //WiFi模组非法数据包通知
- 241                  case 0x11:
- 242                      Uart_Transmission_Layer(10, RX1_Buffer[4] + 1, RX1_Buffer[8]);
- 243                      break;
- 244                  //MCU请求WiFi进入可绑定模式，WiFi模组回复
- 245                  case 0x16:
- 246                      OLED_P6x8Str(2, 2, "Enter bindable mode!");
- 247                      break;
- 248                  //MCU请求获取网络时间，WiFi模组回复
- 249                  case 0x18:
- 250                      break;
- 251                  //MCU请求WiFi重启，WiFi模组回复
- 252                  case 0x2a:
- 253                      OLED_P6x8Str(2, 2, "Restart Wifi!");
- 254                      break;
- 255                  }
- 256                  UART_BUF_Init();
- 257              }
- 258              
- 259          }
- 260          */
+ 239   3              //MCU请求WiFi重启，WiFi模组回复
+ 240   3              case 0x2a:
+ 241   3                  OLED_P6x8Str(2, 2, "Restart Wifi!");
+ 242   3                  break;
+ 243   3              }
+ 244   2              UART_BUF_Init();
+ 245   2          }
+ 246   1          
+ 247   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    871    ----
-   CONSTANT SIZE    =    127    ----
-   XDATA SIZE       =      1     125
+   CODE SIZE        =   1271    ----
+   CONSTANT SIZE    =    212    ----
+   XDATA SIZE       =      1     122
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

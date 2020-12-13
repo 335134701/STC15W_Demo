@@ -23,7 +23,7 @@ void MCU_Init(void)
 {
     GPIO_Init();		//GPIO 初始化
 	  OLED_Init();		//OLED 初始化
-    OLED_CLS();     //OLED 清屏
+    OLED_CLS_Local(0,0,X_WIDTH,Y_WIDTH);     //OLED 清屏
 		Uart_Init();    //UART 初始化
     Timer_Config(); //定时器初始化函数
 		P1=0x00;        //引脚初始化

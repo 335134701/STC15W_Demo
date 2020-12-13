@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 15:45:08 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 19:26:55 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_TIMER
@@ -62,7 +62,7 @@ line level    source
   52   2          TR0 = 0;    //Í£Ö¹¼ÆÊý
   53   2          ET0 = 0;  //½ûÖ¹ÖÐ¶Ï
   54   2          PT0 = 0;  //µÍÓÅÏÈ¼¶ÖÐ¶Ï
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 15:45:08 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 19:26:55 PAGE 2   
 
   55   2          TMOD &= 0xf0; //¶¨Ê±Ä£Ê½, 16Î»×Ô¶¯ÖØ×°
   56   2          AUXR &= ~0x80;  //12TÄ£Ê½, 
@@ -80,215 +80,216 @@ line level    source
   67   2          if(TIMx->TIM_Run == ENABLE) TR0 = 1;  //¿ªÊ¼ÔËÐÐ
   68   2          return  0;    //³É¹¦
   69   2        }
-  70   1      
+  70   1      /*
   71   1        if(TIM == Timer1)
   72   1        {
-  73   2          if(TIMx->TIM_Mode >= TIM_16BitAutoReloadNoMask) return 2; //´íÎó
-  74   2          TR1 = 0;  //Í£Ö¹¼ÆÊý
-  75   2          ET1 = 0;  //½ûÖ¹ÖÐ¶Ï
-  76   2          PT1 = 0;  //µÍÓÅÏÈ¼¶ÖÐ¶Ï
-  77   2          TMOD &=  0x0f;  //¶¨Ê±Ä£Ê½, 16Î»×Ô¶¯ÖØ×°
-  78   2          AUXR &= ~0x40;  //12TÄ£Ê½, 
-  79   2          INT_CLKO &= ~0x02;  //²»Êä³öÊ±ÖÓ
-  80   2          if(TIMx->TIM_Interrupt == ENABLE)   ET1 = 1;  //ÔÊÐíÖÐ¶Ï
-  81   2          if(TIMx->TIM_Polity == PolityHigh)    PT1 = 1;  //¸ßÓÅÏÈ¼¶ÖÐ¶Ï
-  82   2          TMOD |= (TIMx->TIM_Mode << 4);  //¹¤×÷Ä£Ê½,0: 16Î»×Ô¶¯ÖØ×°, 1: 16Î»¶¨Ê±/¼ÆÊý, 2: 8Î»×Ô¶¯ÖØ×°
-  83   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   AUXR |=  0x40;  //1T
-  84   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  TMOD |=  0x40;  //¶ÔÍâ¼ÆÊý»ò·ÖÆµ
-  85   2          if(TIMx->TIM_ClkOut == ENABLE)  INT_CLKO |=  0x02;  //Êä³öÊ±ÖÓ
-  86   2          
-  87   2          TH1 = (unsigned char)(TIMx->TIM_Value >> 8);
-  88   2          TL1 = (unsigned char)TIMx->TIM_Value;
-  89   2          if(TIMx->TIM_Run == ENABLE) TR1 = 1;  //¿ªÊ¼ÔËÐÐ
-  90   2          return  0;    //³É¹¦
-  91   2        }
+  73   1          if(TIMx->TIM_Mode >= TIM_16BitAutoReloadNoMask) return 2; //´íÎó
+  74   1          TR1 = 0;  //Í£Ö¹¼ÆÊý
+  75   1          ET1 = 0;  //½ûÖ¹ÖÐ¶Ï
+  76   1          PT1 = 0;  //µÍÓÅÏÈ¼¶ÖÐ¶Ï
+  77   1          TMOD &=  0x0f;  //¶¨Ê±Ä£Ê½, 16Î»×Ô¶¯ÖØ×°
+  78   1          AUXR &= ~0x40;  //12TÄ£Ê½, 
+  79   1          INT_CLKO &= ~0x02;  //²»Êä³öÊ±ÖÓ
+  80   1          if(TIMx->TIM_Interrupt == ENABLE)   ET1 = 1;  //ÔÊÐíÖÐ¶Ï
+  81   1          if(TIMx->TIM_Polity == PolityHigh)    PT1 = 1;  //¸ßÓÅÏÈ¼¶ÖÐ¶Ï
+  82   1          TMOD |= (TIMx->TIM_Mode << 4);  //¹¤×÷Ä£Ê½,0: 16Î»×Ô¶¯ÖØ×°, 1: 16Î»¶¨Ê±/¼ÆÊý, 2: 8Î»×Ô¶¯ÖØ×°
+  83   1          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   AUXR |=  0x40;  //1T
+  84   1          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  TMOD |=  0x40;  //¶ÔÍâ¼ÆÊý»ò·ÖÆµ
+  85   1          if(TIMx->TIM_ClkOut == ENABLE)  INT_CLKO |=  0x02;  //Êä³öÊ±ÖÓ
+  86   1          
+  87   1          TH1 = (unsigned char)(TIMx->TIM_Value >> 8);
+  88   1          TL1 = (unsigned char)TIMx->TIM_Value;
+  89   1          if(TIMx->TIM_Run == ENABLE) TR1 = 1;  //¿ªÊ¼ÔËÐÐ
+  90   1          return  0;    //³É¹¦
+  91   1        }
   92   1      
   93   1        if(TIM == Timer2)   //Timer2,¹Ì¶¨Îª16Î»×Ô¶¯ÖØ×°, ÖÐ¶ÏÎÞÓÅÏÈ¼¶
   94   1        {
-  95   2          if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)  return 2;
-  96   2          AUXR &= ~0x1c;    //Í£Ö¹¼ÆÊý, ¶¨Ê±Ä£Ê½, 12TÄ£Ê½
-  97   2          IE2  &= ~(1<<2);  //½ûÖ¹ÖÐ¶Ï
-  98   2          INT_CLKO &= ~0x04;  //²»Êä³öÊ±ÖÓ
-  99   2          if(TIMx->TIM_Interrupt == ENABLE)     IE2  |=  (1<<2);  //ÔÊÐíÖÐ¶Ï
- 100   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   AUXR |=  (1<<2);  //1T
- 101   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  AUXR |=  (1<<3);  //¶ÔÍâ¼ÆÊý»ò·ÖÆµ
- 102   2          if(TIMx->TIM_ClkOut == ENABLE)  INT_CLKO |=  0x04;  //Êä³öÊ±ÖÓ
- 103   2      
- 104   2          TH2 = (unsigned char)(TIMx->TIM_Value >> 8);
- 105   2          TL2 = (unsigned char)TIMx->TIM_Value;
- 106   2          if(TIMx->TIM_Run == ENABLE) AUXR |=  (1<<4);  //¿ªÊ¼ÔËÐÐ
- 107   2          return  0;    //³É¹¦
- 108   2        }
+  95   1          if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)  return 2;
+  96   1          AUXR &= ~0x1c;    //Í£Ö¹¼ÆÊý, ¶¨Ê±Ä£Ê½, 12TÄ£Ê½
+  97   1          IE2  &= ~(1<<2);  //½ûÖ¹ÖÐ¶Ï
+  98   1          INT_CLKO &= ~0x04;  //²»Êä³öÊ±ÖÓ
+  99   1          if(TIMx->TIM_Interrupt == ENABLE)     IE2  |=  (1<<2);  //ÔÊÐíÖÐ¶Ï
+ 100   1          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   AUXR |=  (1<<2);  //1T
+ 101   1          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  AUXR |=  (1<<3);  //¶ÔÍâ¼ÆÊý»ò·ÖÆµ
+ 102   1          if(TIMx->TIM_ClkOut == ENABLE)  INT_CLKO |=  0x04;  //Êä³öÊ±ÖÓ
+ 103   1      
+ 104   1          TH2 = (unsigned char)(TIMx->TIM_Value >> 8);
+ 105   1          TL2 = (unsigned char)TIMx->TIM_Value;
+ 106   1          if(TIMx->TIM_Run == ENABLE) AUXR |=  (1<<4);  //¿ªÊ¼ÔËÐÐ
+ 107   1          return  0;    //³É¹¦
+ 108   1        }
  109   1      
  110   1        if(TIM == Timer3)   //Timer3,¹Ì¶¨Îª16Î»×Ô¶¯ÖØ×°, ÖÐ¶ÏÎÞÓÅÏÈ¼¶
  111   1        {
- 112   2          if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)  return 2;
- 113   2          T4T3M &= 0xf0;    //Í£Ö¹¼ÆÊý, ¶¨Ê±Ä£Ê½, 12TÄ£Ê½, ²»Êä³öÊ±ÖÓ
- 114   2          IE2  &= ~(1<<5);  //½ûÖ¹ÖÐ¶Ï
- 115   2          if(TIMx->TIM_Interrupt == ENABLE)     IE2  |=  (1<<5);  //ÔÊÐíÖÐ¶Ï
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 15:45:08 PAGE 3   
+ 112   1          if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)  return 2;
+ 113   1          T4T3M &= 0xf0;    //Í£Ö¹¼ÆÊý, ¶¨Ê±Ä£Ê½, 12TÄ£Ê½, ²»Êä³öÊ±ÖÓ
+ 114   1          IE2  &= ~(1<<5);  //½ûÖ¹ÖÐ¶Ï
+ 115   1          if(TIMx->TIM_Interrupt == ENABLE)     IE2  |=  (1<<5);  //ÔÊÐíÖÐ¶Ï
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 19:26:55 PAGE 3   
 
- 116   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   T4T3M |=  (1<<1); //1T
- 117   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  T4T3M |=  (3<<1); //¶ÔÍâ¼ÆÊý»ò·ÖÆµ
- 118   2          if(TIMx->TIM_ClkOut == ENABLE)  T4T3M |=  1;  //Êä³öÊ±ÖÓ
- 119   2      
- 120   2          TH3 = (unsigned char)(TIMx->TIM_Value >> 8);
- 121   2          TL3 = (unsigned char)TIMx->TIM_Value;
- 122   2          if(TIMx->TIM_Run == ENABLE) T4T3M |=  (1<<3); //¿ªÊ¼ÔËÐÐ
- 123   2          return  0;    //³É¹¦
- 124   2        }
+ 116   1          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   T4T3M |=  (1<<1); //1T
+ 117   1          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  T4T3M |=  (3<<1); //¶ÔÍâ¼ÆÊý»ò·ÖÆµ
+ 118   1          if(TIMx->TIM_ClkOut == ENABLE)  T4T3M |=  1;  //Êä³öÊ±ÖÓ
+ 119   1      
+ 120   1          TH3 = (unsigned char)(TIMx->TIM_Value >> 8);
+ 121   1          TL3 = (unsigned char)TIMx->TIM_Value;
+ 122   1          if(TIMx->TIM_Run == ENABLE) T4T3M |=  (1<<3); //¿ªÊ¼ÔËÐÐ
+ 123   1          return  0;    //³É¹¦
+ 124   1        }
  125   1      
  126   1        if(TIM == Timer4)   //Timer4,¹Ì¶¨Îª16Î»×Ô¶¯ÖØ×°, ÖÐ¶ÏÎÞÓÅÏÈ¼¶
  127   1        {
- 128   2          if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)  return 2;
- 129   2          T4T3M &= 0x0f;    //Í£Ö¹¼ÆÊý, ¶¨Ê±Ä£Ê½, 12TÄ£Ê½, ²»Êä³öÊ±ÖÓ
- 130   2          IE2  &= ~(1<<6);  //½ûÖ¹ÖÐ¶Ï
- 131   2          if(TIMx->TIM_Interrupt == ENABLE)     IE2  |=  (1<<6);  //ÔÊÐíÖÐ¶Ï
- 132   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   T4T3M |=  (1<<5); //1T
- 133   2          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  T4T3M |=  (3<<5); //¶ÔÍâ¼ÆÊý»ò·ÖÆµ
- 134   2          if(TIMx->TIM_ClkOut == ENABLE)  T4T3M |=  (1<<4); //Êä³öÊ±ÖÓ
- 135   2      
- 136   2          TH4 = (unsigned char)(TIMx->TIM_Value >> 8);
- 137   2          TL4 = (unsigned char)TIMx->TIM_Value;
- 138   2          if(TIMx->TIM_Run == ENABLE) T4T3M |=  (1<<7); //¿ªÊ¼ÔËÐÐ
- 139   2          return  0;    //³É¹¦
- 140   2        }
- 141   1        return 2; //´íÎó
- 142   1      }
- 143          //========================================================================
- 144          // º¯Êý: void Timer_config(void)
- 145          // ÃèÊö: ¶¨Ê±Æ÷ÅäÖÃº¯Êý
- 146          // ²ÎÊý: ÎÞ
- 147          // ·µ»Ø: ÎÞ
- 148          // °æ±¾: V1.0, 2020.03.09
- 149          //========================================================================
- 150          void  Timer_Config(void)
- 151          {
- 152   1        TIM_InitTypeDef   TIM_InitStructure;          //½á¹¹¶¨Òå
- 153   1        TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //Ö¸¶¨¹¤×÷Ä£Ê½,   TIM_16BitAutoReload,TIM_16Bit,TI
+ 128   1          if(TIMx->TIM_ClkSource >  TIM_CLOCK_Ext)  return 2;
+ 129   1          T4T3M &= 0x0f;    //Í£Ö¹¼ÆÊý, ¶¨Ê±Ä£Ê½, 12TÄ£Ê½, ²»Êä³öÊ±ÖÓ
+ 130   1          IE2  &= ~(1<<6);  //½ûÖ¹ÖÐ¶Ï
+ 131   1          if(TIMx->TIM_Interrupt == ENABLE)     IE2  |=  (1<<6);  //ÔÊÐíÖÐ¶Ï
+ 132   1          if(TIMx->TIM_ClkSource == TIM_CLOCK_1T)   T4T3M |=  (1<<5); //1T
+ 133   1          if(TIMx->TIM_ClkSource == TIM_CLOCK_Ext)  T4T3M |=  (3<<5); //¶ÔÍâ¼ÆÊý»ò·ÖÆµ
+ 134   1          if(TIMx->TIM_ClkOut == ENABLE)  T4T3M |=  (1<<4); //Êä³öÊ±ÖÓ
+ 135   1      
+ 136   1          TH4 = (unsigned char)(TIMx->TIM_Value >> 8);
+ 137   1          TL4 = (unsigned char)TIMx->TIM_Value;
+ 138   1          if(TIMx->TIM_Run == ENABLE) T4T3M |=  (1<<7); //¿ªÊ¼ÔËÐÐ
+ 139   1          return  0;    //³É¹¦
+ 140   1        }
+ 141   1      */
+ 142   1        return 2; //´íÎó
+ 143   1      }
+ 144          //========================================================================
+ 145          // º¯Êý: void Timer_config(void)
+ 146          // ÃèÊö: ¶¨Ê±Æ÷ÅäÖÃº¯Êý
+ 147          // ²ÎÊý: ÎÞ
+ 148          // ·µ»Ø: ÎÞ
+ 149          // °æ±¾: V1.0, 2020.03.09
+ 150          //========================================================================
+ 151          void  Timer_Config(void)
+ 152          {
+ 153   1        TIM_InitTypeDef   TIM_InitStructure;          //½á¹¹¶¨Òå
+ 154   1        TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //Ö¸¶¨¹¤×÷Ä£Ê½,   TIM_16BitAutoReload,TIM_16Bit,TI
              -M_8BitAutoReload,TIM_16BitAutoReloadNoMask
- 154   1        TIM_InitStructure.TIM_Polity    = PolityLow;      //Ö¸¶¨ÖÐ¶ÏÓÅÏÈ¼¶, PolityHigh,PolityLow
- 155   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE
- 156   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;     //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
+ 155   1        TIM_InitStructure.TIM_Polity    = PolityLow;      //Ö¸¶¨ÖÐ¶ÏÓÅÏÈ¼¶, PolityHigh,PolityLow
+ 156   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE
+ 157   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;     //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
              -Ext
- 157   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
- 158   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 200);    //³õÖµ,5ms
- 159   1        TIM_InitStructure.TIM_Run       = DISABLE;        //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
- 160   1        Timer_Init(Timer0,&TIM_InitStructure);        //³õÊ¼»¯Timer0    Timer0,Timer1,Timer2,Timer3,Timer4
- 161   1        Timer0_Count=0;
- 162   1      /*
- 163   1        TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //Ö¸¶¨¹¤×÷Ä£Ê½,   TIM_16BitAutoReload,TIM_16Bit,TI
+ 158   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
+ 159   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 200);    //³õÖµ,5ms
+ 160   1        TIM_InitStructure.TIM_Run       = DISABLE;        //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
+ 161   1        Timer_Init(Timer0,&TIM_InitStructure);        //³õÊ¼»¯Timer0    Timer0,Timer1,Timer2,Timer3,Timer4
+ 162   1        Timer0_Count=0;
+ 163   1      /*
+ 164   1        TIM_InitStructure.TIM_Mode      = TIM_16BitAutoReload;  //Ö¸¶¨¹¤×÷Ä£Ê½,   TIM_16BitAutoReload,TIM_16Bit,TI
              -M_8BitAutoReload
- 164   1        TIM_InitStructure.TIM_Polity    = PolityLow;      //Ö¸¶¨ÖÐ¶ÏÓÅÏÈ¼¶, PolityHigh,PolityLow
- 165   1        TIM_InitStructure.TIM_Interrupt = DISABLE;        //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE
- 166   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;     //Ö¸¶¨Ê±ÖÓÔ´, TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_Ext
- 167   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
- 168   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 2000);   //³õÖµ,
- 169   1        TIM_InitStructure.TIM_Run       = ENABLE;       //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
- 170   1        Timer_Init(Timer1,&TIM_InitStructure);        //³õÊ¼»¯Timer1    Timer0,Timer1,Timer2,Timer3,Timer4
- 171   1        Timer1_Count=0;
- 172   1      
- 173   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE. (×¢Òâ: Timer2¹Ì¶¨Îª16Î»×Ô
-             -¶¯ÖØ×°, ÖÐ¶Ï¹Ì¶¨ÎªµÍÓÅÏÈ¼¶)
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 15:45:08 PAGE 4   
+ 165   1        TIM_InitStructure.TIM_Polity    = PolityLow;      //Ö¸¶¨ÖÐ¶ÏÓÅÏÈ¼¶, PolityHigh,PolityLow
+ 166   1        TIM_InitStructure.TIM_Interrupt = DISABLE;        //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE
+ 167   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_1T;     //Ö¸¶¨Ê±ÖÓÔ´, TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_Ext
+ 168   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
+ 169   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / 2000);   //³õÖµ,
+ 170   1        TIM_InitStructure.TIM_Run       = ENABLE;       //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
+ 171   1        Timer_Init(Timer1,&TIM_InitStructure);        //³õÊ¼»¯Timer1    Timer0,Timer1,Timer2,Timer3,Timer4
+ 172   1        Timer1_Count=0;
+ 173   1      
+ 174   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE. (×¢Òâ: Timer2¹Ì¶¨Îª16Î»×Ô
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 19:26:55 PAGE 4   
 
- 174   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;    //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
-             -Ext
- 175   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
- 176   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (1000*12));    //³õÖµ
- 177   1        TIM_InitStructure.TIM_Run       = DISABLE;        //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
- 178   1        Timer_Init(Timer2,&TIM_InitStructure);        //³õÊ¼»¯Timer2    Timer0,Timer1,Timer2,Timer3,Timer4
- 179   1        Timer2_Count=0;
- 180   1      
- 181   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE. (×¢Òâ: Timer3¹Ì¶¨Îª16Î»×Ô
              -¶¯ÖØ×°, ÖÐ¶Ï¹Ì¶¨ÎªµÍÓÅÏÈ¼¶)
- 182   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;    //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
+ 175   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;    //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
              -Ext
- 183   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
- 184   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (200*12));   //³õÖµ
- 185   1        TIM_InitStructure.TIM_Run       = ENABLE;       //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
- 186   1        Timer_Init(Timer3,&TIM_InitStructure);        //³õÊ¼»¯Timer3    Timer0,Timer1,Timer2,Timer3,Timer4
- 187   1        Timer3_Count=0;
- 188   1      
- 189   1        TIM_InitStructure.TIM_Interrupt = DISABLE;        //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE. (×¢Òâ: Timer4¹Ì¶¨Îª16Î»×
+ 176   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
+ 177   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (1000*12));    //³õÖµ
+ 178   1        TIM_InitStructure.TIM_Run       = DISABLE;        //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
+ 179   1        Timer_Init(Timer2,&TIM_InitStructure);        //³õÊ¼»¯Timer2    Timer0,Timer1,Timer2,Timer3,Timer4
+ 180   1        Timer2_Count=0;
+ 181   1      
+ 182   1        TIM_InitStructure.TIM_Interrupt = ENABLE;       //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE. (×¢Òâ: Timer3¹Ì¶¨Îª16Î»×Ô
+             -¶¯ÖØ×°, ÖÐ¶Ï¹Ì¶¨ÎªµÍÓÅÏÈ¼¶)
+ 183   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;    //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
+             -Ext
+ 184   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
+ 185   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (200*12));   //³õÖµ
+ 186   1        TIM_InitStructure.TIM_Run       = ENABLE;       //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
+ 187   1        Timer_Init(Timer3,&TIM_InitStructure);        //³õÊ¼»¯Timer3    Timer0,Timer1,Timer2,Timer3,Timer4
+ 188   1        Timer3_Count=0;
+ 189   1      
+ 190   1        TIM_InitStructure.TIM_Interrupt = DISABLE;        //ÖÐ¶ÏÊÇ·ñÔÊÐí,   ENABLE»òDISABLE. (×¢Òâ: Timer4¹Ì¶¨Îª16Î»×
              -Ô¶¯ÖØ×°, ÖÐ¶Ï¹Ì¶¨ÎªµÍÓÅÏÈ¼¶)
- 190   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;    //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
+ 191   1        TIM_InitStructure.TIM_ClkSource = TIM_CLOCK_12T;    //Ö¸¶¨Ê±ÖÓÔ´,     TIM_CLOCK_1T,TIM_CLOCK_12T,TIM_CLOCK_
              -Ext
- 191   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
- 192   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (100*12));   //³õÖµ
- 193   1        TIM_InitStructure.TIM_Run       = DISABLE;        //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
- 194   1        Timer_Init(Timer4,&TIM_InitStructure);        //³õÊ¼»¯Timer4    Timer0,Timer1,Timer2,Timer3,Timer4
- 195   1        Timer4_Count=0;
- 196   1      */
- 197   1      }
- 198          
+ 192   1        TIM_InitStructure.TIM_ClkOut    = DISABLE;        //ÊÇ·ñÊä³ö¸ßËÙÂö³å, ENABLE»òDISABLE
+ 193   1        TIM_InitStructure.TIM_Value     = 65536UL - (MAIN_Fosc / (100*12));   //³õÖµ
+ 194   1        TIM_InitStructure.TIM_Run       = DISABLE;        //ÊÇ·ñ³õÊ¼»¯ºóÆô¶¯¶¨Ê±Æ÷, ENABLE»òDISABLE
+ 195   1        Timer_Init(Timer4,&TIM_InitStructure);        //³õÊ¼»¯Timer4    Timer0,Timer1,Timer2,Timer3,Timer4
+ 196   1        Timer4_Count=0;
+ 197   1      */
+ 198   1      }
  199          
- 200          //========================================================================
- 201          // º¯Êý: void Timer0_Int (void) interrupt TIMER0_VECTOR
- 202          // ÃèÊö: ¶¨Ê±Æ÷0ÖÐ¶Ïº¯Êý
- 203          // ²ÎÊý: ÎÞ
- 204          // ·µ»Ø: ÎÞ
- 205          // °æ±¾: V1.0, 2020.03.09
- 206          //========================================================================
- 207          void Timer0_Int (void) interrupt TIMER0_VECTOR
- 208          {
- 209   1         Timer0_Count++;
- 210   1      }
- 211          /*
- 212          //========================================================================
- 213          // º¯Êý: void Timer1_Int (void) interrupt TIMER1_VECTOR
- 214          // ÃèÊö: ¶¨Ê±Æ÷1ÖÐ¶Ïº¯Êý
- 215          // ²ÎÊý: ÎÞ
- 216          // ·µ»Ø: ÎÞ
- 217          // °æ±¾: V1.0, 2020.03.09
- 218          //========================================================================
- 219          void Timer1_Int (void) interrupt TIMER1_VECTOR
- 220          {
- 221              Timer1_Count++;
- 222          }
- 223          
- 224          //========================================================================
- 225          // º¯Êý: void Timer2_Int (void) interrupt TIMER2_VECTOR
- 226          // ÃèÊö: ¶¨Ê±Æ÷2ÖÐ¶Ïº¯Êý
- 227          // ²ÎÊý: ÎÞ
- 228          // ·µ»Ø: ÎÞ
- 229          // °æ±¾: V1.0, 2020.03.09
- 230          //========================================================================
-C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 15:45:08 PAGE 5   
+ 200          
+ 201          //========================================================================
+ 202          // º¯Êý: void Timer0_Int (void) interrupt TIMER0_VECTOR
+ 203          // ÃèÊö: ¶¨Ê±Æ÷0ÖÐ¶Ïº¯Êý
+ 204          // ²ÎÊý: ÎÞ
+ 205          // ·µ»Ø: ÎÞ
+ 206          // °æ±¾: V1.0, 2020.03.09
+ 207          //========================================================================
+ 208          void Timer0_Int (void) interrupt TIMER0_VECTOR
+ 209          {
+ 210   1         Timer0_Count++;
+ 211   1      }
+ 212          /*
+ 213          //========================================================================
+ 214          // º¯Êý: void Timer1_Int (void) interrupt TIMER1_VECTOR
+ 215          // ÃèÊö: ¶¨Ê±Æ÷1ÖÐ¶Ïº¯Êý
+ 216          // ²ÎÊý: ÎÞ
+ 217          // ·µ»Ø: ÎÞ
+ 218          // °æ±¾: V1.0, 2020.03.09
+ 219          //========================================================================
+ 220          void Timer1_Int (void) interrupt TIMER1_VECTOR
+ 221          {
+ 222              Timer1_Count++;
+ 223          }
+ 224          
+ 225          //========================================================================
+ 226          // º¯Êý: void Timer2_Int (void) interrupt TIMER2_VECTOR
+ 227          // ÃèÊö: ¶¨Ê±Æ÷2ÖÐ¶Ïº¯Êý
+ 228          // ²ÎÊý: ÎÞ
+ 229          // ·µ»Ø: ÎÞ
+ 230          // °æ±¾: V1.0, 2020.03.09
+C51 COMPILER V9.60.0.0   MCU_TIMER                                                         12/13/2020 19:26:55 PAGE 5   
 
- 231          void Timer2_Int (void) interrupt TIMER2_VECTOR
- 232          {
- 233             Timer2_Count++;
- 234          }
- 235          
- 236          //========================================================================
- 237          // º¯Êý: Timer3_Int (void) interrupt TIMER3_VECTOR
- 238          // ÃèÊö: ¶¨Ê±Æ÷3ÖÐ¶Ïº¯Êý
- 239          // ²ÎÊý: ÎÞ
- 240          // ·µ»Ø: ÎÞ
- 241          // °æ±¾: V1.0, 2020.03.09
- 242          //========================================================================
- 243          void Timer3_Int (void) interrupt TIMER3_VECTOR
- 244          {
- 245             Timer3_Count++;
- 246          }
- 247          
- 248          //========================================================================
- 249          // º¯Êý: void Timer4_Int (void) interrupt TIMER4_VECTOR
- 250          // ÃèÊö: ¶¨Ê±Æ÷4ÖÐ¶Ïº¯Êý
- 251          // ²ÎÊý: ÎÞ
- 252          // ·µ»Ø: ÎÞ
- 253          // °æ±¾: V1.0, 2020.03.09
- 254          //========================================================================
- 255          void Timer4_Int (void) interrupt TIMER4_VECTOR
- 256          {
- 257             Timer4_Count++;
- 258          }
- 259          */
+ 231          //========================================================================
+ 232          void Timer2_Int (void) interrupt TIMER2_VECTOR
+ 233          {
+ 234             Timer2_Count++;
+ 235          }
+ 236          
+ 237          //========================================================================
+ 238          // º¯Êý: Timer3_Int (void) interrupt TIMER3_VECTOR
+ 239          // ÃèÊö: ¶¨Ê±Æ÷3ÖÐ¶Ïº¯Êý
+ 240          // ²ÎÊý: ÎÞ
+ 241          // ·µ»Ø: ÎÞ
+ 242          // °æ±¾: V1.0, 2020.03.09
+ 243          //========================================================================
+ 244          void Timer3_Int (void) interrupt TIMER3_VECTOR
+ 245          {
+ 246             Timer3_Count++;
+ 247          }
+ 248          
+ 249          //========================================================================
+ 250          // º¯Êý: void Timer4_Int (void) interrupt TIMER4_VECTOR
+ 251          // ÃèÊö: ¶¨Ê±Æ÷4ÖÐ¶Ïº¯Êý
+ 252          // ²ÎÊý: ÎÞ
+ 253          // ·µ»Ø: ÎÞ
+ 254          // °æ±¾: V1.0, 2020.03.09
+ 255          //========================================================================
+ 256          void Timer4_Int (void) interrupt TIMER4_VECTOR
+ 257          {
+ 258             Timer4_Count++;
+ 259          }
+ 260          */
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    685    ----
+   CODE SIZE        =    211    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =      2       8
    PDATA SIZE       =   ----    ----

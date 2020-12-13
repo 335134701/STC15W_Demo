@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MCU_GPIO                                                          12/13/2020 15:58:42 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_GPIO                                                          12/13/2020 16:17:10 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_GPIO
@@ -62,7 +62,7 @@ line level    source
   51              if(GPIOx->Mode == GPIO_PullUp)    P0M1 &= ~GPIOx->Pin,  P0M0 &= ~GPIOx->Pin;   //上拉准双向口
   52              if(GPIOx->Mode == GPIO_HighZ)   P0M1 |=  GPIOx->Pin,  P0M0 &= ~GPIOx->Pin;   //浮空输入
   53              if(GPIOx->Mode == GPIO_OUT_OD)    P0M1 |=  GPIOx->Pin,  P0M0 |=  GPIOx->Pin;   //开漏输出
-C51 COMPILER V9.60.0.0   MCU_GPIO                                                          12/13/2020 15:58:42 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_GPIO                                                          12/13/2020 16:17:10 PAGE 2   
 
   54              if(GPIOx->Mode == GPIO_OUT_PP)    P0M1 &= ~GPIOx->Pin,  P0M0 |=  GPIOx->Pin;   //推挽输出
   55            }

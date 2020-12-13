@@ -139,6 +139,7 @@ void OLED_Fill(unsigned char bmp_dat)
 		OLED_WrDat(bmp_dat);
 	}
 }
+/*
 //========================================================================
 // 函数: void OLED_CLS(void)
 // 描述: 复位/清屏
@@ -158,6 +159,7 @@ void OLED_CLS(void)
 		OLED_WrDat(0);
 	}
 }
+*/
 //========================================================================
 // 函数: void OLED_CLS_Local(unsigned char first_x,first_y,last_x,last_y)
 // 描述: OLED局部复位/清屏

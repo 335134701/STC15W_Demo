@@ -26,19 +26,19 @@ extern unsigned char Sn;
 // 版本: V1.0, 2020.12.02
 //========================================================================
 //硬件版本号
-extern const unsigned char HardVersion[8];
+extern const unsigned char code  HardVersion[8];
 //软件版本号
-extern const unsigned char SoftVersion[8];
+extern const unsigned char code SoftVersion[8];
 //产品标识码
-extern const unsigned char ProductKey[32];
+extern const unsigned char xdata ProductKey[32];
 //产品密钥
-extern const unsigned char ProductSecert[32];
+extern const unsigned char xdata ProductSecert[32];
 //设备属性
-extern const unsigned char	DeviceAttributes[8];
+extern const unsigned char code	DeviceAttributes[8];
 //串口协议版本号
-extern const unsigned char SerialProVersion[8];
+extern const unsigned char code SerialProVersion[8];
 //业务协议版本号
-extern const unsigned char BusinessProVersion[8];
+extern const unsigned char code BusinessProVersion[8];
 //公共基础协议
 extern const unsigned char PublicAgreement[9];
 

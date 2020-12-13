@@ -11,7 +11,7 @@ unsigned char RX1_len;	//接收数据长度
 //unsigned char RX3_len;	//接收数据长度
 //unsigned char RX4_len;	//接收数据长度
 
-bit B_TX1_Busy,B_TX2_Busy;	// 发送忙标志
+bit B_TX1_Busy;	// 发送忙标志
 //bit B_TX1_Busy,B_TX2_Busy,B_TX3_Busy,B_TX4_Busy;	// 发送忙标志
 //========================================================================
 // UART引脚说明:
@@ -22,7 +22,7 @@ bit B_TX1_Busy,B_TX2_Busy;	// 发送忙标志
 //========================================================================
 
 void	UART1_config(unsigned char brt);
-void	UART2_config(unsigned char brt);
+//void	UART2_config(unsigned char brt);
 //void	UART3_config(unsigned char brt);
 //void	UART4_config(unsigned char brt);
 
