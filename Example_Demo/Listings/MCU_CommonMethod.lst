@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  12/13/2020 19:46:28 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  12/14/2020 21:27:57 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_COMMONMETHOD
 OBJECT MODULE PLACED IN .\Objects\MCU_CommonMethod.obj
-COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE ..\Example\MCU_CommonMethod.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTE
-                    -XTEND PRINT(.\Listings\MCU_CommonMethod.lst) TABS(2) OBJECT(.\Objects\MCU_CommonMethod.obj)
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE ..\..\..\..\..\..\Example\MCU_CommonMethod.c LARGE OPTIMIZE(8,SPEED) BROWS
+                    -E DEBUG OBJECTEXTEND PRINT(.\Listings\MCU_CommonMethod.lst) TABS(2) OBJECT(.\Objects\MCU_CommonMethod.obj)
 
 line level    source
 
@@ -38,71 +38,55 @@ line level    source
   28   1          memset(RX1_Buffer, 0, sizeof(RX1_Buffer));
   29   1      }
   30          //========================================================================
-  31          // 函数: void memcat(unsigned char *dest, const unsigned char *src,unsigned int index,len)
-  32          // 描述: 字符数组拼接函数
-  33          // 参数: dest目的字符数组,src源字符数组,index拼接位置,len拼接长度
+  31          // 函数: unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
+  32          // 描述: 计算校验和
+  33          // 参数: *Buf:字符数组,Buf_len:数组实际长度
   34          // 返回: 无
-  35          // 说明：此函数主要初始化串口设置参数
+  35          // 说明：无
   36          // 版本: V1.0, 2020.03.09
   37          //========================================================================
-  38          void memcat(unsigned char *dest, const unsigned char *src,unsigned int index, len)
+  38          unsigned char Calculate_Checksum(unsigned char *Buf, unsigned int Buf_len)
   39          {
-  40   1          unsigned int i=0;
-  41   1          if(index<0){ return;}
-  42   1          for (i = index;  i< len+index; i++) {
-  43   2              dest[i]=src[i-index];
+  40   1          unsigned char checksum = 0x00;
+  41   1          unsigned int i = 0, len = Buf_len;
+  42   1          for(i = 2; i < (len - 1); i++) {
+  43   2              checksum = checksum + Buf[i];
   44   2          }
-  45   1      }
-  46          //========================================================================
-  47          // 函数: unsigned char Calculate_Checksum(unsigned char *Buf,unsigned int Buf_len)
-  48          // 描述: 计算校验和
-  49          // 参数: *Buf:字符数组,Buf_len:数组实际长度
-  50          // 返回: 无
-  51          // 说明：无
-  52          // 版本: V1.0, 2020.03.09
-  53          //========================================================================
-  54          unsigned char Calculate_Checksum(unsigned char *Buf, unsigned int Buf_len)
-C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  12/13/2020 19:46:28 PAGE 2   
+  45   1          checksum = checksum % 256;
+  46   1          return checksum;
+  47   1      }
+  48          
+  49          //========================================================================
+  50          // 函数: unsigned char Check_Protocol(unsigned char *Buf,unsigned int Buf_len)
+  51          // 描述: 检验校验和是否一致
+  52          // 参数: *Buf:字符数组,Buf_len:数组实际长度
+  53          // 返回: 无
+  54          // 说明：具体思想为：接收到的BUF，取校验和，计算新的校验和，对比是否一致，若不一致，则数据无效
+C51 COMPILER V9.60.0.0   MCU_COMMONMETHOD                                                  12/14/2020 21:27:57 PAGE 2   
 
-  55          {
-  56   1          unsigned char checksum = 0x00;
-  57   1          unsigned int i = 0, len = Buf_len;
-  58   1          for(i = 2; i < (len - 1); i++) {
-  59   2              checksum = checksum + Buf[i];
-  60   2          }
-  61   1          checksum = checksum % 256;
-  62   1          return checksum;
-  63   1      }
-  64          
-  65          //========================================================================
-  66          // 函数: unsigned char Check_Protocol(unsigned char *Buf,unsigned int Buf_len)
-  67          // 描述: 检验校验和是否一致
-  68          // 参数: *Buf:字符数组,Buf_len:数组实际长度
-  69          // 返回: 无
-  70          // 说明：具体思想为：接收到的BUF，取校验和，计算新的校验和，对比是否一致，若不一致，则数据无效
-  71          // 版本: V1.0, 2020.03.09
-  72          //========================================================================
-  73          unsigned char Check_Protocol(unsigned char *Buf, unsigned int Buf_len)
-  74          {
-  75   1          unsigned char Check_protocol_flag = 0;
-  76   1          //将原BUF的校验和提取
-  77   1          unsigned char old_checksum = 0xFF;
-  78   1          unsigned char new_checksum = 0x00;
-  79   1          if(Buf_len>0){old_checksum = Buf[Buf_len - 1];}
-  80   1          //计算新的校验和并赋值给new_checksum
-  81   1          new_checksum = Calculate_Checksum(Buf, Buf_len);
-  82   1          //比较原校验和与新校验和是否一致
-  83   1          if(new_checksum == old_checksum) {
-  84   2              Check_protocol_flag = 1;
-  85   2          }
-  86   1          return Check_protocol_flag;
-  87   1      }
+  55          // 版本: V1.0, 2020.03.09
+  56          //========================================================================
+  57          unsigned char Check_Protocol(unsigned char *Buf, unsigned int Buf_len)
+  58          {
+  59   1          unsigned char Check_protocol_flag = 0;
+  60   1          //将原BUF的校验和提取
+  61   1          unsigned char old_checksum = 0xFF;
+  62   1          unsigned char new_checksum = 0x00;
+  63   1          if(Buf_len>0){old_checksum = Buf[Buf_len - 1];}
+  64   1          //计算新的校验和并赋值给new_checksum
+  65   1          new_checksum = Calculate_Checksum(Buf, Buf_len);
+  66   1          //比较原校验和与新校验和是否一致
+  67   1          if(new_checksum == old_checksum) {
+  68   2              Check_protocol_flag = 1;
+  69   2          }
+  70   1          return Check_protocol_flag;
+  71   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    365    ----
+   CODE SIZE        =    229    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----      24
+   XDATA SIZE       =   ----      12
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

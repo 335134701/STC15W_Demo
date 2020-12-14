@@ -47,47 +47,14 @@ unsigned char Uart_Prereception_Layer()
 void Uart_Transmission_Layer(unsigned int Buf_len, unsigned char order, action)
 {
     unsigned char Buf[116] = {0};
-    memcpy(Buf, PublicAgreement, sizeof(PublicAgreement));
-    Buf[3] = Buf_len - 4;
-    Buf[4] = order;
-    Buf[5] = Sn;
-    //上传设备信息
-    if(order == 0x02) {
-        memcat(Buf, SerialProVersion, 8, sizeof(SerialProVersion));
-        memcat(Buf, BusinessProVersion, 16, sizeof(BusinessProVersion));
-        memcat(Buf, HardVersion, 24, sizeof(HardVersion));
-        memcat(Buf, SoftVersion, 32, sizeof(SoftVersion));
-        memcat(Buf, ProductKey, 40, sizeof(ProductKey));
-        memcat(Buf, DeviceAttributes, 74, sizeof(DeviceAttributes));
-        memcat(Buf, ProductSecert, 82, sizeof(ProductSecert));
-    }
-    //接收非法数据包
-    if(order == 0x12) {
-        Buf[8] = action;
-    }
-    //上传设备状态
-    if((order == 0x04 && action == 0x03) || (order == 0x05 && action == 0x04)) {
-        Buf[8] = action;
-        Buf[9] = P1 >> 4 & 0X0F;
-        Buf[10] = 0;
-        Buf[11] = 0x00;
-        Buf[12] = 0x00;
-    }
-    //计算校验和
-    Buf[Buf_len - 1] = Calculate_Checksum(Buf, Buf_len);
-    //串口1回复数据
-    SendString1(Buf, Buf_len);
-}
-/*
-void Uart_Transmission_Layer(unsigned int Buf_len, unsigned char order, action)
-{
-    unsigned char Buf[116] = {0};
 		unsigned char *tmp=NULL;
+		if(Buf_len<MinOrder){return;}
     memcpy(Buf, PublicAgreement, sizeof(PublicAgreement));
-		tmp=Buf+sizeof(PublicAgreement);
+		tmp=Buf+sizeof(PublicAgreement)-1;
     Buf[3] = Buf_len - 4;
     Buf[4] = order;
     Buf[5] = Sn;
+		Buf[8] = action;
     //上传设备信息
     if(order == 0x02) {
 				memcpy(tmp,SerialProVersion,sizeof(SerialProVersion));
@@ -104,13 +71,8 @@ void Uart_Transmission_Layer(unsigned int Buf_len, unsigned char order, action)
 				tmp=tmp+sizeof(DeviceAttributes);
 				memcpy(tmp,ProductSecert,sizeof(ProductSecert));
     }
-    //接收非法数据包
-    if(order == 0x12) {
-        Buf[8] = action;
-    }
     //上传设备状态
     if((order == 0x04 && action == 0x03) || (order == 0x05 && action == 0x04)) {
-        Buf[8] = action;
         Buf[9] = P1 >> 4 & 0X0F;
         Buf[10] = 0;
         Buf[11] = 0x00;
@@ -121,7 +83,7 @@ void Uart_Transmission_Layer(unsigned int Buf_len, unsigned char order, action)
     //串口1回复数据
     SendString1(Buf, Buf_len);
 }
-*/
+
 //========================================================================
 // 函数: void IsConnect_wifi()
 // 描述: 判断是否接收到心跳包，如果没有接收到表示，连接wifi失败
