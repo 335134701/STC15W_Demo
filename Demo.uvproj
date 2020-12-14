@@ -125,7 +125,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -137,7 +137,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -419,12 +419,12 @@
             <File>
               <FileName>MCU_CommonMethod.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Example\MCU_CommonMethod.c</FilePath>
+              <FilePath>..\..\..\..\..\Example\MCU_CommonMethod.c</FilePath>
             </File>
             <File>
               <FileName>MCU_Variable.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Example\MCU_Variable.c</FilePath>
+              <FilePath>..\..\..\..\..\Example\MCU_Variable.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -444,12 +444,12 @@
             <File>
               <FileName>MCU_Control.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Example\MCU_Control.c</FilePath>
+              <FilePath>..\..\..\..\..\Example\MCU_Control.c</FilePath>
             </File>
             <File>
               <FileName>MCU_Hand_Uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Example\MCU_Hand_Uart.c</FilePath>
+              <FilePath>..\..\..\..\..\Example\MCU_Hand_Uart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -459,12 +459,12 @@
             <File>
               <FileName>MCU_Detect.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Example\MCU_Detect.c</FilePath>
+              <FilePath>..\..\..\..\..\Example\MCU_Detect.c</FilePath>
             </File>
             <File>
               <FileName>MCU_OLED_Show.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Example\MCU_OLED_Show.c</FilePath>
+              <FilePath>..\..\..\..\..\Example\MCU_OLED_Show.c</FilePath>
             </File>
           </Files>
         </Group>

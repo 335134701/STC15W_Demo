@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   MCU_VARIABLE                                                      12/13/2020 19:46:28 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_VARIABLE                                                      12/14/2020 21:29:30 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_VARIABLE
 OBJECT MODULE PLACED IN .\Objects\MCU_Variable.obj
-COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE ..\Example\MCU_Variable.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEN
-                    -D PRINT(.\Listings\MCU_Variable.lst) TABS(2) OBJECT(.\Objects\MCU_Variable.obj)
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE ..\..\..\..\..\Example\MCU_Variable.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG
+                    - OBJECTEXTEND PRINT(.\Listings\MCU_Variable.lst) TABS(2) OBJECT(.\Objects\MCU_Variable.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52          //       产品标示码(32)
   53          //       可绑定状态失效时间(2)
   54          //       设备属性(8)
-C51 COMPILER V9.60.0.0   MCU_VARIABLE                                                      12/13/2020 19:46:28 PAGE 2   
+C51 COMPILER V9.60.0.0   MCU_VARIABLE                                                      12/14/2020 21:29:30 PAGE 2   
 
   55          //       产品密钥(32)
   56          //       校验和(1)

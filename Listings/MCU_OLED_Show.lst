@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/13/2020 19:46:28 PAGE 1   
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/14/2020 21:29:31 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MCU_OLED_SHOW
 OBJECT MODULE PLACED IN .\Objects\MCU_OLED_Show.obj
-COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE ..\Example\MCU_OLED_Show.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTE
-                    -ND PRINT(.\Listings\MCU_OLED_Show.lst) TABS(2) OBJECT(.\Objects\MCU_OLED_Show.obj)
+COMPILER INVOKED BY: D:\Keil5\C51\BIN\C51.EXE ..\..\..\..\..\Example\MCU_OLED_Show.c LARGE OPTIMIZE(8,SPEED) BROWSE DEBU
+                    -G OBJECTEXTEND PRINT(.\Listings\MCU_OLED_Show.lst) TABS(2) OBJECT(.\Objects\MCU_OLED_Show.obj)
 
 line level    source
 
@@ -20,115 +20,114 @@ line level    source
   10          //========================================================================
   11          void MCU_OLED_StatusChange(unsigned char flag)
   12          {
-  13   1          if(Phone_flag) {
-  14   2              if(flag == 0x00) {
-  15   3                  OLED_CLS_Local(0, 4, X_WIDTH, Y_WIDTH);
-  16   3                  OLED_P6x8Str(6, 4, "L1:0 L2:0 L3:0 L4:0");
-  17   3              }
-  18   2              if(flag == 0x01 || flag == 0x00) {
-  19   3                  if(P14 == 0x01) {
-  20   4                      OLED_P6x8Str(24, 4, "1");
-  21   4                  } else {
-  22   4                      OLED_P6x8Str(24, 4, "0");
-  23   4                  }
-  24   3              }
-  25   2              if(flag == 0x02 || flag == 0x00) {
-  26   3                  if(P15 == 0x01) {
-  27   4                      OLED_P6x8Str(54, 4, "1");
-  28   4                  } else {
-  29   4                      OLED_P6x8Str(54, 4, "0");
-  30   4                  }
-  31   3              }
-  32   2              if(flag == 0x04 || flag == 0x00) {
-  33   3                  if(P16 == 0x01) {
-  34   4                      OLED_P6x8Str(84, 4, "1");
-  35   4                  } else {
-  36   4                      OLED_P6x8Str(84, 4, "0");
-  37   4                  }
-  38   3              }
-  39   2              if(flag == 0x08 || flag == 0x00) {
-  40   3                  if(P17 == 0x01) {
-  41   4                      OLED_P6x8Str(114, 4, "1");
-  42   4                  } else {
-  43   4                      OLED_P6x8Str(114, 4, "0");
-  44   4                  }
-  45   3              }
-  46   2          } else {
-  47   2              OLED_CLS_Local(0, 4, X_WIDTH, 6);
+  13   1          if(flag == 0x00) {
+  14   2              OLED_CLS_Local(0, 4, X_WIDTH, Y_WIDTH);
+  15   2          }
+  16   1          if(Phone_flag) {
+  17   2              if(flag == 0x00) {
+  18   3                  OLED_P6x8Str(6, 4, "L1:0 L2:0 L3:0 L4:0");
+  19   3              }
+  20   2              if(flag == 0x01 || flag == 0x00) {
+  21   3                  if(P14 == 0x01) {
+  22   4                      OLED_P6x8Str(24, 4, "1");
+  23   4                  } else {
+  24   4                      OLED_P6x8Str(24, 4, "0");
+  25   4                  }
+  26   3              }
+  27   2              if(flag == 0x02 || flag == 0x00) {
+  28   3                  if(P15 == 0x01) {
+  29   4                      OLED_P6x8Str(54, 4, "1");
+  30   4                  } else {
+  31   4                      OLED_P6x8Str(54, 4, "0");
+  32   4                  }
+  33   3              }
+  34   2              if(flag == 0x04 || flag == 0x00) {
+  35   3                  if(P16 == 0x01) {
+  36   4                      OLED_P6x8Str(84, 4, "1");
+  37   4                  } else {
+  38   4                      OLED_P6x8Str(84, 4, "0");
+  39   4                  }
+  40   3              }
+  41   2              if(flag == 0x08 || flag == 0x00) {
+  42   3                  if(P17 == 0x01) {
+  43   4                      OLED_P6x8Str(114, 4, "1");
+  44   4                  } else {
+  45   4                      OLED_P6x8Str(114, 4, "0");
+  46   4                  }
+  47   3              }
   48   2          }
   49   1      }
   50          
-  51          
-  52          //========================================================================
-  53          // 函数: void MCU_WIFI_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_stat
+  51          //========================================================================
+  52          // 函数: void MCU_WIFI_MessageShow(unsigned char Order,unsigned char Wifi_status_1,unsigned char Wifi_stat
              -us_2)
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/13/2020 19:46:28 PAGE 2   
+  53          // 描述: 系统OLED显示函数,主要显示WiFi连接状态
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/14/2020 21:29:31 PAGE 2   
 
-  54          // 描述: 系统OLED显示函数,主要显示WiFi连接状态
-  55          // 参数: Order:WiFi推送状态命令;Wifi_status_1,Wifi_status_2:WiFi状态标记位
-  56          // 返回: 无
-  57          // 说明:
-  58          // 版本: V1.0, 2020.03.09
-  59          //========================================================================
-  60          void MCU_WIFI_MessageShow(unsigned char Order, unsigned char Wifi_status_1, unsigned char Wifi_status_2)
-  61          {
-  62   1          //推送wifi状态
-  63   1          if(Order == 0x0d) {
-  64   2              //清除第三行及以下所有行
-  65   2              OLED_CLS_Local(0, 2, X_WIDTH, 4);
-  66   2              switch(Wifi_status_2) {
-  67   3              //SoftAP模式开启
-  68   3              case 0x01:
-  69   3                  OLED_P6x8Str(6, 2, "M:A");
-  70   3                  break;
-  71   3              //Station模式开启
-  72   3              case 0x02:
-  73   3                  OLED_P6x8Str(6, 2, "M:S");
-  74   3                  break;
-  75   3              //SoftAP模式开启，开启配置模式,配置使用SoftAP
-  76   3              case 0x04:
-  77   3                  OLED_P6x8Str(6, 2, "M:S");
-  78   3                  break;
-  79   3              //SoftAP模式开启，开启配置模式,配置使用SoftAP
-  80   3              case 0x05:
-  81   3                  OLED_P6x8Str(6, 2, "M:A C:S");
-  82   3                  break;
-  83   3              //Station模式开启，开启配置模式,配置使用AirLink
-  84   3              case 0x06:
-  85   3                  OLED_P6x8Str(6, 2, "M:S C:A");
-  86   3                  break;
-  87   3              //Station模式开启，成功连接路由器
-  88   3              case 0x12:
-  89   3                  OLED_P6x8Str(6, 2, "M:S C:A W:1");
-  90   3                  break;
-  91   3              //Station模式开启，成功连接路由器，开启绑定模式
-  92   3              case 0x1A:
-  93   3                  OLED_P6x8Str(6, 2, "M:S C:A W:1");
-  94   3                  break;
-  95   3              //Station模式开启，成功连接路由器，开启绑定模式，连接上云端
-  96   3              case 0x3A:
-  97   3                  //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，无手机连接 (Wifi_status_1 >= 0x00
+  54          // 参数: Order:WiFi推送状态命令;Wifi_status_1,Wifi_status_2:WiFi状态标记位
+  55          // 返回: 无
+  56          // 说明:
+  57          // 版本: V1.0, 2020.03.09
+  58          //========================================================================
+  59          void MCU_WIFI_MessageShow(unsigned char Order, unsigned char Wifi_status_1, unsigned char Wifi_status_2)
+  60          {
+  61   1          //推送wifi状态
+  62   1          if(Order == 0x0d) {
+  63   2              //清除第三行及以下所有行
+  64   2              OLED_CLS_Local(0, 2, X_WIDTH, 4);
+  65   2              switch(Wifi_status_2) {
+  66   3              //SoftAP模式开启
+  67   3              case 0x01:
+  68   3                  OLED_P6x8Str(6, 2, "M:A");
+  69   3                  break;
+  70   3              //Station模式开启
+  71   3              case 0x02:
+  72   3                  OLED_P6x8Str(6, 2, "M:S");
+  73   3                  break;
+  74   3              //SoftAP模式开启，开启配置模式,配置使用SoftAP
+  75   3              case 0x04:
+  76   3                  OLED_P6x8Str(6, 2, "M:S");
+  77   3                  break;
+  78   3              //SoftAP模式开启，开启配置模式,配置使用SoftAP
+  79   3              case 0x05:
+  80   3                  OLED_P6x8Str(6, 2, "M:A C:S");
+  81   3                  break;
+  82   3              //Station模式开启，开启配置模式,配置使用AirLink
+  83   3              case 0x06:
+  84   3                  OLED_P6x8Str(6, 2, "M:S C:A");
+  85   3                  break;
+  86   3              //Station模式开启，成功连接路由器
+  87   3              case 0x12:
+  88   3                  OLED_P6x8Str(6, 2, "M:S C:A W:1");
+  89   3                  break;
+  90   3              //Station模式开启，成功连接路由器，开启绑定模式
+  91   3              case 0x1A:
+  92   3                  OLED_P6x8Str(6, 2, "M:S C:A W:1");
+  93   3                  break;
+  94   3              //Station模式开启，成功连接路由器，开启绑定模式，连接上云端
+  95   3              case 0x3A:
+  96   3                  //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，无手机连接 (Wifi_status_1 >= 0x00
              - && Wifi_status_1 <= 0x07 )
-  98   3                   OLED_P6x8Str(6, 2, "M:S C:A W:1 N:1");
-  99   3                  //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，有手机连接 (Wifi_status_1 >= 0x08
+  97   3                  OLED_P6x8Str(6, 2, "M:S C:A W:1 N:1");
+  98   3                  //Station模式开启，成功连接路由器，开启绑定模式，连接上云端，有手机连接 (Wifi_status_1 >= 0x08
              - && Wifi_status_1 <= 0x0F )
- 100   3                  if(Wifi_status_1 >= 0x08 && Wifi_status_1 <= 0x0F ) {
- 101   4                      OLED_P6x8Str(102, 2, "P:1");
- 102   4                  }
- 103   3                  break;
- 104   3              }
- 105   2          }
- 106   1      }
+  99   3                  if(Wifi_status_1 >= 0x08 && Wifi_status_1 <= 0x0F ) {
+ 100   4                      OLED_P6x8Str(102, 2, "P:1");
+ 101   4                  }
+ 102   3                  break;
+ 103   3              }
+ 104   2          }
+ 105   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    405    ----
+   CODE SIZE        =    384    ----
    CONSTANT SIZE    =     80    ----
    XDATA SIZE       =   ----       3
    PDATA SIZE       =   ----    ----
-C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/13/2020 19:46:28 PAGE 3   
-
    DATA SIZE        =   ----    ----
+C51 COMPILER V9.60.0.0   MCU_OLED_SHOW                                                     12/14/2020 21:29:31 PAGE 3   
+
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
